@@ -1,0 +1,22 @@
+{
+  "name": "showflix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "cli-progress": "^1.2.0",
+    "filedownloader": "^1.1.0",
+    "inquirer": "^1.2.1",
+    "q": "^1.4.1",
+    "rc": "^1.1.6",
+    "request": "^2.75.0",
+    "upnpserver": "^2.1.3",
+    "url-parse": "^1.1.3"
+  }
+}
