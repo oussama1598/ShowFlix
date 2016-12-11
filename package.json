@@ -1,0 +1,19 @@
+{
+  "name": "showflix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Oussama",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "colors": "^1.1.2",
+    "express": "^4.14.0",
+    "filedownloader": "^1.1.0",
+    "request": "^2.79.0",
+    "underscore": "^1.8.3"
+  }
+}
