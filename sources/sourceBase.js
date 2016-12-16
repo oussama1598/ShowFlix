@@ -7,13 +7,13 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = {
-    providerCodes: [{ code: 3, name: "openload" }, { code: 2, name: "keeload" }, { code: 4, name: "Uptobox" }],
+    name: null,
     init: function(infos, dataPath) {
-        const defer = Q.defer();
+        const defer = Q.defer(), SourceName = this.name;
 
-        console.log("Initializing Cera data".yellow);
+        console.log(`Initializing ${SourceName}'s data`.yellow);
 
-        dataPath = path.join(dataPath, "cera.json");
+        dataPath = path.join(dataPath, `${SourceName}.json`);
 
         if (fs.existsSync(dataPath)) {
             const SerieData = require(dataPath);
@@ -31,12 +31,12 @@ module.exports = {
         return defer.promise;
     },
     BuildUrls: function(infos, dataPath) {
-        const defer = Q.defer();
+        const defer = Q.defer(), SourceName = this.name;
         let Urls = {};
 
         console.log("Building Urls list".yellow);
 
-        utils.getHtml(infos.providers.cera).then($ => {
+        utils.getHtml(infos.providers[SourceName]).then($ => {
             const els = $(".episodesList a");
 
             Urls["name"] = infos.name;
@@ -80,12 +80,12 @@ module.exports = {
             return provider($("iframe").attr("src"));
         })
     },
-    parseUrl: function(infos, code, dataPath) {
+    parseUrl: function(infos, code, dataPath, parsing) {
         return Q.Promise((resolve, reject) => {
-            const defer = Q.defer();
+            const defer = Q.defer(), SourceName = this.name;
             let url, SerieUrls;
 
-            dataPath = path.join(dataPath, "cera.json");
+            dataPath = path.join(dataPath, `${SourceName}.json`);
 
             if (!fs.existsSync(dataPath)) {
                 console.log("Unable to find Serie data".red);
@@ -107,10 +107,12 @@ module.exports = {
             console.log(url)
 
             if (!code) {
-                console.log(`Parsing Episode ${infos.episode} Season ${infos.season} From cera`.green)
+                console.log(`Parsing Episode ${infos.episode} Season ${infos.season} From ${SourceName}`.green)
 
                 utils.getHtml(url).then($ => {
-                    resolve(urlParser.parse($("link[rel='shortlink']").attr("href"), true).query.p);
+                    parsing($).then(result => {
+                        resolve(result);
+                    })
                 })
 
             } else {

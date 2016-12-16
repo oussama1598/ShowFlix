@@ -21,10 +21,7 @@ function getHtml(url, json) {
 
 function BuildNextEpisode(infos, cb) {
     if (infos.max !== infos.episode) {
-        let next = ('' + (parseInt(infos.episode) + 1));
-        next = next.length === 1 ? '0' + next : next;
-
-        infos.episode = next;
+        infos.episode = ('' + (parseInt(infos.episode) + 1));
         updateJSON(infos, () => {
             cb(infos);
         });
@@ -33,14 +30,32 @@ function BuildNextEpisode(infos, cb) {
     }
 }
 
+function WriteSerieData(path, object, done) {
+    fs.writeFile(path, JSON.stringify(object, null, 3), function(err) {
+        if (err) return console.log(err);
+        done();
+    })
+}
+
 function updateJSON(object, done) {
-    fs.writeFile("./infos.json", JSON.stringify(object), function(err) {
+    fs.writeFile("./data/infos.json", JSON.stringify(object, null, 3), function(err) {
         if (err) return console.log(err);
         done()
     });
 }
 
+function ObjectSize(object){
+    let size = 0;
+    for(key in object){
+        if(object.hasOwnProperty(key))
+            ++size;
+    }
+    return size;
+}
+
 module.exports = {
     getHtml,
-    BuildNextEpisode
+    BuildNextEpisode,
+    WriteSerieData,
+    ObjectSize
 }

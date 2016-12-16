@@ -6,7 +6,7 @@ const filedownloader = require("filedownloader");
 function download(url, infos, index) {
     let defer = Q.defer(),
         fileDowns = global.fileDowns,
-        filename = `The BlackList s${infos.season}e${infos.episode}.mp4`;
+        filename = `Westworld s${infos.season}e${infos.episode}.mp4`;
 
     if (index === undefined) {
         index = fileDowns.length;

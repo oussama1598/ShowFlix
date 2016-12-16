@@ -1,5 +1,4 @@
 const sources = require("./sources/sources")
-const infos = require("./infos.json");
 const express = require("express");
 const app = express();
 
@@ -14,12 +13,20 @@ app.get("/goTo", (req, res) => {
     if (req.query.to) {
         infos.episode = req.query.to;
         updateJSON(infos, () => {
-            sources("4helal", infos, 0);
+            sources("cera", infos, 0);
         });
         res.send("Went to " + infos.episode);
     }
 })
 
-sources("4helal", infos, 0);
+sources.initialize("4helal").then(() => {
+	sources.getMediaUrlFor("4helal", 0)
+});
 
-app.listen(8888);
+//sources.getMediaUrlFor("cera", 0);
+
+//app.listen(8888);
+
+
+//TODO:  source inhertins
+//TODO:  season detecteion
