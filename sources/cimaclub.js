@@ -5,13 +5,13 @@ const urlParser = require('url');
 const extend = require("extend");
 
 module.exports = extend(true, {
-    name: "cera",
-    providerCodes: [{ code: 3, name: "openload" }, { code: 2, name: "keeload" }, { code: 4, name: "Uptobox" }],
+    name: "cimaclub",
+    providerCodes: [{ code: 1, name: "openload" }],
     decodeForProvider: function(Ecode, prov) {
         const provDetails = this.providerCodes[prov],
             provider = providers.get(provDetails.name),
             code = provDetails.code,
-            serverUrl = `http://cera.online/wp-content/themes/Theme/servers/server.php?q=${Ecode}&i=${code}`;
+            serverUrl = `http://cimaclub.com/wp-content/themes/Cimaclub/servers/server.php?q=${Ecode}&i=${code}`;
 
         return utils.getHtml(serverUrl).then($ => {
             return provider($("iframe").attr("src"));
@@ -23,12 +23,15 @@ module.exports = extend(true, {
             season: infos.season
         };
 
-        $(".episodesList a").each(function(e) {
-            const Enumber = $(this).attr("class").replace("serie", ""),
-                url = $(this).attr("href");
+        $(".episode a").each(function(e) {
+            $(this).find("span").remove();
+
+            const Enumber = $(this).text().trim(),
+                url = decodeURI($(this).attr("href")) + "?view=1";
 
             Urls[Enumber] = url;
         });
+
         return Urls;
 
     },

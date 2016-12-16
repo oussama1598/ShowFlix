@@ -6,12 +6,14 @@ const colors = require("colors");
 
 function getHtml(url, json) {
     var defer = Q.defer();
+    url = encodeURI(url);
     request(url, (error, response, body) => {
         if (!error && response.statusCode == 200) {
             if (json) {
                 defer.resolve(body);
             } else { defer.resolve(cheerio.load(body)); }
         } else {
+            console.log("Error occured when requesting this url".red);
             defer.reject(new Error(error))
         }
     });

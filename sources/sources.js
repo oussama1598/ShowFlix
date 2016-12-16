@@ -53,6 +53,7 @@ const srcs = {
 
 srcs.set("4helal");
 srcs.set("cera");
+srcs.set("cimaclub");
 
 module.exports = { 
     getMediaUrlFor: srcs.getMediaUrlFor, 

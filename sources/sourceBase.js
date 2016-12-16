@@ -7,7 +7,8 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = {
-    name: null,
+    name: undefined,
+    providerCodes: [],
     init: function(infos, dataPath) {
         const defer = Q.defer(), SourceName = this.name;
 
@@ -18,7 +19,7 @@ module.exports = {
         if (fs.existsSync(dataPath)) {
             const SerieData = require(dataPath);
 
-            if (SerieData.name === infos.name) {
+            if (SerieData.name === infos.name && SerieData.season === infos.season) {
                 defer.resolve();
 
             } else {
@@ -31,24 +32,14 @@ module.exports = {
         return defer.promise;
     },
     BuildUrls: function(infos, dataPath) {
-        const defer = Q.defer(), SourceName = this.name;
-        let Urls = {};
+        const defer = Q.defer(), _this = this, SourceName = _this.name;
 
         console.log("Building Urls list".yellow);
 
         utils.getHtml(infos.providers[SourceName]).then($ => {
-            const els = $(".episodesList a");
+            const Urls = _this.BuildUrlsSource($, infos), episodes = utils.ObjectSize(Urls) - 2;
 
-            Urls["name"] = infos.name;
-
-            els.each(function(e) {
-                const Enumber = $(this).attr("class").replace("serie", ""),
-                    url = $(this).attr("href");
-
-                Urls[Enumber] = url;
-            });
-
-            console.log(`${els.length} Episode(s) Found`.green);
+            console.log(`${episodes} Episode(s) Found`.green);
 
             utils.WriteSerieData(dataPath, Urls, () => {
                 defer.resolve();
@@ -70,19 +61,10 @@ module.exports = {
 
         return defer.promise;
     },
-    decodeForProvider: function(Ecode, prov) {
-        const provDetails = this.providerCodes[prov],
-            provider = providers.get(provDetails.name),
-            code = provDetails.code,
-            serverUrl = `http://cera.online/wp-content/themes/Theme/servers/server.php?q=${Ecode}&i=${code}`;
-
-        return utils.getHtml(serverUrl).then($ => {
-            return provider($("iframe").attr("src"));
-        })
-    },
-    parseUrl: function(infos, code, dataPath, parsing) {
+    parseUrl: function(infos, code, dataPath) {
+        const _this = this;
         return Q.Promise((resolve, reject) => {
-            const defer = Q.defer(), SourceName = this.name;
+            const defer = Q.defer(), SourceName = _this.name;
             let url, SerieUrls;
 
             dataPath = path.join(dataPath, `${SourceName}.json`);
@@ -94,7 +76,7 @@ module.exports = {
             } else {
                 SerieUrls = require(dataPath);
 
-                if(utils.ObjectSize(SerieUrls) < 2){
+                if(utils.ObjectSize(SerieUrls) < 3){
                     console.log("Data is empty please try again. Note: The Data file will be deleted".red);
                     fs.unlink(dataPath);
                     reject();
@@ -104,15 +86,11 @@ module.exports = {
                 url = SerieUrls[infos.episode];
             }
 
-            console.log(url)
-
             if (!code) {
                 console.log(`Parsing Episode ${infos.episode} Season ${infos.season} From ${SourceName}`.green)
 
                 utils.getHtml(url).then($ => {
-                    parsing($).then(result => {
-                        resolve(result);
-                    })
+                    resolve(_this.Parse($));
                 })
 
             } else {

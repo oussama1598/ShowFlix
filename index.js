@@ -19,14 +19,12 @@ app.get("/goTo", (req, res) => {
     }
 })
 
-sources.initialize("4helal").then(() => {
-	sources.getMediaUrlFor("4helal", 0)
+sources.initialize("cimaclub").then(() => {
+	//sources.getMediaUrlFor("cimaclub", 0)
 });
 
 //sources.getMediaUrlFor("cera", 0);
 
 //app.listen(8888);
 
-
-//TODO:  source inhertins
-//TODO:  season detecteion
+// TODO : add cimaclub
