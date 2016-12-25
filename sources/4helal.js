@@ -34,6 +34,10 @@ module.exports = extend(true, {
 
     },
     Parse: function($) {
-        return urlParser.parse($("meta[itemprop='embedURL']").attr("content"), true).query.f;
+        utils.getHtml(url).then($ => {
+            const url = urlParser.parse($("meta[itemprop='embedURL']").attr("content"), true).query.f;
+
+            return url;
+        })
     }
 }, sourceBase);

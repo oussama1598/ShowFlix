@@ -1,8 +1,10 @@
 const sources = require("./sources/sources")
 const express = require("express");
+const fs = require("fs");
 const app = express();
 
 global.fileDowns = [];
+global.SAVETOFOLDER = "../Tv Shows";
 
 app.get("/", (req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -19,12 +21,17 @@ app.get("/goTo", (req, res) => {
     }
 })
 
-sources.initialize("cimaclub").then(() => {
-	//sources.getMediaUrlFor("cimaclub", 0)
-});
+app.get("/medias", (req, res) => {
+    fs.readdir(global.SAVETOFOLDER, (err, files) => {
+        res.send(files);
+    })
+})
 
-//sources.getMediaUrlFor("cera", 0);
+/*sources.initialize("mosalsl").then(() => {
+    sources.getMediaUrlFor("mosalsl", 0)
+});*/
 
-//app.listen(8888);
+app.listen(8885);
 
-// TODO : add cimaclub
+
+// TODO: Add search for mosalsl

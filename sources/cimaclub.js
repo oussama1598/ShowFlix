@@ -36,6 +36,9 @@ module.exports = extend(true, {
 
     },
     Parse: function($) {
-        return urlParser.parse($("link[rel='shortlink']").attr("href"), true).query.p;
+        return utils.getHtml(url).then($ => {
+            const url = urlParser.parse($("link[rel='shortlink']").attr("href"), true).query.p;
+            return url;
+        });
     }
 }, sourceBase);

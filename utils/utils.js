@@ -4,14 +4,18 @@ const cheerio = require("cheerio")
 const fs = require("fs");
 const colors = require("colors");
 
-function getHtml(url, json) {
+function getHtml(url, json, cookies) {
     var defer = Q.defer();
     url = encodeURI(url);
     request(url, (error, response, body) => {
         if (!error && response.statusCode == 200) {
             if (json) {
                 defer.resolve(body);
-            } else { defer.resolve(cheerio.load(body)); }
+            } else { 
+                const $ = cheerio.load(body);
+
+                defer.resolve((!cookies) ? $ : {$: $, cookies: parseCookies(response)}); 
+            }
         } else {
             console.log("Error occured when requesting this url".red);
             defer.reject(new Error(error))
@@ -20,6 +24,19 @@ function getHtml(url, json) {
 
     return defer.promise;
 }
+
+function parseCookies (res) {
+    let list = [],
+        rc = res.headers['set-cookie'];
+
+    rc && rc.forEach(cookie => {
+        let parts = cookie.split(";")[0];
+        list.push(parts);
+    })
+
+    return list;
+}
+
 
 function BuildNextEpisode(infos, cb) {
     if (infos.max !== infos.episode) {

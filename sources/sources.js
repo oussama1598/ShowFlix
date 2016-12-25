@@ -9,10 +9,18 @@ let infos = require("../data/infos.json");
 const srcs = {
     sources: {},
     get: function(name) {
-        return srcs.sources[name];
+        const source = srcs.sources[name];
+        if (source)
+            return source;
+        else
+            throw (new Error("This source can't be found"));
     },
-    set: function(name) {
-        srcs.sources[name] = require(`./${name}`);
+    add: function(arr) {
+        if (arr.constructor === Array) {
+            arr.forEach(val => {
+                srcs.sources[val] = require(`./${val}`);
+            });
+        }
     },
     MoveToNext: function(name) {
         const _this = srcs;
@@ -25,8 +33,14 @@ const srcs = {
         const _this = srcs,
             defer = Q.defer(),
             src = _this.get(name);
-            
+
         src.parseUrl(infos, code, DATAPATH).then(code => {
+
+            if (!code) {
+                console.log("Can't parse this url check again".red);
+                return;
+            }
+
             src.decodeForProvider(code, prov).then(url => {
                 console.log(`Url Found ${url}`.green)
 
@@ -44,6 +58,11 @@ const srcs = {
 
                 })
             })
+        }).catch(next => {
+            if (next) {
+                console.log("Passing this episode".red);
+                _this.MoveToNext(name)
+            }
         })
     },
     initialize: function(name) {
@@ -51,11 +70,9 @@ const srcs = {
     }
 }
 
-srcs.set("4helal");
-srcs.set("cera");
-srcs.set("cimaclub");
+srcs.add(["4helal", "cera", "cimaclub", "mosalsl"]);
 
-module.exports = { 
-    getMediaUrlFor: srcs.getMediaUrlFor, 
-    initialize: srcs.initialize 
+module.exports = {
+    getMediaUrlFor: srcs.getMediaUrlFor,
+    initialize: srcs.initialize
 };

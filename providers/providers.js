@@ -20,5 +20,7 @@ provs.add("Uptobox", require("./Uptobox"));
 
 provs.add("top4top", require("./top4top"));
 
+provs.add("googleDrive", require("./googleDrive"));
+
 
 module.exports = provs;

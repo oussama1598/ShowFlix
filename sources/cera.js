@@ -6,7 +6,7 @@ const extend = require("extend");
 
 module.exports = extend(true, {
     name: "cera",
-    providerCodes: [{ code: 3, name: "openload" }, { code: 2, name: "keeload" }, { code: 4, name: "Uptobox" }],
+    providerCodes: [{ code: 3, name: "openload" }, { code: 2, name: "keeload" }, { code: 4, name: "Uptobox" }, {code: 1, name: "googleDrive"}],
     decodeForProvider: function(Ecode, prov) {
         const provDetails = this.providerCodes[prov],
             provider = providers.get(provDetails.name),
@@ -32,7 +32,16 @@ module.exports = extend(true, {
         return Urls;
 
     },
-    Parse: function($) {
-        return urlParser.parse($("link[rel='shortlink']").attr("href"), true).query.p;
+    Parse: function(SourceUrl) {
+        
+        return utils.getHtml(SourceUrl).then($ => {
+            let url = $("link[rel='shortlink']").attr("href");
+            if (url)
+                url = url ? urlParser.parse(url, true).query.p : false;
+            else
+                url = $("div[id^='post-ratings-']").attr("id").replace("post-ratings-", "");
+
+            return url;
+        });
     }
 }, sourceBase);
