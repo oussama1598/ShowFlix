@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ShowFlix</title>
+    <meta name="description" content="peerflix server">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.ico?new" />
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css" />
+    <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- endbuild -->
+</head>
+
+<body ng-app="showFlex">
+    <!-- Add your site or application content here -->
+    <div ui-view></div>
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-socket-io/socket.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/materialize/dist/js/materialize.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/controllers/homeCtrl.js"></script>
+    <script src="js/controllers/downCtrl.js"></script>
+    <script src="js/services/socket.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- endbuild -->
+</body>
+
+</html>

@@ -79,6 +79,8 @@ module.exports = {
                 reject();
                 return;
             } else {
+                
+                delete require.cache[require.resolve(dataPath)];
                 SerieUrls = require(dataPath);
 
                 if (utils.ObjectSize(SerieUrls) < 3) {

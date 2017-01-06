@@ -1,0 +1,16 @@
+<div class="loading" ng-show="loading">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    <span>Loading ...</span>
+</div>
+<div class="row downloads" ng-hide="loading">
+    <div class="col s12 m6 l4" ng-repeat="file in files">
+        <div class="card">
+            <div class="card-content blue-text text-darken-2">
+                <span class="card-title">{{file.serieName}} s{{file.season}}e{{file.episode}}</span>
+                <div class="progress">
+                    <div class="determinate green" style="width: {{file.progress.progress}}%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

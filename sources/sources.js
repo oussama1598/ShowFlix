@@ -1,5 +1,5 @@
 const Q = require("q");
-const downloader = require("../utils/downloader");
+const downloader = require("../modules/downloader");
 const utils = require("../utils/utils");
 const colors = require("colors");
 const path = require("path");
@@ -24,10 +24,12 @@ const srcs = {
     },
     MoveToNext: function(name) {
         const _this = srcs;
-        utils.BuildNextEpisode(infos, i => {
-            infos = i;
-            _this.getMediaUrlFor(name, 0);
-        });
+        if (!global.NOMORE) {
+            utils.BuildNextEpisode(infos, i => {
+                infos = i;
+                _this.getMediaUrlFor(name, 0);
+            });
+        }
     },
     getMediaUrlFor: function(name, prov, code, index) {
         const _this = srcs,
@@ -40,7 +42,6 @@ const srcs = {
                 console.log("Can't parse this url check again".red);
                 return;
             }
-
             src.decodeForProvider(code, prov).then(url => {
                 console.log(`Url Found ${url}`.green)
 
@@ -67,6 +68,17 @@ const srcs = {
     },
     initialize: function(name) {
         return srcs.get(name).init(infos, DATAPATH);
+    },
+    start: function(name) {
+        global.NOMORE = false;
+        srcs.initialize(name).then(() => {
+            srcs.getMediaUrlFor(name, 0)
+        });
+    },
+    stop: function(name) {
+        global.NOMORE = true;
+        if(global.Dl)
+            global.Dl.pause();
     }
 }
 

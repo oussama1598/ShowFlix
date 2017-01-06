@@ -9,14 +9,24 @@
   "author": "Oussama",
   "license": "ISC",
   "dependencies": {
+    "apicache": "^0.7.3",
     "cheerio": "^0.22.0",
+    "chokidar": "^1.6.1",
     "colors": "^1.1.2",
+    "del": "^2.2.2",
+    "dns": "^0.2.2",
     "express": "^4.14.0",
     "extend": "^3.0.0",
     "filedownloader": "^1.1.0",
+    "fluent-ffmpeg": "^2.1.0",
+    "pump": "^1.0.2",
     "q": "^1.4.1",
+    "range-parser": "^1.2.0",
     "request": "^2.79.0",
+    "socket.io": "^1.7.2",
+    "striptags": "^2.1.1",
     "underscore": "^1.8.3",
-    "unirest": "^0.5.1"
+    "unirest": "^0.5.1",
+    "watchjs": "0.0.0"
   }
 }

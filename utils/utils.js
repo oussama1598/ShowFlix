@@ -3,6 +3,9 @@ const request = require("request")
 const cheerio = require("cheerio")
 const fs = require("fs");
 const colors = require("colors");
+const apicache = require("apicache");
+const del = require("del");
+const _ = require("underscore");
 
 function getHtml(url, json, cookies) {
     var defer = Q.defer();
@@ -11,10 +14,10 @@ function getHtml(url, json, cookies) {
         if (!error && response.statusCode == 200) {
             if (json) {
                 defer.resolve(body);
-            } else { 
+            } else {
                 const $ = cheerio.load(body);
 
-                defer.resolve((!cookies) ? $ : {$: $, cookies: parseCookies(response)}); 
+                defer.resolve((!cookies) ? $ : { $: $, cookies: parseCookies(response) });
             }
         } else {
             console.log("Error occured when requesting this url".red);
@@ -25,7 +28,11 @@ function getHtml(url, json, cookies) {
     return defer.promise;
 }
 
-function parseCookies (res) {
+function filesUpdated() {
+    apicache.clear();
+}
+
+function parseCookies(res) {
     let list = [],
         rc = res.headers['set-cookie'];
 
@@ -63,18 +70,40 @@ function updateJSON(object, done) {
     });
 }
 
-function ObjectSize(object){
+function ObjectSize(object) {
     let size = 0;
-    for(key in object){
-        if(object.hasOwnProperty(key))
+    for (key in object) {
+        if (object.hasOwnProperty(key))
             ++size;
     }
     return size;
 }
 
+function deleteFile(uri) {
+    if (fs.existsSync(uri)) {
+        return del(uri, {force: true});
+    }
+}
+
+function arrayDeffrence(array){
+   var rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
+
+   var containsEquals = function(obj, target) {
+    if (obj == null) return false;
+    return _.any(obj, function(value) {
+      return _.isEqual(value, target);
+    });
+  };
+
+  return _.filter(array, function(value){ return ! containsEquals(rest, value); });
+};
+
 module.exports = {
     getHtml,
     BuildNextEpisode,
     WriteSerieData,
-    ObjectSize
+    ObjectSize,
+    deleteFile,
+    filesUpdated,
+    arrayDeffrence
 }
