@@ -18,10 +18,7 @@ module.exports = extend(true, {
         })
     },
     BuildUrlsSource: function($, infos) {
-        let Urls = {
-            name: infos.name,
-            season: infos.season
-        };
+        let Urls = {};
 
         $(".episodes-table tbody tr").each(function(e) {
             const Enumber = $(this).find("td").eq(0).text(),

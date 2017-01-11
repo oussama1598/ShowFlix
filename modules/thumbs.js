@@ -13,7 +13,7 @@ function init(cb) {
     fs.readdir(global.SAVETOFOLDER, (err, files) => {
         files.forEach(file => {
             global.Files.push(file);
-            if(!thumbExists(file)) generate(path.join(global.SAVETOFOLDER, file));
+            if(!thumbExists(file)) generate(file);
         });
 
         checkThumbs(cb);
@@ -55,6 +55,8 @@ function generate(uri) {
             filename: filename,
             folder: global.thumbsDir,
             size: '400x225'
+        }).on("error", err => {
+            console.log(err)
         })
 }
 

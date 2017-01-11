@@ -3,24 +3,24 @@ const colors = require('colors');
 const filedownloader = require("filedownloader");
 
 
-function download(url, infos, index) {
+function download(url, details, index) {
     return Q.Promise((resolve, reject) => {
         let defer = Q.defer(),
             fileDowns = global.fileDowns,
-            filename = `${infos.name} s${infos.season}e${infos.episode}.mp4`;
+            filename = `${details.name} s${details.season}e${details.episode}.mp4`;
 
         if(!url){
             console.log("No stream found".red);
             reject();
         }
 
-        if (index === undefined) {
+        if (index === null) {
             index = fileDowns.length;
             fileDowns.push({
                 filename,
-                serieName: infos.name,
-                episode: infos.episode,
-                season: infos.season,
+                serieName: details.name,
+                episode: details.episode,
+                season: details.season,
                 started: false,
                 progress: {},
                 error: false,

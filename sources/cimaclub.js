@@ -18,10 +18,7 @@ module.exports = extend(true, {
         })
     },
     BuildUrlsSource: function($, infos) {
-        let Urls = {
-            name: infos.name,
-            season: infos.season
-        };
+        let Urls = {};
 
         $(".episode a").each(function(e) {
             $(this).find("span").remove();

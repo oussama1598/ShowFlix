@@ -9,7 +9,10 @@ angular.module('showFlex').controller('homeCtrl', ["$scope", "$http", "$interval
     $scope.getFiles = function() {
         $http({
             method: 'GET',
-            url: '/medias'
+            url: '/medias?id=' + Math.random(),
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
         }).then(function(res) {
             $scope.loading = false;
             $scope.files = res.data;
@@ -17,13 +20,12 @@ angular.module('showFlex').controller('homeCtrl', ["$scope", "$http", "$interval
     }
 
 
-    $scope.removeFileByStreamUrl = function (url){
-        _.each($scope.files, function (file, key){
-            console.log(file.streamUrl === url, key)
-            if(file.streamUrl === url){
-                $scope.files.splice(0, 0);
-
-                console.log($scope.files)
+    $scope.removeFileByStreamUrl = function(url) {
+        _.each($scope.files, function(file, key) {
+            if (file) {
+                if (file.streamUrl === url) {
+                    $scope.files.splice(key, 1);
+                }
             }
         });
     }
@@ -31,10 +33,8 @@ angular.module('showFlex').controller('homeCtrl', ["$scope", "$http", "$interval
     $scope.delete = function(url, $event) {
         $scope.removeFileByStreamUrl(url);
 
-        $http({
-            method: 'POST',
-            url: url + "/delete"
-        }).then(function(res) {
+        $http.delete(url).then(function(res) {
+            $scope.getFiles();
             $scope.removeFileByStreamUrl(url)
         })
     }

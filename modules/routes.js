@@ -56,10 +56,10 @@ module.exports = app => {
         pump(fs.createReadStream(thumbPath), res);
     })
     // TODO to be changed to app.delete();
-    app.post("/stream/:filename/delete", (req, res) => {
+    app.delete("/stream/:filename", (req, res) => {
         const uri = path.join(global.SAVETOFOLDER, req.params.filename);
-        //utils.deleteFile(uri).then(() => {
+        utils.deleteFile(uri).then(() => {
             res.send({ status: true });
-        //});
+        });
     })
 }

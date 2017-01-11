@@ -5,98 +5,94 @@ const urlParser = require('url');
 const colors = require('colors');
 const fs = require("fs");
 const path = require("path");
+const extend = require("extend");
 
 module.exports = {
     name: undefined,
     providerCodes: [],
-    init: function(infos, dataPath) {
-        const defer = Q.defer(),
-            SourceName = this.name;
+    canSearch: undefined,
+    addToQueueFromTo: function(details, QUEUEPATH) { // replace with get {name, episode, season, from, to}
+        const _this = this;
+        return Q.Promise((resolve) => {
+            const SourceName = _this.name;
+            console.log(`Adding to the queue data from ${SourceName}`.yellow);
 
-        console.log(`Initializing ${SourceName}'s data`.yellow);
-
-        dataPath = path.join(dataPath, `${SourceName}.json`);
-
-        if (fs.existsSync(dataPath)) {
-            const SerieData = require(dataPath);
-
-            if (SerieData.name === infos.name && SerieData.season === infos.season) {
-                defer.resolve();
-
-            } else {
-                console.log("Serie has been changed rebuilding Urls".yellow);
-                return this.BuildUrls(infos, dataPath);
-            }
-        } else {
-            return this.BuildUrls(infos, dataPath);
-        }
-        return defer.promise;
+            _this.BuildUrls(details).then(urls => {
+                utils.addToQueue(QUEUEPATH, urls, () => {
+                    resolve();
+                })
+            })
+        })
     },
-    BuildUrls: function(infos, dataPath) {
-        const defer = Q.defer(),
-            _this = this,
+    BuildUrls: function(details) {
+        const _this = this,
             SourceName = _this.name;
 
-        console.log("Building Urls list".yellow);
-
-        utils.getHtml(infos.providers[SourceName]).then($ => {
-            const Urls = _this.BuildUrlsSource($, infos),
-                episodes = utils.ObjectSize(Urls) - 2;
-
-            console.log(`${episodes} Episode(s) Found`.green);
-
-            utils.WriteSerieData(dataPath, Urls, () => {
-                defer.resolve();
-            })
-
-        })
-        return defer.promise;
-    },
-    canNextProvider: function(prov) {
-        const defer = Q.defer();
-        ++prov;
-        if (prov < this.providerCodes.length) {
-            console.log("Trying Next provider".red);
-            defer.resolve(prov);
-        } else {
-            console.log("Passing this episode".red);
-            defer.reject()
-        }
-
-        return defer.promise;
-    },
-    parseUrl: function(infos, code, dataPath) {
-        const _this = this;
         return Q.Promise((resolve, reject) => {
-            const defer = Q.defer(),
-                SourceName = _this.name;
-            let url, SerieUrls;
+            console.log("Building Urls list".yellow);
 
-            dataPath = path.join(dataPath, `${SourceName}.json`);
-
-            if (!fs.existsSync(dataPath)) {
-                console.log("Unable to find Serie data".red);
+            if (!details.season) {
                 reject();
                 return;
-            } else {
-                
-                delete require.cache[require.resolve(dataPath)];
-                SerieUrls = require(dataPath);
-
-                if (utils.ObjectSize(SerieUrls) < 3) {
-                    console.log("Data is empty please try again. Note: The Data file will be deleted".red);
-                    fs.unlink(dataPath);
-                    reject();
-                    return;
-                }
-
-                url = SerieUrls[infos.episode];
             }
 
-            if (!code) {
-                console.log(`Parsing Episode ${infos.episode} Season ${infos.season} From ${SourceName}`.green)
+            details = extend({
+                name: null,
+                season: 0,
+                from: 0,
+                to: "f" // f for finish
+            }, details)
 
-                return _this.Parse(url).then(url => { resolve(url) }).catch(() => {
+            utils.getHtml(details.providerUrl).then($ => {
+                const Urls = _this.BuildUrlsSource($, details);
+                let interval = [],
+                    { from, to } = details;
+
+                to = (details.to === "f") ? Object.keys(Urls)[utils.ObjectSize(Urls) - 1] : details.to;
+
+                for (episode in Urls) {
+                    episode = parseInt(episode);
+                    if (Urls.hasOwnProperty(episode)) {
+                        if (episode >= parseInt(from) && parseInt(episode) <= to) {
+                            interval.push({
+                                provider: SourceName,
+                                url: Urls[episode],
+                                name: details.name,
+                                episode,
+                                season: details.season,
+                                done: false
+                            });
+                        }
+                    }
+                }
+
+                console.log(`${interval.length} Episode(s) Found`.green);
+                resolve(interval);
+            })
+        })
+    },
+    canNextProvider: function(prov) {
+        return Q.Promise((resolve, reject) => {
+            ++prov;
+            if (prov < this.providerCodes.length) {
+                console.log("Trying Next provider".red);
+                resolve(prov);
+            } else {
+                console.log("Passing this episode".red);
+                reject()
+            }
+        })
+    },
+    parseUrl: function(details, code) {
+        const _this = this;
+
+        return Q.Promise((resolve, reject) => {
+            const SourceName = _this.name,
+                { episode, season, url } = details;
+            if (!code) {
+                console.log(`Parsing Episode ${episode} Season ${season} From ${SourceName}`.green)
+
+                _this.Parse(url).then(url => { resolve(url) }).catch(() => {
                     reject(true)
                 });
 
@@ -104,5 +100,10 @@ module.exports = {
                 resolve(code);
             }
         })
+    },
+    cansearch: function() {
+        return Q.Promise((resolve, reject) => {
+            if (this.canSearch) { resolve() } else { reject() }
+        });
     }
 }

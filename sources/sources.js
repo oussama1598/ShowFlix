@@ -3,88 +3,188 @@ const downloader = require("../modules/downloader");
 const utils = require("../utils/utils");
 const colors = require("colors");
 const path = require("path");
-const DATAPATH = path.join(__dirname, "../data");
-let infos = require("../data/infos.json");
+const fs = require("fs");
 
-const srcs = {
-    sources: {},
-    get: function(name) {
-        const source = srcs.sources[name];
-        if (source)
-            return source;
-        else
-            throw (new Error("This source can't be found"));
-    },
-    add: function(arr) {
-        if (arr.constructor === Array) {
-            arr.forEach(val => {
-                srcs.sources[val] = require(`./${val}`);
-            });
-        }
-    },
-    MoveToNext: function(name) {
-        const _this = srcs;
-        if (!global.NOMORE) {
-            utils.BuildNextEpisode(infos, i => {
-                infos = i;
-                _this.getMediaUrlFor(name, 0);
-            });
-        }
-    },
-    getMediaUrlFor: function(name, prov, code, index) {
-        const _this = srcs,
-            defer = Q.defer(),
-            src = _this.get(name);
 
-        src.parseUrl(infos, code, DATAPATH).then(code => {
+const QUEUEPATH = path.join(__dirname, "../data/queue.json");
+const INFOS_PATH = path.join(__dirname, "../data/infos.json");
+let infos = require(INFOS_PATH);
 
-            if (!code) {
-                console.log("Can't parse this url check again".red);
-                return;
-            }
-            src.decodeForProvider(code, prov).then(url => {
-                console.log(`Url Found ${url}`.green)
+let sources = {};
 
-                downloader.download(url, infos, index).then(() => {
-                    console.log("Next Episode".green)
-                    _this.MoveToNext(name, infos)
+function get(name) {
+    const source = sources[name];
+    if (source)
+        return source;
+    else
+        throw (new Error("This source can't be found"));
+}
 
-                }).catch(index => {
-
-                    src.canNextProvider(prov).then(num => {
-                        _this.getMediaUrlFor(name, num, code, index);
-                    }).catch(() => {
-                        _this.MoveToNext(name)
-                    })
-
-                })
-            })
-        }).catch(next => {
-            if (next) {
-                console.log("Passing this episode".red);
-                _this.MoveToNext(name)
-            }
-        })
-    },
-    initialize: function(name) {
-        return srcs.get(name).init(infos, DATAPATH);
-    },
-    start: function(name) {
-        global.NOMORE = false;
-        srcs.initialize(name).then(() => {
-            srcs.getMediaUrlFor(name, 0)
+function add(arr) {
+    if (arr.constructor === Array) {
+        arr.forEach(val => {
+            sources[val] = require(`./${val}`);
         });
-    },
-    stop: function(name) {
-        global.NOMORE = true;
-        if(global.Dl)
-            global.Dl.pause();
     }
 }
 
-srcs.add(["4helal", "cera", "cimaclub", "mosalsl"]);
+function MoveToNext(name, key) {
+    if (!global.NOMORE) {
+        utils.ElementDone(QUEUEPATH, key).then(() => {
+            utils.BuildNextElement(infos, i => {
+                infos = i;
+                parseQueue(name, 0);
+            });
+        }).catch(() => { global.NOMORE = true });
+    }
+}
+
+function parseQueue() {
+    utils.getQueueValue(QUEUEPATH, parseInt(infos.queue)).then(el => {
+        el.index = parseInt(infos.queue);
+
+        if (!el.done) {
+            getMediaUrlFor({ name: el.provider, prov: 0, code: null, index: null }, el);
+        } else {
+            MoveToNext(el.provider, el.index);
+        }
+
+    }).catch(() => {
+        console.log("All Done".green)
+        global.NOMORE = true;
+    });
+}
+
+function getMediaUrlFor(data, details) {
+    const src = get(data.name);
+
+    src.parseUrl(details, data.code).then(code => {
+        if (!code) {
+            console.log("Can't parse this url check again".red);
+            console.log("Passing this episode".red);
+
+            MoveToNext(data.name, details.index)
+            return;
+        }
+
+        src.decodeForProvider(code, data.prov).then(url => {
+            console.log(`Url Found ${url}`.green)
+
+            downloader.download(url, details, data.index).then(() => {
+                console.log("Next Element".green)
+                MoveToNext(data.name, details.index)
+
+            }).catch(index => {
+                src.canNextProvider(data.prov).then(num => {
+                    data = { name: data.name, prov: num, code, index };
+                    getMediaUrlFor(data, details);
+                }).catch(() => {
+                    MoveToNext(data.name, details.index)
+                })
+
+            })
+        })
+
+    }).catch(next => {
+        if (next) {
+            console.log("Passing this episode".red);
+            MoveToNext(data.name, details.index)
+        }
+    })
+}
+
+function addOnetoQueue(name, details) {
+    const arr = [{
+        provider: name,
+        url: details.url,
+        name: details.name,
+        episode: details.episode,
+        season: details.season,
+        done: false
+    }];
+
+    utils.addToQueue(QUEUEPATH, arr);
+}
+
+function addtoQueue(name, details) {
+    const provider = get(name);
+    return Q.Promise((resolve, reject) => {
+        let SearchInfos = infos.providers[name];
+        SearchInfos.name = SearchInfos.name ? SearchInfos.name.toLowerCase() : null;
+        SearchInfos.season = SearchInfos.season ? SearchInfos.season : null;
+
+        details.name = details.name.toLowerCase();
+
+        if (SearchInfos && SearchInfos.name === details.name && SearchInfos.season === details.season) {
+            details.providerUrl = infos.providers[name].url;
+            _addtoQueue().then(() => { resolve() })
+        } else {
+            provider.cansearch().then(() => {
+                search(name, details).then(url => {
+                    details.providerUrl = url;
+
+                    infos.providers[name] = { url: url, name: details.name, season: details.season };
+                    utils.updateJSON(infos, INFOS_PATH);
+                    
+                    _addtoQueue().then(() => { resolve() })
+                }).catch(err => {
+                    reject(err);
+                })
+            }).catch(err => {
+                reject(err);
+            })
+        }
+
+        function _addtoQueue() {
+            return provider.addToQueueFromTo(details, QUEUEPATH);
+        }
+    })
+}
+
+function clearQueue() {
+    utils.clearQueue(QUEUEPATH);
+}
+
+function search(name, details) {
+    return get(name).search(details);
+}
+
+function searchAndAddEpisode(srcname, details) {
+    const { name, episode, season } = details;
+
+    return addtoQueue(srcname, { name, season, from: episode, to: episode });
+}
+
+function searchAndAddSeason(srcname, details) {
+    const { name, season } = details;
+
+    return addtoQueue(srcname, { name, season });
+}
+
+function start() {
+    global.NOMORE = false;
+    clearQueue();
+
+    infos.queue = -1;
+    utils.BuildNextElement(infos, () => {
+        parseQueue();
+    })
+}
+
+function stop(name) {
+    global.NOMORE = true;
+    if (global.Dl)
+        global.Dl.pause();
+}
+
+add(["4helal", "cera", "cimaclub", "mosalsl"]);
 
 module.exports = {
-    getMediaUrlFor: srcs.getMediaUrlFor,
-    initialize: srcs.initialize
+    addtoQueue,
+    start,
+    stop,
+    clearQueue,
+    addOnetoQueue,
+    searchAndAddEpisode,
+    searchAndAddSeason
 };

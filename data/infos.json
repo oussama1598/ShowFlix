@@ -1,11 +1,11 @@
 {
-   "name": "Breaking Bad",
-   "season": "4",
-   "episode": "2",
-   "max": "13",
+   "queue": "2",
    "providers": {
-      "cera": "http://cera.online/series-breaking-bad-season-4-episode-1-s04e01-watch-cima4u-download-translated-egfire-tv-myegy.html",
-      "4helal": "http://4helal.tv/v/Westworld-S01Ep01",
-      "mosalsl": "http://mosalsl.com/index.php/series/breaking-bad/"
+      "cera": {
+         "url": "http://cera.online/series-breaking-bad-season-4-episode-3-s04e03-watch-cima4u-download-translated-egfire-tv-myegy.html",
+         "name": "breaking bad",
+         "season": 4
+      },
+      "mosalsl": "http://mosalsl.com/index.php/series/the-blacklist/"
    }
 }

@@ -45,28 +45,47 @@ function parseCookies(res) {
 }
 
 
-function BuildNextEpisode(infos, cb) {
-    if (infos.max !== infos.episode) {
-        infos.episode = ('' + (parseInt(infos.episode) + 1));
-        updateJSON(infos, () => {
-            cb(infos);
-        });
-    } else {
-        console.log("All Done".yellow);
-    }
+function BuildNextElement(infos, cb) {
+    infos.queue = ('' + (parseInt(infos.queue) + 1));
+    updateJSON(infos, "./data/infos.json", () => {
+        cb(infos);
+    });
 }
 
-function WriteSerieData(path, object, done) {
-    fs.writeFile(path, JSON.stringify(object, null, 3), function(err) {
-        if (err) return console.log(err);
-        done();
+function ElementDone(QUEUEPATH, index) {
+    return Q.Promise((resolve, reject) => {
+        getQueue(QUEUEPATH).then(data => {
+            data[index].done = true;
+            updateJSON(data, QUEUEPATH, () => {
+                resolve();
+            })
+        }).catch(() => { reject() })
     })
 }
 
-function updateJSON(object, done) {
-    fs.writeFile("./data/infos.json", JSON.stringify(object, null, 3), function(err) {
+function addToQueue(QUEUEPATH, arr, done) {
+    getQueue(QUEUEPATH, true).then(data => {
+        for (key in arr) {
+            const val = arr[key],
+                result = data.filter(val1 => (val1.episode === val.episode && val1.season === val.season) && val1.name === val.name);
+            if (result.length > 0) {
+                arr.splice(key, 1);
+            }
+        }
+
+        data = data.concat(arr);
+        updateJSON(data, QUEUEPATH, () =>{
+            if(done)
+                done();
+        })
+    })
+}
+
+function updateJSON(object, path, done) {
+    fs.writeFile(path, JSON.stringify(object, null, 3), function(err) {
         if (err) return console.log(err);
-        done()
+        if (done)
+            done()
     });
 }
 
@@ -81,29 +100,80 @@ function ObjectSize(object) {
 
 function deleteFile(uri) {
     if (fs.existsSync(uri)) {
-        return del(uri, {force: true});
+        return del(uri, { force: true });
     }
 }
 
-function arrayDeffrence(array){
-   var rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
+function arrayDeffrence(array) {
+    var rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
 
-   var containsEquals = function(obj, target) {
-    if (obj == null) return false;
-    return _.any(obj, function(value) {
-      return _.isEqual(value, target);
+    var containsEquals = function(obj, target) {
+        if (obj == null) return false;
+        return _.any(obj, function(value) {
+            return _.isEqual(value, target);
+        });
+    };
+
+    return _.filter(array, function(value) {
+        return !containsEquals(rest, value);
     });
-  };
+}
 
-  return _.filter(array, function(value){ return ! containsEquals(rest, value); });
-};
+function getQueue(QUEUEPATH, force = false) {
+    return Q.Promise((resolve, reject) => {
+        if (!fs.existsSync(QUEUEPATH)) {
+            console.log("Unable to find queue data".red);
+            reject();
+            return;
+        } else {
+
+            delete require.cache[require.resolve(QUEUEPATH)];
+            const data = require(QUEUEPATH);
+
+            if (ObjectSize(data) <= 0 && !force) {
+                console.log("Data is empty please try again.".red);
+                reject();
+                return;
+            }
+
+            resolve(data);
+        }
+    })
+}
+
+function getQueueValue(QUEUEPATH, index) {
+    return Q.Promise((resolve, reject) => {
+        getQueue(QUEUEPATH).then(data => {
+            const arr = data.filter((val, key) => key === index);
+            if (arr.length > 0) { resolve(arr[0]) } else { reject(); }
+        }).catch(() => { reject() });
+    })
+}
+
+function clearQueue(QUEUEPATH) {
+    getQueue(QUEUEPATH).then(data => {
+        _.each(data, (val, key) => {
+            if (val.done) data.splice(key, 1);
+        });
+        updateJSON(data, QUEUEPATH)
+    })
+}
+
+function searchAPI(cx){
+    return require("../modules/searchAPI")(cx);
+}
 
 module.exports = {
     getHtml,
-    BuildNextEpisode,
-    WriteSerieData,
+    BuildNextElement,
+    addToQueue,
     ObjectSize,
     deleteFile,
     filesUpdated,
-    arrayDeffrence
+    arrayDeffrence,
+    getQueueValue,
+    ElementDone,
+    clearQueue,
+    searchAPI,
+    updateJSON
 }
