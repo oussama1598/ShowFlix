@@ -3,14 +3,14 @@ const fs = require("fs");
 const os = require("os");
 const ffmpeg = require('fluent-ffmpeg');
 const utils = require("../utils/utils");
-
+const config = require("./config")();
 
 function init(cb) {
     const thumbsDir = global.thumbsDir = path.join(os.tmpdir(), "Thumbs");
 
     if (!fs.existsSync(thumbsDir)) fs.mkdirSync(thumbsDir);
 
-    fs.readdir(global.SAVETOFOLDER, (err, files) => {
+    fs.readdir(config['SAVETOFOLDER'], (err, files) => {
         files.forEach(file => {
             global.Files.push(file);
             if(!thumbExists(file)) generate(file);
@@ -43,7 +43,7 @@ function generate(uri) {
     const filename = path.basename(uri, path.extname(uri)) + ".png",
         oldPath = path.join(global.thumbsDir, filename);
 
-    uri = path.join(global.SAVETOFOLDER, uri);
+    uri = path.join(config['SAVETOFOLDER'], uri);
 
     if (!fs.existsSync(uri) || fs.existsSync(oldPath)) {
         return;
@@ -51,7 +51,7 @@ function generate(uri) {
 
     ffmpeg(uri)
         .screenshots({
-            timestamps: ["10%"],
+            timestamps: ["1%"],
             filename: filename,
             folder: global.thumbsDir,
             size: '400x225'

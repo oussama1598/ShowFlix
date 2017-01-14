@@ -54,12 +54,12 @@ function downloadsWatcher() {
     let lastDowns = [];
     setInterval(() => {
         const deff = utils.arrayDeffrence(global.fileDowns, lastDowns);
-        //console.log(deff)
+        
         if (deff.length > 0) {
             lastDowns = _.map(global.fileDowns, _.clone);
             this.emit("downloadsChanged", deff);
         }
-    }, 50);
+    }, 1000);
 }
 
 function addPath(path, imediatly) {
@@ -70,7 +70,7 @@ function addPath(path, imediatly) {
 
     tempraryFiles.push({
         path,
-        timeout: setTimeout(() => { addtoGlobal(path) }, 5000)
+        timeout: setTimeout(() => { addtoGlobal(path) }, 10000)
     })
 }
 

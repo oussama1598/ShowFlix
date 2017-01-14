@@ -4,7 +4,6 @@ const sourceBase = require("./sourceBase");
 const urlParser = require('url');
 const extend = require("extend");
 const Q = require("q");
-
 const SEARCHURL = "http://mosalsl.com/index.php/search/?query=";
 
 module.exports = extend(true, {

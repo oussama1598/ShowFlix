@@ -1,6 +1,7 @@
 const Q = require("q");
 const colors = require('colors');
 const filedownloader = require("filedownloader");
+const config = require("./config");
 
 
 function download(url, details, index) {
@@ -31,7 +32,7 @@ function download(url, details, index) {
         global.Dl = new filedownloader({
             url: url,
             saveas: filename,
-            saveto: global.SAVETOFOLDER,
+            saveto: config['SAVETOFOLDER'],
             deleteIfExists: true
         }).on("start", () => {
             fileDowns[index].started = true;

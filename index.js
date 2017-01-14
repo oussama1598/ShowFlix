@@ -3,14 +3,12 @@ const express = require("express");
 const path = require("path");
 const os = require("os")
 const app = express();
+const config = require("./modules/config")();
 
 const server = http.createServer(app);
 const sources = require("./sources/sources");
 
-
 global.fileDowns = [];
-global.SAVETOFOLDER = path.join(__dirname, "../Tv Shows");
-global.PORT = 8888;
 global.Files = [];
 
 global.NOMORE = false; // for stop and resume downloading 
@@ -18,10 +16,17 @@ global.NOMORE = false; // for stop and resume downloading
 app.use(express.static("app", { maxAge: 3600000 }));
 
 require("./modules/routes")(app);
-require("./modules/socketio")(server);
 require("./modules/thumbs").init(() => {
     global.downloadsWatcher = require("./modules/fileWatcher")();
+
+    require("./modules/socketio")(server);
 });
+
+/*require("./modules/tvShowTime").start(data => {
+    sources.addtoQueue('mosalsl', data).then(() => {
+
+    });
+});*/
 
 /*sources.searchAndAddEpisode('mosalsl', {name: "The BlackListsdfsdfdsf", season: 2, episode: 3}).then(() => {
 	console.log("all good")
@@ -42,9 +47,9 @@ require("./modules/thumbs").init(() => {
 
 //sources.start()
 
-require('dns').lookup(require('os').hostname(), function(err, add, fam) {
-    server.listen(global.PORT, () => {
-        console.log(`Server is up and running access it at: http://${add}:${global.PORT}`)
+require('dns').lookup(require('os').hostname(), function(err, add) {
+    server.listen(config['PORT'], () => {
+        console.log(`Server is up and running access it at: http://${add}:${config['PORT']}`)
     });
 })
 

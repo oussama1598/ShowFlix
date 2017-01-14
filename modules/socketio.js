@@ -5,15 +5,19 @@ const utils = require("../utils/utils");
 module.exports = app => {
 	const io = socketIO(app);
 
-	io.on("connection", socket => {
-		socket.emit("serverDetails", {ongoing: !global.NOMORE})
-		socket.on("watchDownloads", () => {
+	global.downloadsWatcher.on("downloadsChanged", downloads => {
+		_.each(io.sockets.clients(), sk => {
+			if(sk.downloads){
+				sk.emit("downloadsChanged", global.fileDowns);
+			}
+		})
+	})
 
-			socket.emit("downloadsChanged", global.fileDowns)
+	io.on("connection", socket => {
+		socket.on("watchDownloads", start => {
+			if(start) socket.emit("downloadsChanged", global.fileDowns);
 			
-			global.downloadsWatcher.on("downloadsChanged", downloads => {
-				socket.emit("downloadsChanged", downloads);
-			})
+			socket.download = start;
 		})
 	})
 }

@@ -6,6 +6,8 @@ const colors = require("colors");
 const apicache = require("apicache");
 const del = require("del");
 const _ = require("underscore");
+const extend = require("extend");
+const path = require("path");
 
 function getHtml(url, json, cookies) {
     var defer = Q.defer();
@@ -44,10 +46,21 @@ function parseCookies(res) {
     return list;
 }
 
+function getInfosData(INFOS_PATH) {
+    delete require.cache[require.resolve(INFOS_PATH)];
+    return require(INFOS_PATH);
+}
 
-function BuildNextElement(infos, cb) {
+
+function UpdateInfosData(obj, INFOS_PATH, cb) {
+    const OldData = getInfosData(INFOS_PATH);
+    updateJSON(extend(OldData, obj), INFOS_PATH, cb);
+}
+
+
+function BuildNextElement(infos, INFOS_PATH, cb) {
     infos.queue = ('' + (parseInt(infos.queue) + 1));
-    updateJSON(infos, "./data/infos.json", () => {
+    UpdateInfosData(infos, INFOS_PATH, () => {
         cb(infos);
     });
 }
@@ -74,8 +87,8 @@ function addToQueue(QUEUEPATH, arr, done) {
         }
 
         data = data.concat(arr);
-        updateJSON(data, QUEUEPATH, () =>{
-            if(done)
+        updateJSON(data, QUEUEPATH, () => {
+            if (done)
                 done();
         })
     })
@@ -132,7 +145,7 @@ function getQueue(QUEUEPATH, force = false) {
 
             if (ObjectSize(data) <= 0 && !force) {
                 console.log("Data is empty please try again.".red);
-                reject();
+                reject("Data is empty please try again.");
                 return;
             }
 
@@ -146,21 +159,29 @@ function getQueueValue(QUEUEPATH, index) {
         getQueue(QUEUEPATH).then(data => {
             const arr = data.filter((val, key) => key === index);
             if (arr.length > 0) { resolve(arr[0]) } else { reject(); }
-        }).catch(() => { reject() });
+        }).catch(err => { reject(err) });
     })
 }
 
-function clearQueue(QUEUEPATH) {
+function clearQueue(QUEUEPATH, cb) {
     getQueue(QUEUEPATH).then(data => {
+        const newArr = [];
         _.each(data, (val, key) => {
-            if (val.done) data.splice(key, 1);
+            if (!val.done) newArr.push(val);
         });
-        updateJSON(data, QUEUEPATH)
-    })
+        updateJSON(newArr, QUEUEPATH, () => {
+            if(cb)
+                cb()
+        })
+    }).catch(err => {if(cb) cb(err)});
 }
 
-function searchAPI(cx){
+function searchAPI(cx) {
     return require("../modules/searchAPI")(cx);
+}
+
+function updateConfig(obj, cb){
+    updateJSON(obj, path.join(__dirname, "../data/config.json"), cb);
 }
 
 module.exports = {
@@ -175,5 +196,7 @@ module.exports = {
     ElementDone,
     clearQueue,
     searchAPI,
-    updateJSON
+    getInfosData,
+    UpdateInfosData,
+    updateConfig
 }

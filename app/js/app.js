@@ -37,4 +37,13 @@ angular
                 }
             })
         $urlRouterProvider.otherwise("/app/home");
-    });
+    }).run(function($rootScope, serverSocket) {
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams, options) {
+                if (toState.name === "app.downloads") {
+                    serverSocket.emit("watchDownloads", true);
+                } else {
+                    serverSocket.emit("watchDownloads", false);
+                }
+            })
+    })

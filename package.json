@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "apicache": "^0.7.3",
+    "async": "^2.1.4",
     "cheerio": "^0.22.0",
     "chokidar": "^1.6.1",
     "colors": "^1.1.2",

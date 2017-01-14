@@ -4,11 +4,11 @@ const utils = require("../utils/utils");
 const colors = require("colors");
 const path = require("path");
 const fs = require("fs");
+const config = require("../modules/config")();
 
 
-const QUEUEPATH = path.join(__dirname, "../data/queue.json");
-const INFOS_PATH = path.join(__dirname, "../data/infos.json");
-let infos = require(INFOS_PATH);
+const QUEUEPATH = config['QUEUEPATH'];
+const INFOS_PATH = config['INFOS_PATH'];
 
 let sources = {};
 
@@ -30,8 +30,10 @@ function add(arr) {
 
 function MoveToNext(name, key) {
     if (!global.NOMORE) {
+        let infos = utils.getInfosData(INFOS_PATH);
+
         utils.ElementDone(QUEUEPATH, key).then(() => {
-            utils.BuildNextElement(infos, i => {
+            utils.BuildNextElement(infos, INFOS_PATH, i => {
                 infos = i;
                 parseQueue(name, 0);
             });
@@ -40,6 +42,8 @@ function MoveToNext(name, key) {
 }
 
 function parseQueue() {
+    let infos = utils.getInfosData(INFOS_PATH);
+
     utils.getQueueValue(QUEUEPATH, parseInt(infos.queue)).then(el => {
         el.index = parseInt(infos.queue);
 
@@ -109,7 +113,9 @@ function addOnetoQueue(name, details) {
 function addtoQueue(name, details) {
     const provider = get(name);
     return Q.Promise((resolve, reject) => {
+        let infos = utils.getInfosData(INFOS_PATH);
         let SearchInfos = infos.providers[name];
+
         SearchInfos.name = SearchInfos.name ? SearchInfos.name.toLowerCase() : null;
         SearchInfos.season = SearchInfos.season ? SearchInfos.season : null;
 
@@ -124,8 +130,8 @@ function addtoQueue(name, details) {
                     details.providerUrl = url;
 
                     infos.providers[name] = { url: url, name: details.name, season: details.season };
-                    utils.updateJSON(infos, INFOS_PATH);
-                    
+                    utils.UpdateInfosData(infos, INFOS_PATH);
+
                     _addtoQueue().then(() => { resolve() })
                 }).catch(err => {
                     reject(err);
@@ -141,8 +147,8 @@ function addtoQueue(name, details) {
     })
 }
 
-function clearQueue() {
-    utils.clearQueue(QUEUEPATH);
+function clearQueue(cb) {
+    utils.clearQueue(QUEUEPATH, cb);
 }
 
 function search(name, details) {
@@ -161,13 +167,24 @@ function searchAndAddSeason(srcname, details) {
     return addtoQueue(srcname, { name, season });
 }
 
-function start() {
-    global.NOMORE = false;
-    clearQueue();
+function start(cb) {
+    return Q.Promise((resolve, reject) => {
+        let infos = utils.getInfosData(INFOS_PATH);
 
-    infos.queue = -1;
-    utils.BuildNextElement(infos, () => {
-        parseQueue();
+        global.NOMORE = false;
+        
+        clearQueue(err => {
+            if (!err) {
+                infos.queue = -1;
+                utils.BuildNextElement(infos, INFOS_PATH, () => {
+                    resolve();
+                    parseQueue();
+                })
+            } else {
+                reject(err);
+                global.NOMORE = true;
+            }
+        });
     })
 }
 
