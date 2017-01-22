@@ -1,9 +1,9 @@
 const GoogleSearch = require('google-search');
-const GOOGLE_API_KEY = "AIzaSyAKaazNPf7-FSKrVRH-sbmKEQTr7icbdRQ";
+const config = require('./config');
 
 module.exports = (cx) => {
     return new GoogleSearch({
-        key: GOOGLE_API_KEY,
+        key: config('GOOGLE_API_KEY'),
         cx: cx
     });
 };

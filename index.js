@@ -3,54 +3,65 @@ const express = require("express");
 const path = require("path");
 const os = require("os")
 const app = express();
-const config = require("./modules/config")();
-
+const config = require("./modules/config");
 const server = http.createServer(app);
 const sources = require("./sources/sources");
+const utils = require("./utils/utils");
 
 global.fileDowns = [];
 global.Files = [];
-
-global.NOMORE = false; // for stop and resume downloading 
+global.NOMORE = true; // for stop and resume downloading 
 
 app.use(express.static("app", { maxAge: 3600000 }));
 
 require("./modules/routes")(app);
-require("./modules/thumbs").init(() => {
-    global.downloadsWatcher = require("./modules/fileWatcher")();
+global.io = require("./modules/socketio")(server);
 
-    require("./modules/socketio")(server);
+require("./modules/thumbs").init(() => {
+    require("./modules/fileWatcher")();
 });
 
-/*require("./modules/tvShowTime").start(data => {
-    sources.addtoQueue('mosalsl', data).then(() => {
+require("./modules/logging")(global.io);
+require("./modules/tvShowTime").watch(data => {
+    sources.addtoQueue(data).then(() => {
+        let infos = utils.getInfosData(config('INFOS_PATH')),
+            showsTo = infos['tvshowtimefeed'];
+            
+        showsTo[data.index]['lastSeason'] = data.season;
+        showsTo[data.index]['lasEpisode'] = data.number;
 
+        utils.UpdateInfosData(infos, config('INFOS_PATH'), () => {
+            const imediateStart = config('START_SERVER_WHENE_FOUND');
+            if (imediateStart) {
+                //sources.start();
+            }
+        });
     });
-});*/
+});
+
+//overwrite console.log
 
 /*sources.searchAndAddEpisode('mosalsl', {name: "The BlackListsdfsdfdsf", season: 2, episode: 3}).then(() => {
-	console.log("all good")
+    console.log("all good")
 }).catch(NoUrl => {
-	console.log("something went wrong")
+    console.log("something went wrong")
 });*/
 
 /*sources.searchAndAddSeason('cera', {name: "Breaking Bad", season: 4}).then(() => {
-	console.log("Done")
+    console.log("Done")
 }).catch(err => {
-	console.log(err)
+    console.log(err)
 })*/
 
 //sources.addOnetoQueue('mosalsl', {url, name, episode, season})
-/*sources.addtoQueue('mosalsl', {name: "The BlackList", season: 4, from: 9}).then(() => {
-
-});*/ // or from = "start", to="finish" add Url to the object for future adding*/
-
-//sources.start()
+/*sources.addtoQueue({keyword: "Breaking Bad", season: 5, from: 1}).then(() => {
+    console.log("done")
+}); // or from = "start", to="finish" add Url to the object for future adding*/
 
 require('dns').lookup(require('os').hostname(), function(err, add) {
-    server.listen(config['PORT'], () => {
-        console.log(`Server is up and running access it at: http://${add}:${config['PORT']}`)
+    server.listen(config('PORT'), () => {
+        console.log(`Server is up and running access it at: http://${add}:${config('PORT')}`)
     });
 })
 
-// TODO: Add search for mosalsl
+// TO ADD cinemalek

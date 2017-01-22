@@ -1,7 +1,11 @@
 {
-   "queue": "0",
+   "queue": "3",
    "providers": {
-      "cera": "http://cera.online/series-breaking-bad-season-4-episode-1-s04e01-watch-cima4u-download-translated-egfire-tv-myegy.html",
+      "cera": {
+         "url": "http://cera.online/series-the-flash-episode-1-season-3-s03e01-watch-download-translated-tv-video.html",
+         "name": "the flash",
+         "season": 3
+      },
       "mosalsl": {
          "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
          "name": "the flash",
@@ -9,6 +13,11 @@
       }
    },
    "tvshowtimefeed": [
+      {
+         "name": "the blacklist",
+         "lastSeason": 4,
+         "lasEpisode": 11
+      },
       {
          "name": "the flash",
          "lastSeason": 3,

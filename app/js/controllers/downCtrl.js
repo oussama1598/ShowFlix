@@ -1,25 +1,25 @@
 'use strict';
 
-angular.module('showFlex').controller('downCtrl', ["$scope", "serverSocket", function($scope, serverSocket) {
+angular.module('showFlex').controller('downCtrl', ["$scope", "socketEvt", "$rootScope", function($scope, socketEvt, $rootScope) {
     $scope.files = [];
     $scope.loading = true;
 
-
-    serverSocket.on("downloadsChanged", function(data) {
+    $scope.changed = function(data) {
         $scope.loading = false;
         $scope.parseNewData(data);
-    })
+    }
 
     $scope.parseNewData = function(data) {
-        if (_.isArray(data)) {
-            $scope.files = data;
-            return;
-        }
+        $scope.files = data;
+    }
 
-        _.each($scope.files, (val, key) => {
-            if (val.filename === data.filename) {
-                $scope.files[key] = data;
+    socketEvt.emit("watchDownloads", true);
+    socketEvt.add("downloadsChanged", $scope.changed);
+
+    $rootScope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams, options) {
+            if (toState.name !== "app.downloads") {
+                socketEvt.remove("downloadsChanged", $scope.changed);
             }
         })
-    }
 }]);

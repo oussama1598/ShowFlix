@@ -10,24 +10,24 @@ const extend = require("extend");
 const path = require("path");
 
 function getHtml(url, json, cookies) {
-    var defer = Q.defer();
-    url = encodeURI(url);
-    request(url, (error, response, body) => {
-        if (!error && response.statusCode == 200) {
-            if (json) {
-                defer.resolve(body);
+    return Q.Promise((resolve, reject) => {
+        var defer = Q.defer();
+        url = encodeURI(url);
+        request(url, (error, response, body) => {
+            if (error || response.statusCode !== 200) { _log(error, error || response.statusCode, body, url) }
+            if (!error && response.statusCode == 200) {
+                if (json) {
+                    resolve(body);
+                } else {
+                    const $ = cheerio.load(body);
+                    resolve((!cookies) ? $ : { $: $, cookies: parseCookies(response) });
+                }
             } else {
-                const $ = cheerio.load(body);
-
-                defer.resolve((!cookies) ? $ : { $: $, cookies: parseCookies(response) });
+                console.log("Error occured when requesting this url".red);
+                reject("Error occured when requesting this url")
             }
-        } else {
-            console.log("Error occured when requesting this url".red);
-            defer.reject(new Error(error))
-        }
-    });
-
-    return defer.promise;
+        });
+    })
 }
 
 function filesUpdated() {
@@ -78,12 +78,13 @@ function ElementDone(QUEUEPATH, index) {
 
 function addToQueue(QUEUEPATH, arr, done) {
     getQueue(QUEUEPATH, true).then(data => {
-        for (key in arr) {
-            const val = arr[key],
+        for(let i = arr.length-1;i>=0; i--){
+             const val = arr[i],
                 result = data.filter(val1 => (val1.episode === val.episode && val1.season === val.season) && val1.name === val.name);
             if (result.length > 0) {
-                arr.splice(key, 1);
+                arr.splice(i, 1);
             }
+
         }
 
         data = data.concat(arr);
@@ -112,9 +113,13 @@ function ObjectSize(object) {
 }
 
 function deleteFile(uri) {
-    if (fs.existsSync(uri)) {
-        return del(uri, { force: true });
-    }
+    return Q.Promise((resolve, reject) => {
+        fs.exists(uri, (err, exists) => {
+            if (err || !exists) reject("This File does not exist");
+
+            del(uri, { force: true }).then(() => { resolve() }).catch(err => { reject(err) });
+        })
+    })
 }
 
 function arrayDeffrence(array) {
@@ -154,6 +159,12 @@ function getQueue(QUEUEPATH, force = false) {
     })
 }
 
+function getQueueSync(QUEUEPATH){
+    if(!fs.existsSync(QUEUEPATH)) return [];
+    delete require.cache[require.resolve(QUEUEPATH)];
+    return require(QUEUEPATH);
+}
+
 function getQueueValue(QUEUEPATH, index) {
     return Q.Promise((resolve, reject) => {
         getQueue(QUEUEPATH).then(data => {
@@ -170,17 +181,19 @@ function clearQueue(QUEUEPATH, cb) {
             if (!val.done) newArr.push(val);
         });
         updateJSON(newArr, QUEUEPATH, () => {
-            if(cb)
+            if (cb)
                 cb()
         })
-    }).catch(err => {if(cb) cb(err)});
+    }).catch(err => {
+        if (cb) cb(err)
+    });
 }
 
 function searchAPI(cx) {
     return require("../modules/searchAPI")(cx);
 }
 
-function updateConfig(obj, cb){
+function updateConfig(obj, cb) {
     updateJSON(obj, path.join(__dirname, "../data/config.json"), cb);
 }
 
@@ -198,5 +211,7 @@ module.exports = {
     searchAPI,
     getInfosData,
     UpdateInfosData,
-    updateConfig
+    updateConfig,
+    getQueue,
+    getQueueSync
 }

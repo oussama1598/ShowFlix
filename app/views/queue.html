@@ -1,0 +1,11 @@
+<div class="loading" ng-show="loading">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    <span>Loading ...</span>
+</div>
+<div class="row" ng-hide="loading">
+    <ul class="collection">
+        <li class="collection-item avatar" ng-repeat="file in queue">
+            <span class="title">{{file.name}} - {{file.episode}} - {{file.season}} - done: {{file.done}}</span>
+        </li>
+    </ul>
+</div>

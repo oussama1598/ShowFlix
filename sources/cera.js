@@ -44,30 +44,39 @@ module.exports = extend(true, {
         });
     },
     search: function(details) {
+        const _this = this;
         return Q.Promise((resolve, reject) => {
             const CX = "018010331078829701272:y0xgo6cnjbw";
-            const season = ('' + details.season).length > 1 ? details.season : `0${details.season}` 
+            const season = ('' + details.season).length > 1 ? details.season : `0${details.season}`
 
-            let q = details.name.toLowerCase();
+            let q = details.keyword.toLowerCase();
+            let alreadyFound = false;
 
             utils.searchAPI(CX).build({ q: `${q} S${season}`, num: 10 }, (err, res) => {
-                if (err) { reject("Something went wrong!");
-                    return; }
+                if (err) {
+                    reject("Something went wrong!");
+                    return;
+                }
 
                 q = q.replace(/\s+/g, '-');
 
                 for (item in res.items) {
                     const val = res.items[item];
-
-                    if (val.link.indexOf(q) > -1) {
-                        if (val.link.indexOf(`s${season}`) > -1) {
-                            resolve(val.link);
-                            return;
-                        }
+                    if (val.link.indexOf(`s${season}`) > -1) {
+                        return _this.compareTwoTitles(val.link, q, "-").then(result => {
+                            if (result.count > 0) {
+                                if (!alreadyFound) {
+                                    alreadyFound = true;
+                                    return resolve(val.link);
+                                }
+                            } else {
+                                return reject("Can't find any url");
+                            }
+                        })
                     }
                 }
 
-                reject("Can't find any url");
+                return reject("Can't find any url");
             })
         })
     }

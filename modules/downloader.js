@@ -12,7 +12,7 @@ function download(url, details, index) {
 
         if(!url){
             console.log("No stream found".red);
-            reject();
+            return reject(null);
         }
 
         if (index === null) {
@@ -32,21 +32,22 @@ function download(url, details, index) {
         global.Dl = new filedownloader({
             url: url,
             saveas: filename,
-            saveto: config['SAVETOFOLDER'],
-            deleteIfExists: true
+            saveto: config('SAVETOFOLDER'),
+            resume: true,
+            deleteIfExists: config('DELETEIFEXISTS')
         }).on("start", () => {
             fileDowns[index].started = true;
             fileDowns[index].error = false;
             fileDowns[index].finished = false;
 
-            console.log(`Started ${filename}`.green)
+            console.log(`Started ${filename}`.green, true)
 
         }).on("progress", (pr) => {
             process.stdout.clearLine(); // clear current text
             process.stdout.cursorTo(0);
             process.stdout.write(`${pr.progress}%`.blue + " Downloaded".green);
             if (pr.progress === 100) {
-                console.log("");
+                console.log("", true);
             }
 
             fileDowns[index].progress = {

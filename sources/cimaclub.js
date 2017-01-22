@@ -32,10 +32,9 @@ module.exports = extend(true, {
         return Urls;
 
     },
-    Parse: function($) {
-        return utils.getHtml(url).then($ => {
-            const url = urlParser.parse($("link[rel='shortlink']").attr("href"), true).query.p;
-            return url;
+    Parse: function(URL) {
+        return utils.getHtml(URL).then($ => {
+            return urlParser.parse($("link[rel='shortlink']").attr("href"), true).query.p;
         });
     }
 }, sourceBase);

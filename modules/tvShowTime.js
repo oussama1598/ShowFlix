@@ -2,13 +2,13 @@ const req = require("request");
 const Q = require("q");
 const fs = require("fs");
 const utils = require("../utils/utils");
-const config = require("./config")();
+const config = require("./config");
 const async = require("async");
 
-const TVST_CLIENT_ID = config['TVST_CLIENT_ID'];
-const TVST_CLIENT_SECRET = config['TVST_CLIENT_SECRET'];
-const TVST_ACCESS_TOKEN_URI = config['TVST_ACCESS_TOKEN_URI'];
-const TVST_LIBRARY_URI = config['TVST_LIBRARY_URI'];
+const TVST_CLIENT_ID = config('TVST_CLIENT_ID');
+const TVST_CLIENT_SECRET = config('TVST_CLIENT_SECRET');
+const TVST_ACCESS_TOKEN_URI = config('TVST_ACCESS_TOKEN_URI');
+const TVST_LIBRARY_URI = config('TVST_LIBRARY_URI');
 
 let RUN = false;
 let TIMER = false;
@@ -28,9 +28,9 @@ function getAuth(code) {
 }
 
 function getTowatch(page, cb, add) {
-    const ACCESS_TOKEN = require("./config")()['ACCESS_TOKEN'];
+    const ACCESS_TOKEN = config('ACCESS_TOKEN');
 
-    let infos = utils.getInfosData(config['INFOS_PATH']),
+    let infos = utils.getInfosData(config('INFOS_PATH')),
         showsTo = infos['tvshowtimefeed'];
 
     if (!showsTo || !ACCESS_TOKEN) return;
@@ -54,13 +54,15 @@ function getTowatch(page, cb, add) {
                         }
 
                         if (last_seen.number && last_seen.season && (last_seen.number !== number || last_seen.season !== season_number)) {
-                            infos['tvshowtimefeed'][showsTo.indexOf(show[0])].lastSeason = season_number;
-                            infos['tvshowtimefeed'][showsTo.indexOf(show[0])].lasEpisode = number;
-
-                            utils.UpdateInfosData(infos, config['INFOS_PATH'], () => {
-                                add({ name: show[0].name, from: (last_seen.number + 1), season: season_number });
-                                callback();
+                            add({ 
+                                keyword: show[0].name, 
+                                from: (last_seen.number + 1), 
+                                season: season_number , 
+                                number, 
+                                index: showsTo.indexOf(show[0])
                             });
+
+                            callback();
                         } else {
                             callback()
                         }
@@ -84,15 +86,16 @@ function getTowatch(page, cb, add) {
     })
 }
 
-function start(add) {
+function watch(add) {
     clearTimeout(TIMER);
 
     RUN = true;
     TIMER = setTimeout(() => {
         getTowatch(0, () => {
-            if (RUN) start(add);
+            if (RUN) watch(add);
+            return;
         }, add)
-    }, require("./config")()['FEED_FREQUENCY']);
+    }, parseInt(config('FEED_FREQUENCY')));
 }
 
 function stop() {
@@ -106,6 +109,6 @@ function stop() {
 
 module.exports = {
     getAuth,
-    start,
+    watch,
     stop
 }

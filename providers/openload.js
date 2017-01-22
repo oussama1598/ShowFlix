@@ -19,7 +19,7 @@ var OpenloadDecoder = {
         }*/
 
         //Try to get link using eval() first
-        try {
+         try {
             var scriptPattern = /<script[^>]*>([\s\S]*?)<\/script>/gi;
             var scriptMatches = getMatches(html, scriptPattern, 1);
             for (var i = 0; i < scriptMatches.length; i++) {
@@ -33,77 +33,40 @@ var OpenloadDecoder = {
                         var aaDecoded = aadecode(aaEncoded);
 
 
-                        var idPattern = /window.r\s*=\s*'([\s\S]*?)'/gi;
+                        var idPattern = /window\.r\s*=\s*['"]([^'^"]+?)['"]/gi;
                         var id = idPattern.exec(aaDecoded)[1];
 
-                        var spanPattern = new RegExp('<span\\s+id="' + id + "x" + '"[^>]*>([^<]+?)</span>', 'gi');
-                        var span = spanPattern.exec(html)[1];
+                        var spanPattern = new RegExp('<span[^>]+?id="' + id + '[^"]*?"[^>]*?>([^<]+?)</span>', 'gi');
+                        var spanMatches = getMatches(html, spanPattern, 0);
 
-                        var firstTwoChars = parseInt(span.substr(0, 2));
-                        var urlcode = '';
-                        var num = 2;
-                        while (num < span.length) {
-                            urlcode += String.fromCharCode(parseInt(span.substr(num, 3)) - firstTwoChars * parseInt(span.substr(num + 3, 2)));
-                            num += 5;
+                        for (var idx = 0; idx < spanMatches.length; idx++) {
+                            try {
+                                var span = spanMatches[idx];
+
+                                var firstThreeChars = parseInt(span.substr(0, 3));
+                                var middleTwoChars = parseInt(span.substr(3, 2));
+                                var urlcode = '';
+                                var num = 5;
+                                while (num < span.length) {
+                                    urlcode += String.fromCharCode(parseInt(span.substr(num, 3)) + firstThreeChars - middleTwoChars * parseInt(span.substr(num + 3, 2)));
+                                    num += 5;
+                                }
+
+                                var streamUrl = "https://openload.co/stream/" + urlcode + "?mime=true";
+                                results.push(streamUrl);
+
+                            } catch (err) {
+                                
+                            }
                         }
-
-                        var streamUrl = "https://openload.co/stream/" + urlcode + "?mime=true";
-                        results.push(streamUrl);
-                    } catch (err) {
+                    } catch (err2) {
+                        
                     }
                 }
             }
-        } catch (err) {
-            
+        } catch (err3) {
         }
 
-        //Try to get link by decrypting the link
-        try {
-            var hiddenId = '';
-            var decodes = [];
-            var magicNumbers = getAllMagicNumbers();
-
-            var hiddenUrlPattern = /<span[^>]*>([^<]+)<\/span>\s*<span[^>]*>[^<]+<\/span>\s*<span[^>]+id="streamurl"/gi;
-            var hiddenUrl = hiddenUrlPattern.exec(html)[1];
-            if (hiddenUrl == undefined)
-                return;
-
-            hiddenUrl = newUnescape(hiddenUrl);
-
-            var hiddenUrlChars = getCharsFromString(hiddenUrl);
-            var magic = 0;
-            if (hiddenUrlChars.length > 1) {
-                magic = hiddenUrlChars[hiddenUrlChars.length - 1].charCodeAt(0);
-            }
-
-            for (var x = 0; x < magicNumbers.length; x++) {
-                var s = [];
-                var magicNumber = magicNumbers[x];
-
-                for (var i = 0; i < hiddenUrlChars.length; i++) {
-                    var c = hiddenUrlChars[i];
-                    var j = c.charCodeAt(0);
-                    //Log.d("c = " + c + "; j = " + j);
-
-                    if (j == magic)
-                        j -= 1;
-                    else if (j == magic - 1)
-                        j += 1;
-
-                    if (j >= 33 & j <= 126)
-                        j = 33 + ((j + 14) % 94);
-
-                    if (i == (hiddenUrl.length - 1))
-                        j += parseInt(magicNumber);
-
-                    s.push(String.fromCharCode(j));
-                }
-                var res = s.join('');
-
-                results.push("https://openload.co/stream/" + res + "?mime=true");
-            }
-        } catch (err) {
-        }
 
         return JSON.stringify(results);
     },
@@ -286,13 +249,10 @@ function aadecode(text) {
 }
 
 module.exports = function(url) {
-    const defer = Q.defer();
     console.log("OpenLoad start parsing")
 
-    utils.getHtml(url).then($ => {
-        defer.resolve(JSON.parse(OpenloadDecoder.decode($.html()))[0]);
+    return utils.getHtml(url).then($ => {
+        return JSON.parse(OpenloadDecoder.decode($.html()))[0];
     });
-
-    return defer.promise;
 }
 

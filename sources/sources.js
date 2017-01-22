@@ -4,26 +4,26 @@ const utils = require("../utils/utils");
 const colors = require("colors");
 const path = require("path");
 const fs = require("fs");
-const config = require("../modules/config")();
+const config = require("../modules/config");
 
 
-const QUEUEPATH = config['QUEUEPATH'];
-const INFOS_PATH = config['INFOS_PATH'];
+const QUEUEPATH = config('QUEUEPATH');
+const INFOS_PATH = config('INFOS_PATH');
 
-let sources = {};
+let sources = [];
 
 function get(name) {
-    const source = sources[name];
-    if (source)
-        return source;
-    else
-        throw (new Error("This source can't be found"));
+    for (key in sources) {
+        if (sources[key].name === name)
+            return sources[key].require;
+    }
+    throw (new Error("This source can't be found"));
 }
 
 function add(arr) {
     if (arr.constructor === Array) {
-        arr.forEach(val => {
-            sources[val] = require(`./${val}`);
+        arr.forEach(name => {
+            sources.push({ name, require: require(`./${name}`) });
         });
     }
 }
@@ -59,6 +59,15 @@ function parseQueue() {
     });
 }
 
+function TryNextProv(src, data, details, code, index) {
+    src.canNextProvider(data.prov).then(num => {
+        data = { name: data.name, prov: num, code, index };
+        getMediaUrlFor(data, details);
+    }).catch(() => {
+        MoveToNext(data.name, details.index)
+    })
+}
+
 function getMediaUrlFor(data, details) {
     const src = get(data.name);
 
@@ -79,14 +88,10 @@ function getMediaUrlFor(data, details) {
                 MoveToNext(data.name, details.index)
 
             }).catch(index => {
-                src.canNextProvider(data.prov).then(num => {
-                    data = { name: data.name, prov: num, code, index };
-                    getMediaUrlFor(data, details);
-                }).catch(() => {
-                    MoveToNext(data.name, details.index)
-                })
-
+                TryNextProv(src, data, details, code, index);
             })
+        }).catch(err => {
+           TryNextProv(src, data, details, code, null);
         })
 
     }).catch(next => {
@@ -110,40 +115,24 @@ function addOnetoQueue(name, details) {
     utils.addToQueue(QUEUEPATH, arr);
 }
 
-function addtoQueue(name, details) {
-    const provider = get(name);
+function addtoQueue(details) {
     return Q.Promise((resolve, reject) => {
-        let infos = utils.getInfosData(INFOS_PATH);
-        let SearchInfos = infos.providers[name];
+        search(0, details, ({ url, provider }) => {
+            let infos = utils.getInfosData(INFOS_PATH);
 
-        SearchInfos.name = SearchInfos.name ? SearchInfos.name.toLowerCase() : null;
-        SearchInfos.season = SearchInfos.season ? SearchInfos.season : null;
+            details.providerUrl = url;
 
-        details.name = details.name.toLowerCase();
+            infos.providers[provider] = { url: url, name: details.keyword, season: details.season };
+            utils.UpdateInfosData(infos, INFOS_PATH);
 
-        if (SearchInfos && SearchInfos.name === details.name && SearchInfos.season === details.season) {
-            details.providerUrl = infos.providers[name].url;
-            _addtoQueue().then(() => { resolve() })
-        } else {
-            provider.cansearch().then(() => {
-                search(name, details).then(url => {
-                    details.providerUrl = url;
-
-                    infos.providers[name] = { url: url, name: details.name, season: details.season };
-                    utils.UpdateInfosData(infos, INFOS_PATH);
-
-                    _addtoQueue().then(() => { resolve() })
-                }).catch(err => {
-                    reject(err);
-                })
+            get(provider).addToQueueFromTo(details, QUEUEPATH).then(() => {
+                resolve();
             }).catch(err => {
                 reject(err);
-            })
-        }
-
-        function _addtoQueue() {
-            return provider.addToQueueFromTo(details, QUEUEPATH);
-        }
+            });
+        }, err => {
+            reject(err);
+        })
     })
 }
 
@@ -151,20 +140,53 @@ function clearQueue(cb) {
     utils.clearQueue(QUEUEPATH, cb);
 }
 
-function search(name, details) {
-    return get(name).search(details);
+function search(index, details, success, error) {
+    const prov = sources[index].require;
+
+    let infos = utils.getInfosData(INFOS_PATH);
+    let SearchInfos = infos.providers[prov.name];
+
+    if (SearchInfos) {
+        SearchInfos.name = SearchInfos.name ? SearchInfos.name.toLowerCase() : null;
+        SearchInfos.season = SearchInfos.season ? SearchInfos.season : null;
+    }
+
+    details.keyword = details.keyword.toLowerCase();
+
+    if (SearchInfos && SearchInfos.name === details.keyword && SearchInfos.season === details.season) {
+        success({ url: infos.providers[name].url, provider: prov.name });
+    } else {
+        if (prov.cansearch()) {
+            prov.search(details).then(url => {
+                success({ url, provider: prov.name });
+            }).catch(err => {
+                console.log(err);
+                if (index === (sources.length - 1)) {
+                    error(err);
+                } else {
+                    search(++index, details, success, error);
+                }
+            });
+        } else {
+            if (index === (sources.length - 1)) {
+                error("Can't Find anything");
+            } else {
+                search(++index, details, success, error);
+            }
+        }
+    }
 }
 
-function searchAndAddEpisode(srcname, details) {
+function searchAndAddEpisode(details) {
     const { name, episode, season } = details;
 
-    return addtoQueue(srcname, { name, season, from: episode, to: episode });
+    return addtoQueue({ name, season, from: episode, to: episode });
 }
 
-function searchAndAddSeason(srcname, details) {
+function searchAndAddSeason(details) {
     const { name, season } = details;
 
-    return addtoQueue(srcname, { name, season });
+    return addtoQueue({ name, season });
 }
 
 function start(cb) {
@@ -172,7 +194,7 @@ function start(cb) {
         let infos = utils.getInfosData(INFOS_PATH);
 
         global.NOMORE = false;
-        
+
         clearQueue(err => {
             if (!err) {
                 infos.queue = -1;
@@ -203,5 +225,6 @@ module.exports = {
     clearQueue,
     addOnetoQueue,
     searchAndAddEpisode,
-    searchAndAddSeason
+    searchAndAddSeason,
+    search
 };

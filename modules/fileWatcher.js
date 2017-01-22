@@ -2,14 +2,13 @@ const watcher = require('chokidar');
 const thumbs = require("./thumbs");
 const utils = require("../utils/utils");
 const path = require("path");
-const Ev = require("events");
-const util = require('util');
 const _ = require('underscore');
+const config = require("./config");
 
 let tempraryFiles = [];
 
 module.exports = () => {
-    watcher.watch(global.SAVETOFOLDER)
+    watcher.watch(config('SAVETOFOLDER'))
         .on("add", uri => {
             uri = path.basename(uri);
 
@@ -46,20 +45,6 @@ module.exports = () => {
             utils.filesUpdated();
 
         })
-
-    return new downloadsWatcher();
-}
-
-function downloadsWatcher() {
-    let lastDowns = [];
-    setInterval(() => {
-        const deff = utils.arrayDeffrence(global.fileDowns, lastDowns);
-        
-        if (deff.length > 0) {
-            lastDowns = _.map(global.fileDowns, _.clone);
-            this.emit("downloadsChanged", deff);
-        }
-    }, 1000);
 }
 
 function addPath(path, imediatly) {
@@ -101,5 +86,3 @@ function searchWithinGlobal(path) {
     }
     return false;
 }
-
-util.inherits(downloadsWatcher, Ev);

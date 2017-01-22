@@ -6,6 +6,7 @@ const colors = require('colors');
 const fs = require("fs");
 const path = require("path");
 const extend = require("extend");
+const async = require("async");
 
 module.exports = {
     name: undefined,
@@ -13,14 +14,10 @@ module.exports = {
     canSearch: undefined,
     addToQueueFromTo: function(details, QUEUEPATH) { // replace with get {name, episode, season, from, to}
         const _this = this;
-        return Q.Promise((resolve) => {
-            const SourceName = _this.name;
-            console.log(`Adding to the queue data from ${SourceName}`.yellow);
-
-            _this.BuildUrls(details).then(urls => {
-                utils.addToQueue(QUEUEPATH, urls, () => {
-                    resolve();
-                })
+        const SourceName = _this.name;
+        return _this.BuildUrls(details).then(urls => {
+            utils.addToQueue(QUEUEPATH, urls.slice(0), () => {
+                console.log(`${urls.length} Episode(s) added to the queue`.yellow);
             })
         })
     },
@@ -29,8 +26,6 @@ module.exports = {
             SourceName = _this.name;
 
         return Q.Promise((resolve, reject) => {
-            console.log("Building Urls list".yellow);
-
             if (!details.season) {
                 reject();
                 return;
@@ -57,7 +52,7 @@ module.exports = {
                             interval.push({
                                 provider: SourceName,
                                 url: Urls[episode],
-                                name: details.name,
+                                name: details.keyword,
                                 episode,
                                 season: details.season,
                                 done: false
@@ -66,8 +61,10 @@ module.exports = {
                     }
                 }
 
-                console.log(`${interval.length} Episode(s) Found`.green);
+                if(interval.length <= 0) return reject("Nothing Found");
                 resolve(interval);
+            }).catch(err => {
+                reject(err);
             })
         })
     },
@@ -101,9 +98,30 @@ module.exports = {
             }
         })
     },
-    cansearch: function() {
+    compareTwoTitles: function(keyword, title, str) {
         return Q.Promise((resolve, reject) => {
-            if (this.canSearch) { resolve() } else { reject() }
-        });
+            let results = [],
+                count = 0;
+
+            keyword = keyword.toLowerCase();
+            title = title.toLowerCase();
+
+            async.forEach(title.split(str), (word, cb) => {
+                async.forEach(keyword.split(str), (item, callback) => {
+                    if (word.indexOf(item) > -1 || item.indexOf(word) > -1) {
+                        results.push(word);
+                        ++count;
+                    }
+                    callback();
+                }, err => {
+                    cb();
+                })
+            }, err => {
+                return resolve({ count, results })
+            })
+        })
+    },
+    cansearch: function() {
+        return this.canSearch;
     }
 }

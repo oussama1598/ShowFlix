@@ -49,10 +49,12 @@ module.exports = extend(true, {
         return Q.Promise(resolve => { resolve(SourceUrl) });
     },
     search: function(details) {
+        const _this = this;
         return Q.Promise((resolve, reject) => {
-            utils.getHtml(SEARCHURL + details.name).then($ => {
+            utils.getHtml(SEARCHURL + details.keyword).then($ => {
                 const results = $("#searchResults .searchResult");
-                
+                let alreadyFound = false;
+
                 if (!results.length > 0) {
                     reject("Can't find any url");
                     return;
@@ -62,11 +64,22 @@ module.exports = extend(true, {
                     const el = $(this).find("h3 a"),
                         title = el.text().toLowerCase(),
                         url = el.attr("href");
+ 
+                    _this.compareTwoTitles(details.keyword, title, " ").then(result => {
+                        if(result.count > 0 && !alreadyFound){
+                            alreadyFound = true;
+                            return resolve(url)
+                        }
+                    })
 
-                    if (title.indexOf(details.name.toLowerCase()) > -1) {
-                        resolve(url);
+                    if(results.length == 1){
+                        if(url.indexOf("upcoming-series/") == -1){
+                            return resolve(url);
+                        }
                     }
                 })
+
+                return reject("Can't find any url")
             })
         })
     }
