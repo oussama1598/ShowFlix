@@ -5,6 +5,11 @@ const Q = require("q");
 const striptags = require('striptags');
 
 const ENDPOINT = "http://api.tvmaze.com/singlesearch/shows?q=%query%&embed=episodes";
+const SHOWSENDPOINT = "http://tvdb-images.herokuapp.com/shows/";
+
+function getShows(page) {
+    return utils.getHtml(`${SHOWSENDPOINT}${page}`, true)
+}
 
 function parseFromFilename(filename) {
     let season = filename.match(/s\d+/gi)[0].toLowerCase(),
@@ -42,8 +47,8 @@ function getEpisodeDataByQuery(episodes) {
         _.each(val, episode => {
             const result = (json) ? json._embedded.episodes.filter(val => val.season == episode.season && val.number == episode.episode) : null;
 
-            episode["title"] = (json) ? result[0].name: null;
-            episode["summary"] = (json) ? striptags(result[0].summary): null;
+            episode["title"] = (json) ? result[0].name : null;
+            episode["summary"] = (json) ? striptags(result[0].summary) : null;
 
             toReturn.push(episode)
         })
@@ -55,5 +60,6 @@ function getEpisodeDataByQuery(episodes) {
 
 module.exports = {
     getEpisodeDataByQuery,
-    parseFromFilename
+    parseFromFilename,
+    getShows
 }

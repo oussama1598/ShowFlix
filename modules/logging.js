@@ -1,12 +1,14 @@
 const _ = require("underscore");
 const colors = require("colors");
+const config = require("./config");
 const arrayWatcher = require("./arrayWatcher");
 
 module.exports = io => {
     const _log = global._log = console.log.bind({});
     console.log = (data, noServer) => {
-        _log(data);
-        if (!noServer) {
+        if(config("ENABLE_SERVER_LOGGING")) _log(data);
+
+        if (!noServer && config("ENABLE_CLIENT_LOGGING")) {
             let color;
             if (typeof data === "string") {
                 const str = colors.stripColors(data);
@@ -24,7 +26,7 @@ module.exports = io => {
                 if (!color) color = "white";
                 io.sockets.emit("all", { evt: "log", data: { str, color } });
             }
-        };
+        }
     };
 
     new arrayWatcher(global.fileDowns, 1000).on("changed", changes => {
@@ -37,7 +39,6 @@ module.exports = io => {
 
     new arrayWatcher(null, 1000, true).on("changed", changes => {
         _.each(io.sockets.sockets, sk => {
-            console.log(sk)
             if (sk.queue) {
                 sk._emit("queueChanged", changes);
             }

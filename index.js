@@ -65,3 +65,4 @@ require('dns').lookup(require('os').hostname(), function(err, add) {
 })
 
 // TO ADD cinemalek
+// TODO: check for last queue element error Unexpected end of JSON input

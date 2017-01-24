@@ -160,7 +160,6 @@ function search(index, details, success, error) {
             prov.search(details).then(url => {
                 success({ url, provider: prov.name });
             }).catch(err => {
-                console.log(err);
                 if (index === (sources.length - 1)) {
                     error(err);
                 } else {
@@ -189,8 +188,11 @@ function searchAndAddSeason(details) {
     return addtoQueue({ name, season });
 }
 
-function start(cb) {
+function start() {
     return Q.Promise((resolve, reject) => {
+        if(!global.NOMORE) return resolve();
+
+        _log("yes okay")
         let infos = utils.getInfosData(INFOS_PATH);
 
         global.NOMORE = false;
@@ -199,6 +201,7 @@ function start(cb) {
             if (!err) {
                 infos.queue = -1;
                 utils.BuildNextElement(infos, INFOS_PATH, () => {
+                    console.log("Parsing Started".orange, true);
                     resolve();
                     parseQueue();
                 })
@@ -212,8 +215,8 @@ function start(cb) {
 
 function stop(name) {
     global.NOMORE = true;
-    if (global.Dl)
-        global.Dl.pause();
+    console.log("Parsing Stopped".orange, true);
+    if (global.Dl) global.Dl.pause();
 }
 
 add(["4helal", "cera", "cimaclub", "mosalsl"]);

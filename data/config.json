@@ -11,5 +11,7 @@
    "ACCESS_TOKEN": "9b490ec26ff5c3decfc44e5ffb2dae4f",
    "GOOGLE_API_KEY": "AIzaSyAKaazNPf7-FSKrVRH-sbmKEQTr7icbdRQ",
    "START_SERVER_WHENE_FOUND": false,
-   "DELETEIFEXISTS": false
+   "DELETEIFEXISTS": false,
+   "ENABLE_CLIENT_LOGGING": true,
+   "ENABLE_SERVER_LOGGING": true
 }

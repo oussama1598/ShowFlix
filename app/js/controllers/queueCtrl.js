@@ -9,7 +9,6 @@ angular.module('showFlex').controller('queueCtrl', ["$scope", "socketEvt", "$roo
 
     $scope.parseNewData = function(data) {
         $scope.queue = data;
-        console.log(data)
     }
 
     socketEvt.emit("watchQueue", true);

@@ -3,11 +3,12 @@ const request = require("request")
 const cheerio = require("cheerio")
 const fs = require("fs");
 const colors = require("colors");
-const apicache = require("apicache");
 const del = require("del");
 const _ = require("underscore");
 const extend = require("extend");
 const path = require("path");
+const NodeCache = require("node-cache");
+const myCache = new NodeCache( { stdTTL: 60 * 60 * 24, checkperiod: 120 } );
 
 function getHtml(url, json, cookies) {
     return Q.Promise((resolve, reject) => {
@@ -30,8 +31,22 @@ function getHtml(url, json, cookies) {
     })
 }
 
+function cache(){
+        return {
+            get: key => {
+                return myCache.get(key);
+            },
+            set: (key, data) => {
+                myCache.set(key, data);
+            },
+            delete: key => {
+                myCache.del(key);
+            }
+        }
+}
+
 function filesUpdated() {
-    apicache.clear();
+    cache().delete("medias")
 }
 
 function parseCookies(res) {
@@ -213,5 +228,6 @@ module.exports = {
     UpdateInfosData,
     updateConfig,
     getQueue,
-    getQueueSync
+    getQueueSync,
+    cache
 }

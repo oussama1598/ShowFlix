@@ -53,29 +53,7 @@ angular.module('showFlex').controller('DownloadedCtrl', ["$scope", "$http", "$in
                 $scope.delete(url, ev);
             });
         };
-
-        $scope.sendReq = function(url) {
-            return $http({
-                method: 'GET',
-                url: url
-            })
-        }
-
-        $scope.startServer = function() {
-            if ($scope.serverOn) {
-                $scope.sendReq("/stop").then(function(res) {
-                    serverSocket.emit("serverStat");
-                })
-            } else {
-                $scope.sendReq("/start").then(function(res) {
-                    if (res.data.error) {
-                        Materialize.toast(res.data.error, 4000, 'red')
-                    }
-                    serverSocket.emit("serverStat");
-                })
-            }
-        }
-
+        
         $scope.getFiles();
     }
 ]);

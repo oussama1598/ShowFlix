@@ -3,7 +3,6 @@ const path = require("path");
 const pump = require("pump");
 const tvShowsData = require("./tvshowsData");
 const stream = require("./stream");
-const apicache = require("apicache");
 const utils = require("../utils/utils");
 const sources = require("../sources/sources");
 const tvshowTime = require("../modules/tvShowTime");
@@ -20,7 +19,10 @@ module.exports = app => {
         res.send(utils.getQueueSync(config("QUEUEPATH")));
     })
 
-    app.get("/medias", apicache.middleware("1 day"), (req, res) => {
+
+    app.get("/medias", (req, res) => {
+        if(utils.cache().get("medias")) return res.send(utils.cache().get("medias"));
+
         let episodes = {};
 
         async.forEach(global.Files, (file, cb) => {
@@ -39,8 +41,8 @@ module.exports = app => {
             cb();
         }, (err) => {
             tvShowsData.getEpisodeDataByQuery(episodes)
-                .then(Files => { res.send(Files) })
-                .catch(Files => { res.send(Files) });
+                .then(Files => { res.json(Files); utils.cache().set("medias", Files);})
+                .catch(Files => { res.json(Files); utils.cache().set("medias", Files);});
         })
     })
 
@@ -112,6 +114,19 @@ module.exports = app => {
             res.send({ status: true, url: data.url });
         }, error => {
             res.send({ status: false, error })
+        })
+    })
+
+    app.get("/shows/:page", (req, res) => {
+        if (isNaN(req.params.page)) return res.send({});
+        if(utils.cache().get(`shows/${req.params.page}`)) return res.send(utils.cache().get(`shows/${req.params.page}`));
+
+        tvShowsData.getShows(parseInt(req.params.page)).then(data => {
+
+            utils.cache().set(`shows/${req.params.page}`, JSON.parse(data));
+            res.send(JSON.parse(data));
+        }).catch(err => {
+            res.send({});
         })
     })
 }

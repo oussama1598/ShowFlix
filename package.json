@@ -9,7 +9,6 @@
   "author": "Oussama",
   "license": "ISC",
   "dependencies": {
-    "apicache": "^0.7.3",
     "async": "^2.1.4",
     "cheerio": "^0.22.0",
     "chokidar": "^1.6.1",
@@ -21,6 +20,7 @@
     "filedownloader": "^1.2.3",
     "fluent-ffmpeg": "^2.1.0",
     "google-search": "0.0.5",
+    "node-cache": "^4.1.1",
     "pump": "^1.0.2",
     "q": "^1.4.1",
     "range-parser": "^1.2.0",
