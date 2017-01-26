@@ -1,5 +1,5 @@
 {
-   "queue": "1",
+   "queue": "0",
    "providers": {
       "cera": {
          "url": "http://cera.online/series-the-flash-episode-1-season-3-s03e01-watch-download-translated-tv-video.html",
@@ -22,6 +22,11 @@
          "name": "the flash",
          "lastSeason": 3,
          "lasEpisode": 9
+      },
+      {
+         "name": "lucifer",
+         "lastSeason": 2,
+         "lasEpisode": 12
       }
    ]
 }

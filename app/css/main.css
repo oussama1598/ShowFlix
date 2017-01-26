@@ -6,20 +6,21 @@ body {
 }
 
 @media only screen and (min-width: 992px) {
-  .brand-logo {
-    margin-left: 15px;
-  }
+    .brand-logo {
+        margin-left: 15px;
+    }
 }
 
-.button-collapse, .brand-logo{
+.button-collapse,
+.brand-logo {
     font-size: 25px !important;
 }
 
-.button-collapse{
+.button-collapse {
     margin-left: 15px;
 }
 
-.button-collapse i{
+.button-collapse i {
     font-size: 30px !important;
 }
 
@@ -33,30 +34,39 @@ body {
 .loading span {
     margin-top: 15px;
 }
- 
+
 .home .collection-item.avatar .circle {
     width: 150px !important;
     height: 84.75px !important;
     border-radius: 0 !important;
+    left: 75px;
 }
 
 .home .collection .collection-item {
     padding: 0 31px !important;
     padding-bottom: 40px !important;
     padding-top: 20px !important;
-	padding-left: 180px !important;
+    padding-left: 235px !important;
 }
 
 .home .collection .collection-item.avatar {
     padding-left: 180px;
 }
 
-
-.home .download-icon{
+.home .download-icon {
     font-size: 22px;
 }
 
-.home .delete-btn{
+.home .delete-btn {
     top: 60px !important;
     cursor: pointer;
+}
+
+img.poster-img {
+    position: absolute;
+    left: 10px;
+    height: 84.75px;
+}
+.queue .finished{
+    text-decoration: line-through;
 }

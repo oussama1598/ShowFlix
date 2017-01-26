@@ -2,10 +2,13 @@
     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     <span>Loading ...</span>
 </div>
-<div class="row" ng-hide="loading">
+<div class="row queue" ng-hide="loading">
     <ul class="collection">
-        <li class="collection-item avatar" ng-repeat="file in queue">
-            <span class="title">{{file.name}} - {{file.episode}} - {{file.season}} - done: {{file.done}}</span>
+        <li class="collection-item" ng-repeat="file in queue">
+            <span ng-class="{'finished': file.done}">{{file.name}} S{{file.season}}E{{file.episode}}</span>
+            <a ng-click="" class="secondary-content" ng-hide="file.done">
+                 <i class="fa fa-trash" aria-hidden="true" style="cursor: pointer;"></i>
+            </a>
         </li>
     </ul>
 </div>

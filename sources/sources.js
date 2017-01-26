@@ -191,8 +191,6 @@ function searchAndAddSeason(details) {
 function start() {
     return Q.Promise((resolve, reject) => {
         if(!global.NOMORE) return resolve();
-
-        _log("yes okay")
         let infos = utils.getInfosData(INFOS_PATH);
 
         global.NOMORE = false;
@@ -201,7 +199,7 @@ function start() {
             if (!err) {
                 infos.queue = -1;
                 utils.BuildNextElement(infos, INFOS_PATH, () => {
-                    console.log("Parsing Started".orange, true);
+                    _log("Parsing Started".yellow);
                     resolve();
                     parseQueue();
                 })
@@ -215,7 +213,7 @@ function start() {
 
 function stop(name) {
     global.NOMORE = true;
-    console.log("Parsing Stopped".orange, true);
+    _log("Parsing Started".yellow);
     if (global.Dl) global.Dl.pause();
 }
 

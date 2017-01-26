@@ -5,14 +5,12 @@
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="fa fa-bars"></i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="#/app/home">Home</a></li>
-                <li><a href="#/app/downloaded">Downloaded</a></li>
                 <li><a href="#/app/downloads">Downloadings</a></li>
                 <li><a href="#/app/queue">Queue</a></li>
                 <li><a href="#/app/settings">Settings</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="#/app/home">Home</a></li>
-                <li><a href="#/app/downloaded">Downloaded</a></li>
                 <li><a href="#/app/downloads">Downloadings</a></li>
                 <li><a href="#/app/queue">Queue</a></li>
                 <li><a href="#/app/settings">Settings</a></li>
@@ -21,8 +19,12 @@
     </nav>
 </div>
 <div ui-view="mainView"></div>
-<div class="fixed-action-btn click-to-toggle" ng-click="startServer()">
+<div class="fixed-action-btn click-to-toggle">
     <a class="btn-floating btn-large red">
-        <i class="large material-icons">{{serverOn == true | iif : "stop" : "play_arrow"}}</i>
+        <i class="large material-icons">menu</i>
     </a>
+     <ul>
+      <li><a class="btn-floating blue darken-1"><i class="material-icons">add</i></a></li>
+      <li><a class="btn-floating orange" ng-click="startServer()"><i class="large material-icons">{{serverOn == true | iif : "stop" : "play_arrow"}}</i></a></li>
+    </ul>
 </div>

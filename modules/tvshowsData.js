@@ -47,14 +47,20 @@ function getEpisodeDataByQuery(episodes) {
         _.each(val, episode => {
             const result = (json) ? json._embedded.episodes.filter(val => val.season == episode.season && val.number == episode.episode) : null;
 
+            episode["poster"] = (json) ? json.image.medium : null;
             episode["title"] = (json) ? result[0].name : null;
             episode["summary"] = (json) ? striptags(result[0].summary) : null;
+
 
             toReturn.push(episode)
         })
     }
 
-    return Q.all(promise).then(() => _.sortBy(toReturn, 'episode')).catch(() => _.sortBy(toReturn, 'episode'));
+    function Sort(){
+        return _(toReturn).chain().sortBy('serieName').sortBy('season').sortBy('episode');
+    }
+
+    return Q.all(promise).then(() => Sort()).catch(() => Sort());
 
 }
 

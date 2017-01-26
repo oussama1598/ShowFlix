@@ -27,15 +27,6 @@ angular
                     }
                 }
             })
-            .state('app.downloaded', {
-                url: "/downloaded",
-                views: {
-                    "mainView": {
-                        templateUrl: "views/downloaded.html",
-                        controller: "DownloadedCtrl"
-                    }
-                }
-            })
             .state('app.downloads', {
                 url: "/downloads",
                 views: {

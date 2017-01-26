@@ -2,26 +2,21 @@
     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     <span>Loading ...</span>
 </div>
-<div class="row home" ng-hide="loading" scrolly="bottom">
-    <div class="col s6 l2 m3" ng-repeat="show in shows">
-        <div class="card small" ng-click="Goto(show.imdb_id)">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="/images/empty.jpg" ng-src="{{show.poster}}">
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">{{show.title}}</span>
-            </div>
-        </div>
-    </div>
-    <div class="col s6 l2 m3 loading-card" ng-show="moreLoader">
-        <div class="card small">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="/images/empty.jpg">
-                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Loading More...</span>
-            </div>
-        </div>
-    </div>
+<div class="row home" ng-hide="loading">
+    <ul class="collection">
+        <li class="collection-item avatar" ng-repeat="file in files">
+            <img ng-src="{{file.poster}}" class="poster-img">
+            <img ng-src="{{file.thumbUrl}}" alt="" class="circle">
+            <span class="title">{{file.filename}}</span>
+            <p>{{file.title}}
+            </p>
+            <a href="{{file.streamUrl}}" class="secondary-content">
+                <i class="fa fa-download download-icon" aria-hidden="true"></i>
+            </a>
+            <br>
+            <a ng-click="confirmDelete(file.streamUrl, $event)" class="secondary-content delete-btn">
+                <i class="fa fa-trash download-icon" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
 </div>

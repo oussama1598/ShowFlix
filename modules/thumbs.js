@@ -4,6 +4,7 @@ const os = require("os");
 const ffmpeg = require('fluent-ffmpeg');
 const utils = require("../utils/utils");
 const config = require("./config");
+const colors = require("colors");
 
 function init(cb) {
     const thumbsDir = global.thumbsDir = path.join(os.tmpdir(), "Thumbs");
@@ -56,7 +57,8 @@ function generate(uri) {
             folder: global.thumbsDir,
             size: '400x225'
         }).on("error", err => {
-            console.log(err)
+            //console.log(err)
+            _log("Error when generating thumbnail".red);
         })
 }
 
