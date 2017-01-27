@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "async": "^2.1.4",
+    "body-parser": "^1.16.0",
     "cheerio": "^0.22.0",
     "chokidar": "^1.6.1",
     "colors": "^1.1.2",
@@ -17,7 +18,7 @@
     "dns": "^0.2.2",
     "express": "^4.14.0",
     "extend": "^3.0.0",
-    "filedownloader": "^1.2.3",
+    "filedownloader": "^1.2.5",
     "fluent-ffmpeg": "^2.1.0",
     "google-search": "0.0.5",
     "node-cache": "^4.1.1",
@@ -30,5 +31,15 @@
     "underscore": "^1.8.3",
     "unirest": "^0.5.1",
     "watchjs": "0.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^2.0.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-obfuscate": "^0.2.9",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^2.0.1",
+    "pump": "^1.0.2"
   }
 }

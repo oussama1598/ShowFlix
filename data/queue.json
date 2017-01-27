@@ -1,1 +1,26 @@
-[]
+[
+   {
+      "provider": "cera",
+      "url": "http://cera.online/series-supergirl-episode-8-season-2-s02e08-watch-download-translated-egfire-tv-video.html",
+      "name": "supergirl",
+      "episode": 8,
+      "season": 2,
+      "done": false
+   },
+   {
+      "provider": "cera",
+      "url": "http://cera.online/series-legends-of-tomorrow-episode-7-season-2-s02e07-watch-download-translated-egfire-tv-video.html",
+      "name": "legends of tomorrow",
+      "episode": 7,
+      "season": 2,
+      "done": false
+   },
+   {
+      "provider": "cera",
+      "url": "http://cera.online/series-arrow-episode-8-season-5-s05e08-watch-download-translated-egfire-tv-video.html",
+      "name": "arrow",
+      "episode": 8,
+      "season": 5,
+      "done": false
+   }
+]

@@ -10,7 +10,7 @@ function Watcher(arr, delay, queue) {
     	if(queue) arr = utils.getQueueSync(config("QUEUEPATH"));
         const deff = utils.arrayDeffrence(arr, this.last);
 
-        if (deff.length > 0) {
+        if (deff.length > 0 || arr.length === 0 && this.last.length > 0)  {
             this.last = _.map(arr, _.clone);
             this.emit("changed", arr);
         }

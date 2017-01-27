@@ -88,6 +88,7 @@ function getMediaUrlFor(data, details) {
                 MoveToNext(data.name, details.index)
 
             }).catch(index => {
+                _log(index)
                 TryNextProv(src, data, details, code, index);
             })
         }).catch(err => {
@@ -119,10 +120,10 @@ function addtoQueue(details) {
     return Q.Promise((resolve, reject) => {
         search(0, details, ({ url, provider }) => {
             let infos = utils.getInfosData(INFOS_PATH);
-
             details.providerUrl = url;
 
             infos.providers[provider] = { url: url, name: details.keyword, season: details.season };
+
             utils.UpdateInfosData(infos, INFOS_PATH);
 
             get(provider).addToQueueFromTo(details, QUEUEPATH).then(() => {
@@ -154,7 +155,7 @@ function search(index, details, success, error) {
     details.keyword = details.keyword.toLowerCase();
 
     if (SearchInfos && SearchInfos.name === details.keyword && SearchInfos.season === details.season) {
-        success({ url: infos.providers[name].url, provider: prov.name });
+        success({ url: infos.providers[prov.name].url, provider: prov.name });
     } else {
         if (prov.cansearch()) {
             prov.search(details).then(url => {
@@ -174,18 +175,6 @@ function search(index, details, success, error) {
             }
         }
     }
-}
-
-function searchAndAddEpisode(details) {
-    const { name, episode, season } = details;
-
-    return addtoQueue({ name, season, from: episode, to: episode });
-}
-
-function searchAndAddSeason(details) {
-    const { name, season } = details;
-
-    return addtoQueue({ name, season });
 }
 
 function start() {
@@ -225,7 +214,5 @@ module.exports = {
     stop,
     clearQueue,
     addOnetoQueue,
-    searchAndAddEpisode,
-    searchAndAddSeason,
     search
 };

@@ -21,7 +21,7 @@ module.exports = app => {
 
 
     app.get("/medias", (req, res) => {
-        if(utils.cache().get("medias")) return res.send(utils.cache().get("medias"));
+        if (utils.cache().get("medias")) return res.send(utils.cache().get("medias"));
 
         let episodes = {};
 
@@ -41,8 +41,10 @@ module.exports = app => {
             cb();
         }, (err) => {
             tvShowsData.getEpisodeDataByQuery(episodes)
-                .then(Files => { res.json(Files); utils.cache().set("medias", Files);})
-                .catch(Files => { res.json(Files); utils.cache().set("medias", Files);});
+                .then(Files => { res.json(Files);
+                    utils.cache().set("medias", Files); })
+                .catch(Files => { res.json(Files);
+                    utils.cache().set("medias", Files); });
         })
     })
 
@@ -109,8 +111,8 @@ module.exports = app => {
     })
 
     app.get("/search", (req, res) => {
-        if (!req.query.keyword) return res.send({ status: false, url: "" });
-        sources.search(0, { keyword: req.query.keyword, season: req.query.season }, data => {
+        if (!req.query.keyword || isNaN(req.query.season)) return res.send({ status: false, error: "Can't find any url" });
+        sources.search(0, { keyword: req.query.keyword, season: parseInt(req.query.season) }, data => {
             res.send({ status: true, url: data.url });
         }, error => {
             res.send({ status: false, error })
@@ -119,7 +121,7 @@ module.exports = app => {
 
     app.get("/shows/:page", (req, res) => {
         if (isNaN(req.params.page)) return res.send({});
-        if(utils.cache().get(`shows/${req.params.page}`)) return res.send(utils.cache().get(`shows/${req.params.page}`));
+        if (utils.cache().get(`shows/${req.params.page}`)) return res.send(utils.cache().get(`shows/${req.params.page}`));
 
         tvShowsData.getShows(parseInt(req.params.page)).then(data => {
 
@@ -128,5 +130,38 @@ module.exports = app => {
         }).catch(err => {
             res.send({});
         })
+    })
+
+    app.post("/queue", (req, res) => {
+        let { name, season, episode } = req.body;
+
+        season = utils.fixInt(season);
+        episode = utils.fixInt(episode);
+
+        if (name === null || season === null || episode === null) return res.send({ status: false, error: "data not completed" });
+
+
+        utils.deleteFromQueue({name, episode, season}, config("QUEUEPATH")).then(() => {
+             res.send({status: true});
+         }).catch(error => {
+            res.send({status: false, error})
+         });
+    })
+
+    app.post("/addToqueue", (req, res) => {
+        let { keyword, season, to, from } = req.body;
+
+        season = utils.fixInt(season);
+        to = utils.fixInt(to);
+        from = utils.fixInt(from);
+
+        if (keyword === null || season === null || from === null || to === null) return res.send({ status: false, error: "data not completed" });
+        if(to < from) return res.send({status: false, error: "from can't be less that to"});
+
+        sources.addtoQueue({ keyword, season, from, to }).then(() => {
+            res.send({status: true})
+        }).catch(error => {
+            res.send({status: false, error})
+        });
     })
 }

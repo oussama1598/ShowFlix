@@ -2,9 +2,9 @@
    "queue": "0",
    "providers": {
       "cera": {
-         "url": "http://cera.online/series-the-flash-episode-1-season-3-s03e01-watch-download-translated-tv-video.html",
-         "name": "the flash",
-         "season": 3
+         "url": "http://cera.online/series-arrow-episode-1-season-5-s05e01-watch-download-translated-egfire-tv-video.html",
+         "name": "arrow",
+         "season": 5
       },
       "mosalsl": {
          "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
@@ -21,12 +21,15 @@
       {
          "name": "the flash",
          "lastSeason": 3,
-         "lasEpisode": 9
+         "lasEpisode": 10
       },
       {
          "name": "lucifer",
          "lastSeason": 2,
          "lasEpisode": 12
+      },
+      {
+         "name": "suits"
       }
    ]
 }

@@ -52,7 +52,7 @@ module.exports = extend(true, {
             let q = details.keyword.toLowerCase();
             let alreadyFound = false;
 
-            utils.searchAPI(CX).build({ q: `${q} S${season}`, num: 10 }, (err, res) => {
+            utils.searchAPI(CX).build({ q: `${q} S${season}E01`, num: 10 }, (err, res) => {
                 if (err) {
                     reject("Something went wrong!");
                     return;

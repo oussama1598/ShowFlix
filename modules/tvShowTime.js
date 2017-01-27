@@ -70,9 +70,9 @@ function getTowatch(page, cb, add) {
                                 season: season_number,
                                 number,
                                 index: showsTo.indexOf(show[0])
+                            }, () => {
+                                callback();
                             });
-
-                            callback();
                         } else {
                             callback()
                         }

@@ -10,7 +10,7 @@ angular
         'ngMdIcons',
         'btford.socket-io'
     ])
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider", function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
         $stateProvider
             .state('app', {
                 url: '/app',
@@ -41,7 +41,7 @@ angular
                 views: {
                     "mainView": {
                         templateUrl: "views/settings.html",
-                        controller: "SettingsCtrl"
+                        controller: "settingsCtrl"
                     }
                 }
             })
@@ -55,18 +55,20 @@ angular
                 }
             });
         $urlRouterProvider.otherwise("/app/home");
-    }).run(function($rootScope, socketEvt) {
+        $mdThemingProvider.theme('default')
+    .primaryPalette('pink')
+    }]).run(["$rootScope", "socketEvt", function($rootScope, socketEvt) {
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams, options) {
                 if (toState.name !== "app.downloads") {
                     socketEvt.emit("watchDownloads", false);
                 }
 
-                if(toState.name !== "app.queue"){
+                if (toState.name !== "app.queue") {
                     socketEvt.emit("watchQueue", false);
                 }
             })
-    }).filter('iif', function() {
+    }]).filter('iif', function() {
         return function(input, trueValue, falseValue) {
             return input ? trueValue : falseValue;
         };

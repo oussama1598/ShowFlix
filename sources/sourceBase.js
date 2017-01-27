@@ -31,6 +31,10 @@ module.exports = {
                 return;
             }
 
+            details.to = utils.fixInt(details.to);
+            details.from = utils.fixInt(details.from);
+            details.season = utils.fixInt(details.season);
+
             details = extend({
                 name: null,
                 season: 0,

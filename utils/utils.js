@@ -8,7 +8,7 @@ const _ = require("underscore");
 const extend = require("extend");
 const path = require("path");
 const NodeCache = require("node-cache");
-const myCache = new NodeCache( { stdTTL: 60 * 60 * 24, checkperiod: 120 } );
+const myCache = new NodeCache({ stdTTL: 60 * 60 * 24, checkperiod: 120 });
 
 function getHtml(url, json, cookies) {
     return Q.Promise((resolve, reject) => {
@@ -31,18 +31,18 @@ function getHtml(url, json, cookies) {
     })
 }
 
-function cache(){
-        return {
-            get: key => {
-                return myCache.get(key);
-            },
-            set: (key, data) => {
-                myCache.set(key, data);
-            },
-            delete: key => {
-                myCache.del(key);
-            }
+function cache() {
+    return {
+        get: key => {
+            return myCache.get(key);
+        },
+        set: (key, data) => {
+            myCache.set(key, data);
+        },
+        delete: key => {
+            myCache.del(key);
         }
+    }
 }
 
 function filesUpdated() {
@@ -93,8 +93,8 @@ function ElementDone(QUEUEPATH, index) {
 
 function addToQueue(QUEUEPATH, arr, done) {
     getQueue(QUEUEPATH, true).then(data => {
-        for(let i = arr.length-1;i>=0; i--){
-             const val = arr[i],
+        for (let i = arr.length - 1; i >= 0; i--) {
+            const val = arr[i],
                 result = data.filter(val1 => (val1.episode === val.episode && val1.season === val.season) && val1.name === val.name);
             if (result.length > 0) {
                 arr.splice(i, 1);
@@ -112,7 +112,7 @@ function addToQueue(QUEUEPATH, arr, done) {
 
 function updateJSON(object, path, done) {
     fs.writeFile(path, JSON.stringify(object, null, 3), function(err) {
-        if (err) return console.log(err);
+        if (err) return console.log(err, true);
         if (done)
             done()
     });
@@ -156,8 +156,7 @@ function getQueue(QUEUEPATH, force = false) {
     return Q.Promise((resolve, reject) => {
         if (!fs.existsSync(QUEUEPATH)) {
             console.log("Unable to find queue data".red);
-            reject();
-            return;
+            return reject();
         } else {
 
             delete require.cache[require.resolve(QUEUEPATH)];
@@ -165,8 +164,7 @@ function getQueue(QUEUEPATH, force = false) {
 
             if (ObjectSize(data) <= 0 && !force) {
                 console.log("Data is empty please try again.".red);
-                reject("Data is empty please try again.");
-                return;
+                return reject("Data is empty please try again.");
             }
 
             resolve(data);
@@ -174,8 +172,8 @@ function getQueue(QUEUEPATH, force = false) {
     })
 }
 
-function getQueueSync(QUEUEPATH){
-    if(!fs.existsSync(QUEUEPATH)) return [];
+function getQueueSync(QUEUEPATH) {
+    if (!fs.existsSync(QUEUEPATH)) return [];
     delete require.cache[require.resolve(QUEUEPATH)];
     return require(QUEUEPATH);
 }
@@ -208,8 +206,31 @@ function searchAPI(cx) {
     return require("../modules/searchAPI")(cx);
 }
 
-function updateConfig(obj, cb) {
-    updateJSON(obj, path.join(__dirname, "../data/config.json"), cb);
+function updateConfig(obj, queuepath, cb) {
+    updateJSON(obj, queuepath, cb);
+}
+
+function fixInt(num) {
+    return isNaN(parseInt(num)) ? null : parseInt(num);
+}
+
+function deleteFromQueue({ episode, season, name }, queuepath) {
+    return Q.Promise((resolve, reject) => {
+        getQueue(queuepath, true).then(data => {
+            for (let i = data.length - 1; i >= 0; i--) {
+                const val = data[i];
+                if(val.name === name && val.episode == episode && val.season == season){
+                    data.splice(i, 1);
+                }
+            }
+            
+            updateConfig(data, queuepath, function (){
+                resolve();
+            });
+        }).catch(err => {
+            reject(err);
+        });
+    });
 }
 
 module.exports = {
@@ -229,5 +250,7 @@ module.exports = {
     updateConfig,
     getQueue,
     getQueueSync,
-    cache
+    cache,
+    fixInt,
+    deleteFromQueue
 }

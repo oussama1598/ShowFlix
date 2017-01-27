@@ -7,11 +7,14 @@ const config = require("./modules/config");
 const server = http.createServer(app);
 const sources = require("./sources/sources");
 const utils = require("./utils/utils");
+const bodyParser = require('body-parser');
 
 global.fileDowns = [];
 global.Files = [];
-global.NOMORE = true; // for stop and resume downloading 
-
+global.NOMORE = true; // for stop and resume downloading
+ 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static("app", { maxAge: 3600000 }));
 
 require("./modules/routes")(app);
@@ -22,7 +25,7 @@ require("./modules/thumbs").init(() => {
     require("./modules/fileWatcher")();
 });
 
-require("./modules/tvShowTime").watch(data => {
+require("./modules/tvShowTime").watch((data, next) => {
     sources.addtoQueue(data).then(() => {
         let infos = utils.getInfosData(config('INFOS_PATH')),
             showsTo = infos['tvshowtimefeed'];
@@ -30,33 +33,22 @@ require("./modules/tvShowTime").watch(data => {
         showsTo[data.index]['lastSeason'] = data.season;
         showsTo[data.index]['lasEpisode'] = data.number;
 
+        //console.log()
+
         utils.UpdateInfosData(infos, config('INFOS_PATH'), () => {
+            next();
             const imediateStart = config('START_SERVER_WHENE_FOUND');
-            if (imediateStart && !global.NOMORE) {
-                //sources.start();
+            if (imediateStart) {
+                sources.start();
             }
         });
     });
 });
 
-//overwrite console.log
-
-/*sources.searchAndAddEpisode('mosalsl', {name: "The BlackListsdfsdfdsf", season: 2, episode: 3}).then(() => {
-    console.log("all good")
-}).catch(NoUrl => {
-    console.log("something went wrong")
-});*/
-
-/*sources.searchAndAddSeason('cera', {name: "Breaking Bad", season: 4}).then(() => {
-    console.log("Done")
-}).catch(err => {
-    console.log(err)
-})*/
-
-//sources.addOnetoQueue('mosalsl', {url, name, episode, season})
+//sources.addOnetoQueue('mosalsl', {url, name, episode, season});
 /*sources.addtoQueue({keyword: "Breaking Bad", season: 5, from: 1}).then(() => {
     console.log("done")
-}); // or from = "start", to="finish" add Url to the object for future adding*/
+}); // or from = "0", to="f" add Url to the object for future adding*/
 
 require('dns').lookup(require('os').hostname(), function(err, add) {
     server.on("error", err => {
