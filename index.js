@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 
 global.fileDowns = [];
 global.Files = [];
-global.NOMORE = true; // for stop and resume downloading
+global.NOMORE = true;
  
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -26,14 +26,12 @@ require("./modules/thumbs").init(() => {
 });
 
 require("./modules/tvShowTime").watch((data, next) => {
-    sources.addtoQueue(data).then(() => {
+    sources.addtoQueue(data, data.from).then(() => {
         let infos = utils.getInfosData(config('INFOS_PATH')),
             showsTo = infos['tvshowtimefeed'];
 
         showsTo[data.index]['lastSeason'] = data.season;
         showsTo[data.index]['lasEpisode'] = data.number;
-
-        //console.log()
 
         utils.UpdateInfosData(infos, config('INFOS_PATH'), () => {
             next();
@@ -46,9 +44,6 @@ require("./modules/tvShowTime").watch((data, next) => {
 });
 
 //sources.addOnetoQueue('mosalsl', {url, name, episode, season});
-/*sources.addtoQueue({keyword: "Breaking Bad", season: 5, from: 1}).then(() => {
-    console.log("done")
-}); // or from = "0", to="f" add Url to the object for future adding*/
 
 require('dns').lookup(require('os').hostname(), function(err, add) {
     server.on("error", err => {
@@ -60,4 +55,5 @@ require('dns').lookup(require('os').hostname(), function(err, add) {
 })
 
 // TO ADD cinemalek
+// TO ADD notification 'https://api.simplepush.io/send/8BQi8a/Wow/So easy'
 // TODO: check for last queue element error Unexpected end of JSON input

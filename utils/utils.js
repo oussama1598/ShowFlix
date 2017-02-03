@@ -73,8 +73,13 @@ function UpdateInfosData(obj, INFOS_PATH, cb) {
 }
 
 
-function BuildNextElement(infos, INFOS_PATH, cb) {
+function BuildNextElement(infos, INFOS_PATH, QUEUEPATH, cb) {
+    let queueData = getQueueSync(QUEUEPATH),
+        result = queueData.filter(item => !item.done);
+
     infos.queue = ('' + (parseInt(infos.queue) + 1));
+    if(parseInt(infos.queue) > (queueData.length - 1) && result.length > 0) infos.queue = "0";
+
     UpdateInfosData(infos, INFOS_PATH, () => {
         cb(infos);
     });

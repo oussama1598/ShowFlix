@@ -1,12 +1,12 @@
-var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    csso = require('gulp-csso'),
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat'),
-    livereload = require('gulp-livereload'),
-    pump = require('pump'),
-    obfuscate = require('gulp-obfuscate');
-
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const csso = require('gulp-csso');
+const uglify = require('gulp-uglify');
+const concat = require('gulp-concat');
+const livereload = require('gulp-livereload');
+const pump = require('pump');
+const obfuscate = require('gulp-obfuscate');
+const htmlmin = require('gulp-htmlmin');
 
 // --- Basic Tasks ---
 gulp.task('css', function() {
@@ -34,7 +34,9 @@ gulp.task('js', function(cb) {
 
 gulp.task('html', function(cb) {
     pump([
-        gulp.src('app/views/*.html'),
+        gulp.src('app/src/views/*.html'),
+        htmlmin({ collapseWhitespace: true }),
+        gulp.dest("app/views"),
         livereload(true)
     ], cb);
 });
@@ -43,8 +45,8 @@ gulp.task('watch', function() {
     livereload.listen();
     gulp.watch('app/src/css/*.sass', ['css']);
     gulp.watch('app/src/js/**/*.js', ['js']);
-    gulp.watch('app/views/*.html', ['html']);
+    gulp.watch('app/src/views/*.html', ['html']);
 });
 
 // Default Task
-gulp.task('default', ['js', 'css', 'watch']);
+gulp.task('default', ['js', 'css', 'html', 'watch']);

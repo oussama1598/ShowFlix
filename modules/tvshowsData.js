@@ -57,7 +57,7 @@ function getEpisodeDataByQuery(episodes) {
     }
 
     function Sort(){
-        return _(toReturn).chain().sortBy('serieName').sortBy('season').sortBy('episode');
+        return _(toReturn).chain().sortBy('seaon').sortBy('episode').sortBy('serieName');
     }
 
     return Q.all(promise).then(() => Sort()).catch(() => Sort());

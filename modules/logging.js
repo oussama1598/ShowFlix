@@ -2,13 +2,18 @@ const _ = require("underscore");
 const colors = require("colors");
 const config = require("./config");
 const arrayWatcher = require("./arrayWatcher");
+const request = require("request");
 
 module.exports = io => {
     const _log = global._log = console.log.bind({});
-    console.log = (data, noServer) => {
-        if(config("ENABLE_SERVER_LOGGING")) _log(data);
+    console.log = (data, onlyServer, phoneLog) => {
+        if (config("ENABLE_SERVER_LOGGING")) _log(data);
 
-        if (!noServer && config("ENABLE_CLIENT_LOGGING")) {
+        if (phoneLog && config("ENABLE_PHONE_LOGGIN") && config("SIMPLE_PUSH_ID") !== "" && typeof data === "string") {
+            request.get(`${config("SIMPLE_PUSH_URL")}${config("SIMPLE_PUSH_ID")}/showFlix Notification/${data}`);
+        }
+
+        if (!onlyServer && config("ENABLE_CLIENT_LOGGING")) {
             let color;
             if (typeof data === "string") {
                 const str = colors.stripColors(data);
@@ -30,18 +35,14 @@ module.exports = io => {
     };
 
     new arrayWatcher(global.fileDowns, 1000).on("changed", changes => {
-        _.each(io.sockets.clients(), sk => {
-            if (sk.downloads) {
-                sk._emit("downloadsChanged", changes);
-            }
+        _.each(io.sockets.sockets, sk => {
+            sk._emit("downloadsChanged", changes);
         })
     })
 
-    new arrayWatcher(null, 1000, true).on("changed", changes => {
+    new arrayWatcher(null, 1000, true).on("changed", (changes, added) => {
         _.each(io.sockets.sockets, sk => {
-            if (sk.queue) {
-                sk._emit("queueChanged", changes);
-            }
+            sk._emit("queueChanged", changes);
         })
     })
 }

@@ -43,16 +43,16 @@ module.exports = extend(true, {
             return url;
         });
     },
-    search: function(details) {
+    search: function(details, ParticularEpisode) {
         const _this = this;
         return Q.Promise((resolve, reject) => {
             const CX = "018010331078829701272:y0xgo6cnjbw";
             const season = ('' + details.season).length > 1 ? details.season : `0${details.season}`
-
+            const episode = ParticularEpisode ? ('' + ParticularEpisode).length > 1 ? ParticularEpisode : `0${ParticularEpisode}` : "01";
             let q = details.keyword.toLowerCase();
             let alreadyFound = false;
 
-            utils.searchAPI(CX).build({ q: `${q} S${season}E01`, num: 10 }, (err, res) => {
+            utils.searchAPI(CX).build({ q: `${q} S${season}E${episode}`, num: 10 }, (err, res) => {
                 if (err) {
                     reject("Something went wrong!");
                     return;
@@ -62,9 +62,10 @@ module.exports = extend(true, {
 
                 for (item in res.items) {
                     const val = res.items[item];
-                    if (val.link.indexOf(`s${season}`) > -1) {
+                    const tryAgainst = ParticularEpisode ? `s${season}e${episode}` : `s${season}`;
+                    if (val.link.indexOf(tryAgainst) > -1) {
                         return _this.compareTwoTitles(val.link, q, "-").then(result => {
-                            if (result.count > 0) {
+                            if (result.count > 0 && !(result.results.indexOf("the") > -1 && result.count == 1)) {
                                 if (!alreadyFound) {
                                     alreadyFound = true;
                                     return resolve(val.link);

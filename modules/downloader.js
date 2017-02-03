@@ -30,7 +30,7 @@ function download(url, details, index) {
         }
 
         global.Dl = new filedownloader({
-            url: url,
+            url: encodeURI(url),
             saveas: filename,
             saveto: config('SAVETOFOLDER'),
             resume: true,
@@ -40,7 +40,7 @@ function download(url, details, index) {
             fileDowns[index].error = false;
             fileDowns[index].finished = false;
 
-            console.log(`Started ${filename}`.green, true)
+            console.log(`Started ${filename}`.green)
 
         }).on("progress", (pr) => {
             process.stdout.clearLine(); // clear current text
@@ -58,7 +58,7 @@ function download(url, details, index) {
             };
         }).on("end", () => {
             resolve();
-
+            console.log(`${details.name} s${details.season}e${details.episode} Finished`.green, true, true);
             fileDowns[index].finished = true;
 
         }).on("error", err => {

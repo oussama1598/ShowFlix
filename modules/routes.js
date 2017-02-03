@@ -41,10 +41,14 @@ module.exports = app => {
             cb();
         }, (err) => {
             tvShowsData.getEpisodeDataByQuery(episodes)
-                .then(Files => { res.json(Files);
-                    utils.cache().set("medias", Files); })
-                .catch(Files => { res.json(Files);
-                    utils.cache().set("medias", Files); });
+                .then(Files => {
+                    res.json(Files);
+                    utils.cache().set("medias", Files);
+                })
+                .catch(Files => {
+                    res.json(Files);
+                    utils.cache().set("medias", Files);
+                });
         })
     })
 
@@ -75,6 +79,8 @@ module.exports = app => {
 
         utils.deleteFile(uri).then(() => {
             res.send({ status: true });
+        }).catch(error => {
+            res.send({ status: false, error });
         });
     })
 
@@ -94,7 +100,12 @@ module.exports = app => {
     })
 
     app.get("/start", (req, res) => {
-        sources.start().then(() => {
+        if (!global.NOMORE) return res.send({ running: NOMORE, error: "Can't you should stop the parsing first" });
+        if (req.query.index && isNaN(parseInt(req.query.index))) return res.send({ running: !NOMORE, error: "The index must be a number" });
+
+
+        const index = req.query.index ? parseInt(req.query.index) - 1 : null;
+        sources.start(index).then(() => {
             res.send({ running: !NOMORE });
         }).catch(error => {
             res.send({ running: !NOMORE, error });
@@ -107,7 +118,11 @@ module.exports = app => {
     });
 
     app.get("/state", (req, res) => {
-        res.send({ running: !NOMORE });
+        res.send({
+            running: !NOMORE,
+            queueIndex: utils.getInfosData(config("INFOS_PATH")).queue,
+            queueCount: utils.getQueueSync(config("QUEUEPATH")).length
+        });
     })
 
     app.get("/search", (req, res) => {
@@ -141,27 +156,27 @@ module.exports = app => {
         if (name === null || season === null || episode === null) return res.send({ status: false, error: "data not completed" });
 
 
-        utils.deleteFromQueue({name, episode, season}, config("QUEUEPATH")).then(() => {
-             res.send({status: true});
-         }).catch(error => {
-            res.send({status: false, error})
-         });
+        utils.deleteFromQueue({ name, episode, season }, config("QUEUEPATH")).then(() => {
+            res.send({ status: true });
+        }).catch(error => {
+            res.send({ status: false, error })
+        });
     })
 
     app.post("/addToqueue", (req, res) => {
+        if(!req.body) return res.send({ status: false, error: "data not completed" });
+
         let { keyword, season, to, from } = req.body;
 
         season = utils.fixInt(season);
-        to = utils.fixInt(to);
         from = utils.fixInt(from);
-
         if (keyword === null || season === null || from === null || to === null) return res.send({ status: false, error: "data not completed" });
-        if(to < from) return res.send({status: false, error: "from can't be less that to"});
+        if (to !== "f" && to < from) return res.send({ status: false, error: "from can't be less that to" });
 
-        sources.addtoQueue({ keyword, season, from, to }).then(() => {
-            res.send({status: true})
+        sources.addtoQueue({ keyword, season, from, to }, null).then(() => {
+            res.send({ status: true })
         }).catch(error => {
-            res.send({status: false, error})
+            res.send({ status: false, error })
         });
     })
 }

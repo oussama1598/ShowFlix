@@ -18,6 +18,13 @@ angular.module('showFlex')
             }, 7000);
 
             socketEvt.add("serverStat", function(data) {
+                if(!localStorage["queueCount"]) localStorage["queueCount"] = data.queueCount;
+                if(parseInt(localStorage["queueCount"]) < data.queueCount){
+                    $scope.newItems = (data.queueCount - parseInt(localStorage["queueCount"]));
+                }else{
+                    $scope.newItems = false;
+                }
+
                 $scope.serverOn = data.running;
             });
 

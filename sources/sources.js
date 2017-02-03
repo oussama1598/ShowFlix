@@ -6,10 +6,6 @@ const path = require("path");
 const fs = require("fs");
 const config = require("../modules/config");
 
-
-const QUEUEPATH = config('QUEUEPATH');
-const INFOS_PATH = config('INFOS_PATH');
-
 let sources = [];
 
 function get(name) {
@@ -30,10 +26,10 @@ function add(arr) {
 
 function MoveToNext(name, key) {
     if (!global.NOMORE) {
-        let infos = utils.getInfosData(INFOS_PATH);
+        let infos = utils.getInfosData(config('INFOS_PATH'));
 
-        utils.ElementDone(QUEUEPATH, key).then(() => {
-            utils.BuildNextElement(infos, INFOS_PATH, i => {
+        utils.ElementDone(config('QUEUEPATH'), key).then(() => {
+            utils.BuildNextElement(infos, config('INFOS_PATH'), config('QUEUEPATH'), i => {
                 infos = i;
                 parseQueue(name, 0);
             });
@@ -42,9 +38,9 @@ function MoveToNext(name, key) {
 }
 
 function parseQueue() {
-    let infos = utils.getInfosData(INFOS_PATH);
+    let infos = utils.getInfosData(config('INFOS_PATH'));
 
-    utils.getQueueValue(QUEUEPATH, parseInt(infos.queue)).then(el => {
+    utils.getQueueValue(config('QUEUEPATH'), parseInt(infos.queue)).then(el => {
         el.index = parseInt(infos.queue);
 
         if (!el.done) {
@@ -88,11 +84,10 @@ function getMediaUrlFor(data, details) {
                 MoveToNext(data.name, details.index)
 
             }).catch(index => {
-                _log(index)
                 TryNextProv(src, data, details, code, index);
             })
         }).catch(err => {
-           TryNextProv(src, data, details, code, null);
+            TryNextProv(src, data, details, code, null);
         })
 
     }).catch(next => {
@@ -113,20 +108,20 @@ function addOnetoQueue(name, details) {
         done: false
     }];
 
-    utils.addToQueue(QUEUEPATH, arr);
+    utils.addToQueue(config('QUEUEPATH'), arr);
 }
 
-function addtoQueue(details) {
+function addtoQueue(details, ParticularEpisode) {
     return Q.Promise((resolve, reject) => {
-        search(0, details, ({ url, provider }) => {
-            let infos = utils.getInfosData(INFOS_PATH);
+        search(0, details, ParticularEpisode, ({ url, provider }) => {
+            let infos = utils.getInfosData(config('INFOS_PATH'));
             details.providerUrl = url;
 
             infos.providers[provider] = { url: url, name: details.keyword, season: details.season };
 
-            utils.UpdateInfosData(infos, INFOS_PATH);
+            utils.UpdateInfosData(infos, config('INFOS_PATH'));
 
-            get(provider).addToQueueFromTo(details, QUEUEPATH).then(() => {
+            get(provider).addToQueueFromTo(details, config('QUEUEPATH')).then(() => {
                 resolve();
             }).catch(err => {
                 reject(err);
@@ -138,13 +133,13 @@ function addtoQueue(details) {
 }
 
 function clearQueue(cb) {
-    utils.clearQueue(QUEUEPATH, cb);
+    utils.clearQueue(config('QUEUEPATH'), cb);
 }
 
-function search(index, details, success, error) {
+function search(index, details, ParticularEpisode, success, error) {
     const prov = sources[index].require;
 
-    let infos = utils.getInfosData(INFOS_PATH);
+    let infos = utils.getInfosData(config('INFOS_PATH'));
     let SearchInfos = infos.providers[prov.name];
 
     if (SearchInfos) {
@@ -154,40 +149,40 @@ function search(index, details, success, error) {
 
     details.keyword = details.keyword.toLowerCase();
 
-    if (SearchInfos && SearchInfos.name === details.keyword && SearchInfos.season === details.season) {
+    if (!ParticularEpisode && SearchInfos && SearchInfos.name === details.keyword && SearchInfos.season === details.season) {
         success({ url: infos.providers[prov.name].url, provider: prov.name });
     } else {
         if (prov.cansearch()) {
-            prov.search(details).then(url => {
+            prov.search(details, ParticularEpisode).then(url => {
                 success({ url, provider: prov.name });
             }).catch(err => {
                 if (index === (sources.length - 1)) {
                     error(err);
                 } else {
-                    search(++index, details, success, error);
+                    search(++index, details, ParticularEpisode, success, error);
                 }
             });
         } else {
             if (index === (sources.length - 1)) {
                 error("Can't Find anything");
             } else {
-                search(++index, details, success, error);
+                search(++index, details, ParticularEpisode, success, error);
             }
         }
     }
 }
 
-function start() {
+function start(index) {
     return Q.Promise((resolve, reject) => {
-        if(!global.NOMORE) return resolve();
-        let infos = utils.getInfosData(INFOS_PATH);
+        if (!global.NOMORE) return resolve();
+        let infos = utils.getInfosData(config('INFOS_PATH'));
 
         global.NOMORE = false;
 
         clearQueue(err => {
             if (!err) {
-                infos.queue = -1;
-                utils.BuildNextElement(infos, INFOS_PATH, () => {
+                infos.queue = index || -1;
+                utils.BuildNextElement(infos, config('INFOS_PATH'), config("QUEUEPATH"), () => {
                     _log("Parsing Started".yellow);
                     resolve();
                     parseQueue();
@@ -202,7 +197,7 @@ function start() {
 
 function stop(name) {
     global.NOMORE = true;
-    _log("Parsing Started".yellow);
+    _log("Parsing Stopped".yellow);
     if (global.Dl) global.Dl.pause();
 }
 

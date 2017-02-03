@@ -5,26 +5,21 @@ const _ = require("underscore");
 
 
 module.exports = app => {
-	const io = socketIO(app);
-	
-	io.on("connection", socket => {
-		socket._emit = (evt, data) => {
-			socket.emit("all", {evt, data})
-		}
-		socket.on("watchDownloads", start => {
-			if(start) socket._emit("downloadsChanged", global.fileDowns);
-			socket.download = start;
-		})		
+    const io = socketIO(app);
 
-		socket.on("watchQueue", start => {
-			if(start) socket._emit("queueChanged", utils.getQueueSync(config("QUEUEPATH")));
-			socket.queue = start;
-		})
+    io.on("connection", socket => {
+        socket._emit = (evt, data) => {
+            socket.emit("all", { evt, data })
+        }
+        
+        socket.on("serverStat", () => {
+            socket._emit("serverStat", {
+                running: !NOMORE,
+                queueIndex: utils.getInfosData(config("INFOS_PATH")).queue,
+                queueCount: utils.getQueueSync(config("QUEUEPATH")).length
+            });
+        })
+    })
 
-		socket.on("serverStat", () => {
-			socket._emit("serverStat", { running: !NOMORE });
-		})
-	})
-
-	return io;
+    return io;
 }

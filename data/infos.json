@@ -2,14 +2,18 @@
    "queue": "0",
    "providers": {
       "cera": {
-         "url": "http://cera.online/series-arrow-episode-1-season-5-s05e01-watch-download-translated-egfire-tv-video.html",
-         "name": "arrow",
-         "season": 5
+         "url": "http://cera.online/series-supernatural-episode-1-season-1-s01e01-mosalsal-motarjam-translated-download-watch.html",
+         "name": "supernatural",
+         "season": 1
       },
       "mosalsl": {
-         "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
-         "name": "the flash",
-         "season": 3
+         "url": "http://mosalsl.com/index.php/series/suits-season-5/",
+         "name": "suits",
+         "season": 6
+      },
+      "undefined": {
+         "name": "lucifer",
+         "season": 2
       }
    },
    "tvshowtimefeed": [
@@ -26,10 +30,12 @@
       {
          "name": "lucifer",
          "lastSeason": 2,
-         "lasEpisode": 12
+         "lasEpisode": 13
       },
       {
-         "name": "suits"
+         "name": "suits",
+         "lastSeason": 6,
+         "lasEpisode": 12
       }
    ]
 }

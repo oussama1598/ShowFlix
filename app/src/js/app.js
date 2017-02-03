@@ -63,10 +63,6 @@ angular
                 if (toState.name !== "app.downloads") {
                     socketEvt.emit("watchDownloads", false);
                 }
-
-                if (toState.name !== "app.queue") {
-                    socketEvt.emit("watchQueue", false);
-                }
             })
     }]).filter('iif', function() {
         return function(input, trueValue, falseValue) {

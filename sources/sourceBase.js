@@ -31,7 +31,6 @@ module.exports = {
                 return;
             }
 
-            details.to = utils.fixInt(details.to);
             details.from = utils.fixInt(details.from);
             details.season = utils.fixInt(details.season);
 
@@ -47,7 +46,7 @@ module.exports = {
                 let interval = [],
                     { from, to } = details;
 
-                to = (details.to === "f") ? Object.keys(Urls)[utils.ObjectSize(Urls) - 1] : details.to;
+                to = (details.to === "f") ? Object.keys(Urls)[utils.ObjectSize(Urls) - 1] : (isNaN(details.to) ? details.to : parseInt(details.to));
 
                 for (episode in Urls) {
                     episode = parseInt(episode);
@@ -89,9 +88,9 @@ module.exports = {
 
         return Q.Promise((resolve, reject) => {
             const SourceName = _this.name,
-                { episode, season, url } = details;
+                { episode, season, url, name} = details;
             if (!code) {
-                console.log(`Parsing Episode ${episode} Season ${season} From ${SourceName}`.green)
+                console.log(`Parsing ${name} S${season}E${episode} From ${SourceName}`.green)
 
                 _this.Parse(url).then(url => { resolve(url) }).catch(() => {
                     reject(true)
