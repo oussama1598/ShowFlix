@@ -1,15 +1,15 @@
 {
-   "queue": "0",
+   "queue": "4",
    "providers": {
       "cera": {
-         "url": "http://cera.online/series-supernatural-episode-1-season-1-s01e01-mosalsal-motarjam-translated-download-watch.html",
-         "name": "supernatural",
-         "season": 1
+         "url": "http://cera.online/series-the-blacklist-episode-12-season-4-s04e12-watch-cima4u-download-translated-egfire-tv-video.html",
+         "name": "the blacklist",
+         "season": 4
       },
       "mosalsl": {
-         "url": "http://mosalsl.com/index.php/series/suits-season-5/",
-         "name": "suits",
-         "season": 6
+         "url": "http://mosalsl.com/index.php/series/za-100-all/",
+         "name": "the 100",
+         "season": 4
       },
       "undefined": {
          "name": "lucifer",
@@ -20,7 +20,7 @@
       {
          "name": "the blacklist",
          "lastSeason": 4,
-         "lasEpisode": 11
+         "lasEpisode": 12
       },
       {
          "name": "the flash",
@@ -36,6 +36,11 @@
          "name": "suits",
          "lastSeason": 6,
          "lasEpisode": 12
+      },
+      {
+         "name": "the 100",
+         "lastSeason": 4,
+         "lasEpisode": 1
       }
    ]
 }

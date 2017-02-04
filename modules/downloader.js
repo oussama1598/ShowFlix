@@ -4,7 +4,7 @@ const filedownloader = require("filedownloader");
 const config = require("./config");
 
 
-function download(url, details, index) {
+function download(url, details, index, overWrite) {
     return Q.Promise((resolve, reject) => {
         let defer = Q.defer(),
             fileDowns = global.fileDowns,
@@ -34,7 +34,7 @@ function download(url, details, index) {
             saveas: filename,
             saveto: config('SAVETOFOLDER'),
             resume: true,
-            deleteIfExists: config('DELETEIFEXISTS')
+            deleteIfExists: config('DELETEIFEXISTS') || overWrite
         }).on("start", () => {
             fileDowns[index].started = true;
             fileDowns[index].error = false;

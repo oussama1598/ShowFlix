@@ -1,51 +1,11 @@
 [
    {
       "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-8-season-1-s01e08-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 8,
-      "season": 1,
-      "done": false
-   },
-   {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-9-season-1-s01e09-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 9,
-      "season": 1,
-      "done": false
-   },
-   {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-10-season-1-s01e10-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 10,
-      "season": 1,
-      "done": false
-   },
-   {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-11-season-1-s01e11-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 11,
-      "season": 1,
-      "done": false
-   },
-   {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-12-season-1-s01e12-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 12,
-      "season": 1,
-      "done": false
-   },
-   {
-      "provider": "cera",
       "url": "http://cera.online/series-supernatural-episode-13-season-1-s01e13-mosalsal-motarjam-translated-download-watch.html",
       "name": "supernatural",
       "episode": 13,
       "season": 1,
-      "done": false
+      "done": true
    },
    {
       "provider": "cera",
@@ -53,7 +13,7 @@
       "name": "supernatural",
       "episode": 14,
       "season": 1,
-      "done": false
+      "done": true
    },
    {
       "provider": "cera",
@@ -61,7 +21,7 @@
       "name": "supernatural",
       "episode": 15,
       "season": 1,
-      "done": false
+      "done": true
    },
    {
       "provider": "cera",
@@ -69,7 +29,7 @@
       "name": "supernatural",
       "episode": 16,
       "season": 1,
-      "done": false
+      "done": true
    },
    {
       "provider": "cera",
@@ -118,5 +78,13 @@
       "episode": 22,
       "season": 1,
       "done": false
+   },
+   {
+      "provider": "cera",
+      "url": "http://cera.online/series-the-blacklist-episode-12-season-4-s04e12-watch-cima4u-download-translated-egfire-tv-video.html",
+      "name": "the blacklist",
+      "episode": 12,
+      "season": 4,
+      "done": true
    }
 ]

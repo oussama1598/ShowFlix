@@ -17,7 +17,7 @@ let TIMER = false;
 function isWatched(serieName, season, episode) {
     const filename = `filename=${serieName} s${season}e${episode}`,
         ACCESS_TOKEN = config('ACCESS_TOKEN');
-        
+
     return utils.getHtml(`${TVST_CHECKIN_URI}?${filename}&access_token=${ACCESS_TOKEN}`, true).then(data => {
         return JSON.parse(data).code === 1;
     })
@@ -66,7 +66,7 @@ function getTowatch(page, cb, add) {
                         if (last_seen.number && last_seen.season && (last_seen.number !== number || last_seen.season !== season_number)) {
                             add({
                                 keyword: show[0].name,
-                                from: (last_seen.number + 1),
+                                from: last_seen.season == season_number ? (last_seen.number + 1) : number,
                                 season: season_number,
                                 number,
                                 index: showsTo.indexOf(show[0])

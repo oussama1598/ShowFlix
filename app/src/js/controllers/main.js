@@ -25,6 +25,8 @@ angular.module('showFlex')
                     $scope.newItems = false;
                 }
 
+                console.log(data);
+
                 $scope.serverOn = data.running;
             });
 

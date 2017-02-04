@@ -35,6 +35,6 @@
     </a>
     <ul>
         <li><a class="btn-floating blue darken-1" ng-click="showAddtoQueue($event)"><i class="material-icons">add</i></a></li>
-        <li><a class="btn-floating orange" ng-click="startServer()"><i class="large material-icons">{{serverOn == true | iif : "stop" : "play_arrow"}}</i></a></li>
+        <li><a class="btn-floating orange" ng-click="startServer()"><i class="large material-icons">{{serverOn == true ? "stop" : "play_arrow"}}</i></a></li>
     </ul>
 </div>

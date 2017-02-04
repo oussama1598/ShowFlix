@@ -1,10 +1,9 @@
 'use strict';
 
-angular.module('showFlex').controller('homeCtrl', ["$scope", "$http", "$interval", "socketEvt", "$mdDialog", "$rootScope",
-    function($scope, $http, $interval, socketEvt, $mdDialog, $rootScope) {
+angular.module('showFlex').controller('homeCtrl', ["$scope", "$http", "socketEvt", "$mdDialog", "$rootScope",
+    function($scope, $http, socketEvt, $mdDialog, $rootScope) {
         $scope.files = [];
         $scope.loading = true;
-        // $interval(function() { $scope.getFiles() }, 10000);
 
         $scope.getFiles = function() {
             $http({
@@ -34,7 +33,6 @@ angular.module('showFlex').controller('homeCtrl', ["$scope", "$http", "$interval
             $scope.removeFileByStreamUrl(url);
 
             $http.delete(url).then(function(res) {
-                $scope.getFiles();
                 $scope.removeFileByStreamUrl(url)
             })
         }
@@ -53,7 +51,20 @@ angular.module('showFlex').controller('homeCtrl', ["$scope", "$http", "$interval
                 $scope.delete(url, ev);
             });
         };
-        
+
+        $scope.mediasChanged = function(data) {
+            $scope.files = data;
+        }
+
         $scope.getFiles();
+
+        socketEvt.add("mediasChanged", $scope.mediasChanged);
+
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams, options) {
+                if (toState.name !== "app.home") {
+                    socketEvt.remove("mediasChanged", $scope.mediasChanged);
+                }
+            })
     }
 ]);

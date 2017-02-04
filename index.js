@@ -27,6 +27,7 @@ require("./modules/thumbs").init(() => {
 
 require("./modules/tvShowTime").watch((data, next) => {
     sources.addtoQueue(data, data.from).then(() => {
+        _log(`Found ${data.keyword} From tvShowTime`);
         let infos = utils.getInfosData(config('INFOS_PATH')),
             showsTo = infos['tvshowtimefeed'];
 

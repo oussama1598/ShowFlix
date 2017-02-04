@@ -29,6 +29,7 @@ function MoveToNext(name, key) {
         let infos = utils.getInfosData(config('INFOS_PATH'));
 
         utils.ElementDone(config('QUEUEPATH'), key).then(() => {
+            _log(key);
             utils.BuildNextElement(infos, config('INFOS_PATH'), config('QUEUEPATH'), i => {
                 infos = i;
                 parseQueue(name, 0);
@@ -58,13 +59,13 @@ function parseQueue() {
 function TryNextProv(src, data, details, code, index) {
     src.canNextProvider(data.prov).then(num => {
         data = { name: data.name, prov: num, code, index };
-        getMediaUrlFor(data, details);
+        getMediaUrlFor(data, details, true);
     }).catch(() => {
         MoveToNext(data.name, details.index)
     })
 }
 
-function getMediaUrlFor(data, details) {
+function getMediaUrlFor(data, details, overWrite) {
     const src = get(data.name);
 
     src.parseUrl(details, data.code).then(code => {
@@ -76,7 +77,7 @@ function getMediaUrlFor(data, details) {
             return;
         }
 
-        src.decodeForProvider(code, data.prov).then(url => {
+        src.decodeForProvider(code, data.prov, overWrite).then(url => {
             console.log(`Url Found ${url}`.green)
 
             downloader.download(url, details, data.index).then(() => {

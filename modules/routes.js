@@ -5,7 +5,8 @@ const tvShowsData = require("./tvshowsData");
 const stream = require("./stream");
 const utils = require("../utils/utils");
 const sources = require("../sources/sources");
-const tvshowTime = require("../modules/tvShowTime");
+const tvshowTime = require("./tvShowTime");
+const mediasHandler = require("./mediasHandler");
 const async = require("async");
 const config = require("./config");
 
@@ -23,32 +24,9 @@ module.exports = app => {
     app.get("/medias", (req, res) => {
         if (utils.cache().get("medias")) return res.send(utils.cache().get("medias"));
 
-        let episodes = {};
-
-        async.forEach(global.Files, (file, cb) => {
-            const metadata = tvShowsData.parseFromFilename(file);
-            if (!episodes[metadata.serieName]) episodes[metadata.serieName] = [];
-
-            episodes[metadata.serieName].push({
-                filename: path.basename(file),
-                serieName: metadata.serieName,
-                episode: parseInt(metadata.episode),
-                season: parseInt(metadata.season),
-                streamUrl: encodeURI(`/stream/${file}`),
-                thumbUrl: encodeURI(`/thumb/${file}`)
-            })
-
-            cb();
-        }, (err) => {
-            tvShowsData.getEpisodeDataByQuery(episodes)
-                .then(Files => {
-                    res.json(Files);
-                    utils.cache().set("medias", Files);
-                })
-                .catch(Files => {
-                    res.json(Files);
-                    utils.cache().set("medias", Files);
-                });
+        mediasHandler.getMedias().then(Files => {
+            res.json(Files);
+            utils.cache().set("medias", Files);
         })
     })
 
