@@ -10,9 +10,9 @@ function download(url, details, index, overWrite) {
             fileDowns = global.fileDowns,
             filename = `${details.name} s${details.season}e${details.episode}.mp4`;
 
-        if(!url){
+        if (!url) {
             console.log("No stream found".red);
-            return reject(null);
+            return reject({ index: null });
         }
 
         if (index === null) {
@@ -64,7 +64,7 @@ function download(url, details, index, overWrite) {
         }).on("error", err => {
             fileDowns[index].error = true;
             console.log(err.red);
-            reject(index);
+            reject({ index });
         })
     });
 }

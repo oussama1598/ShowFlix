@@ -1,19 +1,25 @@
 {
-   "queue": "4",
+   "queue": "0",
    "providers": {
+      "mosalsl": {
+         "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
+         "name": "the flash",
+         "season": 3
+      },
+      "seri-ar": {
+         "url": "http://www.seri-ar.com/2016/10/black-mirror-season-3.html",
+         "name": "black mirror",
+         "season": 3
+      },
       "cera": {
-         "url": "http://cera.online/series-the-blacklist-episode-12-season-4-s04e12-watch-cima4u-download-translated-egfire-tv-video.html",
+         "url": "http://cera.online/series-the-blacklist-episode-13-season-4-s04e13-watch-cima4u-download-translated-egfire-tv-video.html",
          "name": "the blacklist",
          "season": 4
       },
-      "mosalsl": {
-         "url": "http://mosalsl.com/index.php/series/za-100-all/",
-         "name": "the 100",
-         "season": 4
-      },
-      "undefined": {
-         "name": "lucifer",
-         "season": 2
+      "4helal": {
+         "url": "http://www.4helal.tv/video/16827/watch.html",
+         "name": "stranger things",
+         "season": 1
       }
    },
    "tvshowtimefeed": [
@@ -25,7 +31,7 @@
       {
          "name": "the flash",
          "lastSeason": 3,
-         "lasEpisode": 10
+         "lasEpisode": 12
       },
       {
          "name": "lucifer",
@@ -35,12 +41,12 @@
       {
          "name": "suits",
          "lastSeason": 6,
-         "lasEpisode": 12
+         "lasEpisode": 13
       },
       {
          "name": "the 100",
          "lastSeason": 4,
-         "lasEpisode": 1
+         "lasEpisode": 2
       }
    ]
 }

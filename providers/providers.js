@@ -15,7 +15,7 @@ function get(name) {
     return providers[name];
 }
 
-add(["openload", "keeload", "Uptobox", "top4top", "googleDrive"]);
+add(["openload", "keeload", "Uptobox", "top4top", "googleDrive", "thevideo"]);
 
 module.exports = {
     add,

@@ -13,7 +13,8 @@ angular.module('showFlex').controller('queueCtrl', ["$scope", "socketEvt", "$roo
                     return item.done;
                 }),
                 index = (index - done.length);
-            return $http({
+                
+            $http({
                 method: 'GET',
                 url: "/start",
                 params: { index: index }
@@ -43,7 +44,7 @@ angular.module('showFlex').controller('queueCtrl', ["$scope", "socketEvt", "$roo
         }
 
         $scope.init = function() {
-            $http.get("/queue").then(function (res){
+            $http.get("/queue").then(function(res) {
                 $scope.loading = false;
                 $scope.queue = res.data;
             })

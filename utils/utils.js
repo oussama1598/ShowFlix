@@ -9,6 +9,7 @@ const extend = require("extend");
 const path = require("path");
 const NodeCache = require("node-cache");
 const myCache = new NodeCache({ stdTTL: 60 * 60 * 24, checkperiod: 120 });
+const Bypasser = require('node-bypasser');
 
 function getHtml(url, json, cookies) {
     return Q.Promise((resolve, reject) => {
@@ -78,15 +79,16 @@ function BuildNextElement(infos, INFOS_PATH, QUEUEPATH, cb) {
         result = queueData.filter(item => !item.done);
 
     infos.queue = ('' + (parseInt(infos.queue) + 1));
-    if(parseInt(infos.queue) > (queueData.length - 1) && result.length > 0) infos.queue = "0";
+    if (parseInt(infos.queue) > (queueData.length - 1) && result.length > 0) infos.queue = "0";
 
     UpdateInfosData(infos, INFOS_PATH, () => {
         cb(infos);
     });
 }
 
-function ElementDone(QUEUEPATH, index) {
+function ElementDone(QUEUEPATH, index, not) {
     return Q.Promise((resolve, reject) => {
+        if (not) return resolve();
         getQueue(QUEUEPATH).then(data => {
             data[index].done = true;
             updateJSON(data, QUEUEPATH, () => {
@@ -180,7 +182,11 @@ function getQueue(QUEUEPATH, force = false) {
 function getQueueSync(QUEUEPATH) {
     if (!fs.existsSync(QUEUEPATH)) return [];
     delete require.cache[require.resolve(QUEUEPATH)];
-    return require(QUEUEPATH);
+    try {
+        return require(QUEUEPATH);
+    } catch (e) {
+        return require(QUEUEPATH);
+    }
 }
 
 function getQueueValue(QUEUEPATH, index) {
@@ -224,18 +230,33 @@ function deleteFromQueue({ episode, season, name }, queuepath) {
         getQueue(queuepath, true).then(data => {
             for (let i = data.length - 1; i >= 0; i--) {
                 const val = data[i];
-                if(val.name === name && val.episode == episode && val.season == season){
+                if (val.name === name && val.episode == episode && val.season == season) {
                     data.splice(i, 1);
                 }
             }
-            
-            updateConfig(data, queuepath, function (){
+
+            updateConfig(data, queuepath, function() {
                 resolve();
             });
         }).catch(err => {
             reject(err);
         });
     });
+}
+
+function pad(num, size) {
+    let s = num.toString();
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
+function Bypass(url) {
+    return Q.Promise((resolve, reject) => {
+        new Bypasser(url).decrypt(function(err, result) {
+            if (err) return reject();
+            resolve(result);
+        });
+    })
 }
 
 module.exports = {
@@ -257,5 +278,7 @@ module.exports = {
     getQueueSync,
     cache,
     fixInt,
-    deleteFromQueue
+    deleteFromQueue,
+    pad,
+    Bypass
 }

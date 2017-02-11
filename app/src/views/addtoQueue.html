@@ -5,33 +5,72 @@
             <md-button class="md-icon-button" ng-click="cancel()"><i class="fa fa-times" aria-hidden="true"></i></md-button>
         </div>
     </md-toolbar>
-    <md-dialog-content> 
+    <md-dialog-content>
         <md-content layout-padding>
-            <form name="addForm">
-                <md-input-container class="md-block">
-                    <label>Serie Name</label>
-                    <input required md-no-asterisk name="name" ng-model="addtoQueue.name">
-                </md-input-container>
-                <md-input-container class="md-block">
-                    <label>Season</label>
-                    <input required type="number" name="season" ng-model="addtoQueue.season" min="0" value="0">
-                </md-input-container>
-                <div layout="row">
-                    <md-input-container flex="50">
-                        <label>From episode</label>
-                        <input required type="number" name="fromepisode" ng-model="addtoQueue.fromepisode" min="0" value="1">
-                    </md-input-container>
-                    <md-input-container flex="50">
-                        <label>To episode</label>
-                        <input required type="text" name="toepisode" ng-model="addtoQueue.toepisode">
-                    </md-input-container>
-                </div>
-                <div>
-                    <button class="waves-effect pink btn" ng-click="add($event)" ng-disabled="addQueueProgress"><span ng-show="!addQueueProgress">Add</span>
-                        <md-progress-circular ng-show="addQueueProgress" class="md-hue-3" md-diameter="20px"></md-progress-circular>
-                    </button>
-                </div>
-            </form>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="AUTO">
+                    <md-content>
+                        <form name="addForm">
+                            <md-input-container class="md-block">
+                                <label>Serie Name</label>
+                                <input required md-no-asterisk name="name" ng-model="addtoQueue.name">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Season</label>
+                                <input required type="number" name="season" ng-model="addtoQueue.season" min="0" value="0">
+                            </md-input-container>
+                            <div layout="row">
+                                <md-input-container flex="50">
+                                    <label>From episode</label>
+                                    <input required type="number" name="fromepisode" ng-model="addtoQueue.fromepisode" min="0" value="1">
+                                </md-input-container>
+                                <md-input-container flex="50">
+                                    <label>To episode</label>
+                                    <input required type="text" name="toepisode" ng-model="addtoQueue.toepisode">
+                                </md-input-container>
+                            </div>
+                            <div>
+                                <button class="waves-effect pink btn" ng-click="add($event)" ng-disabled="addQueueProgress"><span ng-show="!addQueueProgress">Add</span>
+                                    <md-progress-circular ng-show="addQueueProgress" class="md-hue-3" md-diameter="20px"></md-progress-circular>
+                                </button>
+                            </div>
+                        </form>
+                    </md-content>
+                </md-tab>
+                <md-tab label="MANUAL">
+                    <md-content>
+                        <form name="addForm">
+                            <md-input-container class="md-block">
+                                <label>Url</label>
+                                <input required md-no-asterisk name="name" ng-model="manual.url">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Serie Name</label>
+                                <input required md-no-asterisk name="name" ng-model="manual.name">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Season</label>
+                                <input required type="number" name="season" ng-model="manual.season" min="0" value="0">
+                            </md-input-container>
+                            <div layout="row">
+                                <md-input-container flex="50">
+                                    <label>From episode</label>
+                                    <input required type="number" name="fromepisode" ng-model="manual.fromepisode" min="0" value="1">
+                                </md-input-container>
+                                <md-input-container flex="50">
+                                    <label>To episode</label>
+                                    <input required type="text" name="toepisode" ng-model="manual.toepisode">
+                                </md-input-container>
+                            </div>
+                            <div>
+                                <button class="waves-effect pink btn" ng-click="addUrl($event)" ng-disabled="addQueueProgress"><span ng-show="!addQueueProgress">Add</span>
+                                    <md-progress-circular ng-show="addQueueProgress" class="md-hue-3" md-diameter="20px"></md-progress-circular>
+                                </button>
+                            </div>
+                        </form>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
         </md-content>
     </md-dialog-content>
 </md-dialog>

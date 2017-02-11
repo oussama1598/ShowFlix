@@ -12,6 +12,7 @@ module.exports = {
     name: undefined,
     providerCodes: [],
     canSearch: undefined,
+    Url: undefined,
     addToQueueFromTo: function(details, QUEUEPATH) { // replace with get {name, episode, season, from, to}
         const _this = this;
         const SourceName = _this.name;
@@ -43,6 +44,7 @@ module.exports = {
 
             utils.getHtml(details.providerUrl).then($ => {
                 const Urls = _this.BuildUrlsSource($, details);
+
                 let interval = [],
                     { from, to } = details;
 
@@ -64,7 +66,7 @@ module.exports = {
                     }
                 }
 
-                if(interval.length <= 0) return reject("Nothing Found");
+                if (interval.length <= 0) return reject("Nothing Found");
                 resolve(interval);
             }).catch(err => {
                 reject(err);
@@ -84,45 +86,34 @@ module.exports = {
         })
     },
     parseUrl: function(details, code) {
-        const _this = this;
+        const _this = this,
+            SourceName = _this.name,
+            { episode, season, url, name } = details;
 
-        return Q.Promise((resolve, reject) => {
-            const SourceName = _this.name,
-                { episode, season, url, name} = details;
-            if (!code) {
-                console.log(`Parsing ${name} S${season}E${episode} From ${SourceName}`.green)
+        if (code) return Promise.resolve(code);
 
-                _this.Parse(url).then(url => { resolve(url) }).catch(() => {
-                    reject(true)
-                });
-
-            } else {
-                resolve(code);
-            }
-        })
+        console.log(`Parsing ${name} S${season}E${episode} From ${SourceName}`.green)
+        return _this.Parse(url).catch(() => {
+            return { next: true };
+        });
     },
-    compareTwoTitles: function(keyword, title, str) {
-        return Q.Promise((resolve, reject) => {
-            let results = [],
-                count = 0;
+    compareTwoTitles: function(keyword, title, str, fn) {
+        let results = [],
+            count = 0;
 
-            keyword = keyword.toLowerCase();
-            title = title.toLowerCase();
+        keyword = keyword.toLowerCase().split(str);
+        title = title.toLowerCase().split(str);
 
-            async.forEach(title.split(str), (word, cb) => {
-                async.forEach(keyword.split(str), (item, callback) => {
-                    if (word.indexOf(item) > -1 || item.indexOf(word) > -1) {
-                        results.push(word);
-                        ++count;
-                    }
-                    callback();
-                }, err => {
-                    cb();
-                })
-            }, err => {
-                return resolve({ count, results })
-            })
-        })
+        for (word of title) {
+            for (item of keyword) {
+                if (word.indexOf(item) > -1 || item.indexOf(word) > -1) {
+                    results.push(word);
+                    ++count;
+                }
+            }
+        }
+
+        fn({ count, results });
     },
     cansearch: function() {
         return this.canSearch;

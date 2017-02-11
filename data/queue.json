@@ -1,90 +1,50 @@
 [
    {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-13-season-1-s01e13-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 13,
-      "season": 1,
-      "done": true
-   },
-   {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-14-season-1-s01e14-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 14,
-      "season": 1,
-      "done": true
-   },
-   {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-15-season-1-s01e15-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 15,
-      "season": 1,
-      "done": true
-   },
-   {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-16-season-1-s01e16-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 16,
-      "season": 1,
-      "done": true
-   },
-   {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-17-season-1-s01e17-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 17,
-      "season": 1,
+      "provider": "seri-ar",
+      "url": "http://adf.ly/1fEnzt",
+      "name": "black mirror",
+      "episode": 1,
+      "season": 3,
       "done": false
    },
    {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-18-season-1-s01e18-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 18,
-      "season": 1,
+      "provider": "seri-ar",
+      "url": "http://adf.ly/1fEnyZ",
+      "name": "black mirror",
+      "episode": 2,
+      "season": 3,
       "done": false
    },
    {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-19-season-1-s01e19-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 19,
-      "season": 1,
+      "provider": "seri-ar",
+      "url": "http://adf.ly/1fEnzY",
+      "name": "black mirror",
+      "episode": 3,
+      "season": 3,
       "done": false
    },
    {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-20-season-1-s01e20-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 20,
-      "season": 1,
+      "provider": "seri-ar",
+      "url": "http://adf.ly/1fEo0Y",
+      "name": "black mirror",
+      "episode": 4,
+      "season": 3,
       "done": false
    },
    {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-21-season-1-s01e21-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 21,
-      "season": 1,
+      "provider": "seri-ar",
+      "url": "http://adf.ly/1fEnzF",
+      "name": "black mirror",
+      "episode": 5,
+      "season": 3,
       "done": false
    },
    {
-      "provider": "cera",
-      "url": "http://cera.online/series-supernatural-episode-22-season-1-s01e22-mosalsal-motarjam-translated-download-watch.html",
-      "name": "supernatural",
-      "episode": 22,
-      "season": 1,
+      "provider": "seri-ar",
+      "url": "http://adf.ly/1fEtCQ",
+      "name": "black mirror",
+      "episode": 6,
+      "season": 3,
       "done": false
-   },
-   {
-      "provider": "cera",
-      "url": "http://cera.online/series-the-blacklist-episode-12-season-4-s04e12-watch-cima4u-download-translated-egfire-tv-video.html",
-      "name": "the blacklist",
-      "episode": 12,
-      "season": 4,
-      "done": true
    }
 ]

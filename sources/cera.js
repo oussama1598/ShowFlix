@@ -7,8 +7,9 @@ const Q = require("q");
 
 module.exports = extend(true, {
     name: "cera",
-    providerCodes: [{ code: 3, name: "openload" }, { code: 2, name: "keeload" }, { code: 4, name: "Uptobox" }, { code: 1, name: "googleDrive" }],
+    providerCodes: [{ code: 3, name: "openload" }, { code: 4, name: "Uptobox" }, { code: 2, name: "keeload" }, { code: 1, name: "googleDrive" }],
     canSearch: true,
+    Url: "cera.online",
     decodeForProvider: function(Ecode, prov) {
         const provDetails = this.providerCodes[prov],
             provider = providers.get(provDetails.name),
@@ -64,8 +65,8 @@ module.exports = extend(true, {
                     const val = res.items[item];
                     const tryAgainst = ParticularEpisode ? `s${season}e${episode}` : `s${season}`;
                     if (val.link.indexOf(tryAgainst) > -1) {
-                        return _this.compareTwoTitles(val.link, q, "-").then(result => {
-                            if (result.count > 0 && !(result.results.indexOf("the") > -1 && result.count == 1)) {
+                        return _this.compareTwoTitles(val.link, q, "-", result => {
+                            if (result.count >= q.split("-").length) {
                                 if (!alreadyFound) {
                                     alreadyFound = true;
                                     return resolve(val.link);

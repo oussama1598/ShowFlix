@@ -24,12 +24,11 @@ function add(arr) {
     }
 }
 
-function MoveToNext(name, key) {
+function MoveToNext(name, key, notDone) {
     if (!global.NOMORE) {
         let infos = utils.getInfosData(config('INFOS_PATH'));
 
-        utils.ElementDone(config('QUEUEPATH'), key).then(() => {
-            _log(key);
+        utils.ElementDone(config('QUEUEPATH'), key, notDone).then(() => {
             utils.BuildNextElement(infos, config('INFOS_PATH'), config('QUEUEPATH'), i => {
                 infos = i;
                 parseQueue(name, 0);
@@ -49,7 +48,6 @@ function parseQueue() {
         } else {
             MoveToNext(el.provider, el.index);
         }
-
     }).catch(() => {
         console.log("All Done".green)
         global.NOMORE = true;
@@ -71,50 +69,33 @@ function getMediaUrlFor(data, details, overWrite) {
     src.parseUrl(details, data.code).then(code => {
         if (!code) {
             console.log("Can't parse this url check again".red);
-            console.log("Passing this episode".red);
-
-            MoveToNext(data.name, details.index)
-            return;
+            return Promise.reject({ next: true });
         }
-
-        src.decodeForProvider(code, data.prov, overWrite).then(url => {
-            console.log(`Url Found ${url}`.green)
-
-            downloader.download(url, details, data.index).then(() => {
-                console.log("Next Element".green)
-                MoveToNext(data.name, details.index)
-
-            }).catch(index => {
-                TryNextProv(src, data, details, code, index);
-            })
-        }).catch(err => {
-            TryNextProv(src, data, details, code, null);
-        })
-
-    }).catch(next => {
+        return src.decodeForProvider(code, data.prov)
+    }).then(url => {
+        console.log(`Url Found ${url}`.green);
+        return downloader.download(url, details, data.index, overWrite)
+    }).then(() => {
+        console.log("Next Element".green)
+        MoveToNext(data.name, details.index)
+    }).catch(({ next, index }) => {
+        if (index) TryNextProv(src, data, details, code, index);
         if (next) {
             console.log("Passing this episode".red);
-            MoveToNext(data.name, details.index)
+            MoveToNext(data.name, details.index, true)
         }
     })
 }
 
-function addOnetoQueue(name, details) {
-    const arr = [{
-        provider: name,
-        url: details.url,
-        name: details.name,
-        episode: details.episode,
-        season: details.season,
-        done: false
-    }];
 
-    utils.addToQueue(config('QUEUEPATH'), arr);
-}
-
-function addtoQueue(details, ParticularEpisode) {
+function addtoQueue(details, ParticularEpisode, withoutSearch) {
     return Q.Promise((resolve, reject) => {
-        search(0, details, ParticularEpisode, ({ url, provider }) => {
+        search({
+            index: 0,
+            details,
+            ParticularEpisode,
+            withoutSearch
+        }, ({ url, provider }) => {
             let infos = utils.getInfosData(config('INFOS_PATH'));
             details.providerUrl = url;
 
@@ -137,7 +118,9 @@ function clearQueue(cb) {
     utils.clearQueue(config('QUEUEPATH'), cb);
 }
 
-function search(index, details, ParticularEpisode, success, error) {
+function search({ index, details, ParticularEpisode, withoutSearch }, success, error) {
+    if (withoutSearch) return success(withoutSearch);
+
     const prov = sources[index].require;
 
     let infos = utils.getInfosData(config('INFOS_PATH'));
@@ -160,14 +143,14 @@ function search(index, details, ParticularEpisode, success, error) {
                 if (index === (sources.length - 1)) {
                     error(err);
                 } else {
-                    search(++index, details, ParticularEpisode, success, error);
+                    search({ index: ++index, details, ParticularEpisode }, success, error);
                 }
             });
         } else {
             if (index === (sources.length - 1)) {
                 error("Can't Find anything");
             } else {
-                search(++index, details, ParticularEpisode, success, error);
+                search({ index: ++index, details, ParticularEpisode }, success, error);
             }
         }
     }
@@ -182,7 +165,7 @@ function start(index) {
 
         clearQueue(err => {
             if (!err) {
-                infos.queue = index || -1;
+                infos.queue = index === null ? -1 : index;
                 utils.BuildNextElement(infos, config('INFOS_PATH'), config("QUEUEPATH"), () => {
                     _log("Parsing Started".yellow);
                     resolve();
@@ -202,13 +185,24 @@ function stop(name) {
     if (global.Dl) global.Dl.pause();
 }
 
-add(["4helal", "cera", "cimaclub", "mosalsl"]);
+function parseProviderFromUrl(url) {
+    for (source of sources) {
+        if (url.indexOf(source.require.Url) > -1) {
+            return source.name;
+            break;
+        }
+    }
+
+    return null;
+}
+ 
+add(["cera", "seri-ar", "4helal", "mosalsl"]);
 
 module.exports = {
     addtoQueue,
     start,
     stop,
     clearQueue,
-    addOnetoQueue,
-    search
+    search,
+    parseProviderFromUrl
 };

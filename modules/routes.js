@@ -105,7 +105,14 @@ module.exports = app => {
 
     app.get("/search", (req, res) => {
         if (!req.query.keyword || isNaN(req.query.season)) return res.send({ status: false, error: "Can't find any url" });
-        sources.search(0, { keyword: req.query.keyword, season: parseInt(req.query.season) }, data => {
+        sources.search({
+            index: 0,
+            details: {
+                keyword: req.query.keyword,
+                season: parseInt(req.query.season)
+            },
+            ParticularEpisode: req.query.episode
+        }, data => {
             res.send({ status: true, url: data.url });
         }, error => {
             res.send({ status: false, error })
@@ -142,16 +149,26 @@ module.exports = app => {
     })
 
     app.post("/addToqueue", (req, res) => {
-        if(!req.body) return res.send({ status: false, error: "data not completed" });
+        if (!req.body) return res.send({ status: false, error: "data not completed" });
 
-        let { keyword, season, to, from } = req.body;
-
+        let { keyword, season, to, from } = req.body, provName;
         season = utils.fixInt(season);
         from = utils.fixInt(from);
-        if (keyword === null || season === null || from === null || to === null) return res.send({ status: false, error: "data not completed" });
+
+        if (!keyword || !season || !from || !to) return res.send({ status: false, error: "data not completed" });
         if (to !== "f" && to < from) return res.send({ status: false, error: "from can't be less that to" });
 
-        sources.addtoQueue({ keyword, season, from, to }, null).then(() => {
+        if (req.body.url) {
+            provName = sources.parseProviderFromUrl(req.body.url);
+            if (!provName) return res.send({ status: false, error: "Url provider not found" });
+        }
+
+        const Url = provName ? {
+            url: req.body.url,
+            provider: provName
+        } : null;
+
+        sources.addtoQueue({ keyword, season, from, to }, null, Url).then(() => {
             res.send({ status: true })
         }).catch(error => {
             res.send({ status: false, error })

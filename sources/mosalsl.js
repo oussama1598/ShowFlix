@@ -10,6 +10,7 @@ module.exports = extend(true, {
     name: "mosalsl",
     providerCodes: [{ code: 3, name: "googleDrive" }],
     canSearch: true,
+    Url: "mosalsl.com/",
     decodeForProvider: function(Ecode, prov) {
         const provDetails = this.providerCodes[prov],
             provider = providers.get(provDetails.name);
@@ -65,7 +66,7 @@ module.exports = extend(true, {
                         title = el.text().toLowerCase(),
                         url = el.attr("href");
  
-                    _this.compareTwoTitles(details.keyword, title, " ").then(result => {
+                    _this.compareTwoTitles(details.keyword, title, " ", result => {
                         if(result.count > 0 && !alreadyFound){
                             alreadyFound = true;
                             return resolve(url)
