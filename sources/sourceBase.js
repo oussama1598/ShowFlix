@@ -36,7 +36,7 @@ module.exports = {
             details.season = utils.fixInt(details.season);
 
             details = extend({
-                name: null,
+                keyword: null,
                 season: 0,
                 from: 0,
                 to: "f" // f for finish
@@ -48,7 +48,7 @@ module.exports = {
                 let interval = [],
                     { from, to } = details;
 
-                to = (details.to === "f") ? Object.keys(Urls)[utils.ObjectSize(Urls) - 1] : (isNaN(details.to) ? details.to : parseInt(details.to));
+                to = (details.to === "f") ? utils.getLastEpisode(Urls) : (isNaN(details.to) ? details.to : parseInt(details.to));
 
                 for (episode in Urls) {
                     episode = parseInt(episode);
@@ -60,7 +60,8 @@ module.exports = {
                                 name: details.keyword,
                                 episode,
                                 season: details.season,
-                                done: false
+                                done: false,
+                                tried: false
                             });
                         }
                     }

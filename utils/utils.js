@@ -1,5 +1,4 @@
 const Q = require("q")
-const request = require("request")
 const cheerio = require("cheerio")
 const fs = require("fs");
 const colors = require("colors");
@@ -10,26 +9,25 @@ const path = require("path");
 const NodeCache = require("node-cache");
 const myCache = new NodeCache({ stdTTL: 60 * 60 * 24, checkperiod: 120 });
 const Bypasser = require('node-bypasser');
+const fetch = require('node-fetch');
+const FormData = require('form-data');
 
-function getHtml(url, json, cookies) {
-    return Q.Promise((resolve, reject) => {
-        var defer = Q.defer();
-        url = encodeURI(url);
-        request(url, (error, response, body) => {
-            if (error || response.statusCode !== 200) { _log(error, error || response.statusCode, body, url) }
-            if (!error && response.statusCode == 200) {
-                if (json) {
-                    resolve(body);
-                } else {
-                    const $ = cheerio.load(body);
-                    resolve((!cookies) ? $ : { $: $, cookies: parseCookies(response) });
-                }
-            } else {
-                console.log("Error occured when requesting this url".red);
-                reject("Error occured when requesting this url")
-            }
+function getHtml(url, json, method = "GET", form = {}, headers = {}) {
+    url = encodeURI(url);
+    return fetch(url, {
+            timeout: 10000,
+            method,
+            body: generateFormData(form),
+            headers
+        })
+        .then(res => {
+            return res.text();
+        }).then(body => {
+            return json ? body : cheerio.load(body);
+        }).catch(err => {
+            console.log(err.toString().red);
+            return err;
         });
-    })
 }
 
 function cache() {
@@ -64,7 +62,11 @@ function parseCookies(res) {
 
 function getInfosData(INFOS_PATH) {
     delete require.cache[require.resolve(INFOS_PATH)];
-    return require(INFOS_PATH);
+    try {
+        return require(INFOS_PATH);
+    } catch (e) {
+        return require(INFOS_PATH);
+    }
 }
 
 
@@ -74,11 +76,11 @@ function UpdateInfosData(obj, INFOS_PATH, cb) {
 }
 
 
-function BuildNextElement(infos, INFOS_PATH, QUEUEPATH, cb) {
+function BuildNextElement(infos, INFOS_PATH, QUEUEPATH, cb, forced) {
     let queueData = getQueueSync(QUEUEPATH),
-        result = queueData.filter(item => !item.done);
+        result = queueData.filter(item => !item.done && (parseInt(infos.queue) != (queueData.length - 1) ? true : !item.tried));
 
-    infos.queue = ('' + (parseInt(infos.queue) + 1));
+    infos.queue = (parseInt(infos.queue) + 1).toString();
     if (parseInt(infos.queue) > (queueData.length - 1) && result.length > 0) infos.queue = "0";
 
     UpdateInfosData(infos, INFOS_PATH, () => {
@@ -88,9 +90,9 @@ function BuildNextElement(infos, INFOS_PATH, QUEUEPATH, cb) {
 
 function ElementDone(QUEUEPATH, index, not) {
     return Q.Promise((resolve, reject) => {
-        if (not) return resolve();
         getQueue(QUEUEPATH).then(data => {
-            data[index].done = true;
+            data[index].done = !not;
+            data[index].tried = true;
             updateJSON(data, QUEUEPATH, () => {
                 resolve();
             })
@@ -259,6 +261,25 @@ function Bypass(url) {
     })
 }
 
+function generateFormData(obj) {
+    let str = "";
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            str += `${key}=${obj[key]}`;
+        }
+    }
+    return str;
+}
+
+function getLastEpisode(obj) {
+    let last = 0;
+    Object.keys(obj).forEach(episode => {
+        if (episode > last) last = episode;
+    });
+
+    return last;
+}
+
 module.exports = {
     getHtml,
     BuildNextElement,
@@ -280,5 +301,6 @@ module.exports = {
     fixInt,
     deleteFromQueue,
     pad,
-    Bypass
+    Bypass,
+    getLastEpisode
 }

@@ -14,7 +14,7 @@ function loadHtml(url, done) {
 function getUrl() {
     let results = [];
 
-    $("source").each(function () {
+    $("source").each(function() {
         results.push($(this).attr("src"));
     })
 
@@ -26,7 +26,7 @@ module.exports = function(url) {
     console.log("KeeLoad start parsing")
 
     loadHtml(url, () => {
-        defer.resolve(getUrl());
+        defer.resolve({ url: getUrl(), code: url });
     });
 
     return defer.promise;

@@ -8,15 +8,15 @@ module.exports = function(url) {
     url = `http://api.getlinkdrive.com/getlink?url=${url}`;
 
     return utils.getHtml(url, true).then(res => {
-    	res = JSON.parse(res);
+        res = JSON.parse(res);
 
-    	let lastRes = {res: 0, src: null};
-    	_.each(res, val => {
-    		const res = parseInt(val.res.replace("p", ""));
+        let lastRes = { res: 0, src: null };
+        _.each(res, val => {
+            const res = parseInt(val.res.replace("p", ""));
 
-    		if(res > lastRes.res) lastRes = {res, src: val.src};
-    	})
+            if (res > lastRes.res) lastRes = { res, src: val.src };
+        })
 
-    	return lastRes.src;
+        return { url: lastRes.src, code: url };
     })
 }

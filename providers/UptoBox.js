@@ -26,7 +26,7 @@ module.exports = function(url) {
     console.log("Uptobox start parsing")
 
     loadHtml(url, () => {
-        defer.resolve(getUrl());
+        defer.resolve({url: getUrl(), code: url});
     });
 
     return defer.promise;

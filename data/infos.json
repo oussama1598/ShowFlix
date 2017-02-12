@@ -1,5 +1,5 @@
 {
-   "queue": "0",
+   "queue": "3",
    "providers": {
       "mosalsl": {
          "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
@@ -7,26 +7,31 @@
          "season": 3
       },
       "seri-ar": {
-         "url": "http://www.seri-ar.com/2016/10/black-mirror-season-3.html",
-         "name": "black mirror",
-         "season": 3
+         "url": "http://www.seri-ar.com/2016/04/agents-of-shield-s1.html",
+         "name": "agents of shield",
+         "season": 1
       },
       "cera": {
-         "url": "http://cera.online/series-the-blacklist-episode-13-season-4-s04e13-watch-cima4u-download-translated-egfire-tv-video.html",
-         "name": "the blacklist",
+         "url": "http://cera.online/mosalsal-the-blacklist-episode-1-season-4-s04e01-watch-cima4u-download-translated-egfire-tv-series.html",
+         "name": "blacklist",
          "season": 4
       },
       "4helal": {
          "url": "http://www.4helal.tv/video/16827/watch.html",
          "name": "stranger things",
          "season": 1
+      },
+      "4filmk": {
+         "url": "http://www.4filmk.tv/show_online/مسلسل-marvels-agents-of-s-h-i-e-l-d-s04e01-حلقة-1-موسم-4-مترجم/",
+         "name": "agents of shield",
+         "season": 4
       }
    },
    "tvshowtimefeed": [
       {
          "name": "the blacklist",
          "lastSeason": 4,
-         "lasEpisode": 12
+         "lasEpisode": 13
       },
       {
          "name": "the flash",

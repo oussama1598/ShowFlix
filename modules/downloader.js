@@ -4,7 +4,7 @@ const filedownloader = require("filedownloader");
 const config = require("./config");
 
 
-function download(url, details, index, overWrite) {
+function download(url, details, index, overWrite, code) {
     return Q.Promise((resolve, reject) => {
         let defer = Q.defer(),
             fileDowns = global.fileDowns,
@@ -64,7 +64,7 @@ function download(url, details, index, overWrite) {
         }).on("error", err => {
             fileDowns[index].error = true;
             console.log(err.red);
-            reject({ index });
+            reject({ index, code });
         })
     });
 }

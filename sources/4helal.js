@@ -20,7 +20,7 @@ module.exports = extend(true, {
             resolve(provider(Ecode));
         })
     },
-    BuildUrlsSource: function($, infos) {
+    BuildUrlsSource: function($) {
         let Urls = {};
 
         $(".episodes-table").eq(0).find("tbody tr").each(function(e) {

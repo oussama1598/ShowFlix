@@ -20,7 +20,7 @@ module.exports = extend(true, {
             return provider($("iframe").attr("src"));
         })
     },
-    BuildUrlsSource: function($, infos) {
+    BuildUrlsSource: function($) {
         let Urls = {};
 
         $(".episodesList a").each(function(e) {
@@ -47,9 +47,10 @@ module.exports = extend(true, {
     search: function(details, ParticularEpisode) {
         const _this = this;
         return Q.Promise((resolve, reject) => {
-            const CX = "018010331078829701272:y0xgo6cnjbw";
-            const season = ('' + details.season).length > 1 ? details.season : `0${details.season}`
-            const episode = ParticularEpisode ? ('' + ParticularEpisode).length > 1 ? ParticularEpisode : `0${ParticularEpisode}` : "01";
+            const CX = "018010331078829701272:y0xgo6cnjbw",
+                season = utils.pad(details.season, 2),
+                episode = ParticularEpisode ? utils.pad(ParticularEpisode, 2) : utils.pad(1, 2);
+
             let q = details.keyword.toLowerCase();
             let alreadyFound = false;
 

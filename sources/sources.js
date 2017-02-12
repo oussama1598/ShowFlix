@@ -31,7 +31,7 @@ function MoveToNext(name, key, notDone) {
         utils.ElementDone(config('QUEUEPATH'), key, notDone).then(() => {
             utils.BuildNextElement(infos, config('INFOS_PATH'), config('QUEUEPATH'), i => {
                 infos = i;
-                parseQueue(name, 0);
+                parseQueue();
             });
         }).catch(() => { global.NOMORE = true });
     }
@@ -59,7 +59,7 @@ function TryNextProv(src, data, details, code, index) {
         data = { name: data.name, prov: num, code, index };
         getMediaUrlFor(data, details, true);
     }).catch(() => {
-        MoveToNext(data.name, details.index)
+        MoveToNext(data.name, details.index, true)
     })
 }
 
@@ -72,15 +72,15 @@ function getMediaUrlFor(data, details, overWrite) {
             return Promise.reject({ next: true });
         }
         return src.decodeForProvider(code, data.prov)
-    }).then(url => {
+    }).then(({ url, code }) => {
         console.log(`Url Found ${url}`.green);
-        return downloader.download(url, details, data.index, overWrite)
+        return downloader.download(url, details, data.index, overWrite, code)
     }).then(() => {
         console.log("Next Element".green)
         MoveToNext(data.name, details.index)
-    }).catch(({ next, index }) => {
-        if (index) TryNextProv(src, data, details, code, index);
-        if (next) {
+    }).catch(({ next, index, code }) => {
+        if (index != undefined) TryNextProv(src, data, details, code, index);
+        if (next != undefined) {
             console.log("Passing this episode".red);
             MoveToNext(data.name, details.index, true)
         }
@@ -170,7 +170,7 @@ function start(index) {
                     _log("Parsing Started".yellow);
                     resolve();
                     parseQueue();
-                })
+                });
             } else {
                 reject(err);
                 global.NOMORE = true;
@@ -195,8 +195,8 @@ function parseProviderFromUrl(url) {
 
     return null;
 }
- 
-add(["cera", "seri-ar", "4helal", "mosalsl"]);
+
+add(["4filmk", "cera", "seri-ar", "4helal", "mosalsl"]);
 
 module.exports = {
     addtoQueue,
