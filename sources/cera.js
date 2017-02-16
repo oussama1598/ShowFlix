@@ -7,7 +7,7 @@ const Q = require("q");
 
 module.exports = extend(true, {
     name: "cera",
-    providerCodes: [{ code: 3, name: "openload" }, { code: 4, name: "Uptobox" }, { code: 2, name: "keeload" }, { code: 1, name: "googleDrive" }],
+    providerCodes: [{ code: 3, name: "openload" }, { code: 4, name: "UptoBox" }, { code: 2, name: "keeload" }, { code: 1, name: "googleDrive" }],
     canSearch: true,
     Url: "cera.online",
     decodeForProvider: function(Ecode, prov) {

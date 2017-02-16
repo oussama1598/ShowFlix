@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 global.fileDowns = [];
 global.Files = [];
 global.NOMORE = true;
- 
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static("app", { maxAge: 3600000 }));
@@ -34,13 +34,15 @@ require("./modules/tvShowTime").watch((data, next) => {
         showsTo[data.index]['lastSeason'] = data.season;
         showsTo[data.index]['lasEpisode'] = data.number;
 
-        utils.UpdateInfosData(infos, config('INFOS_PATH'), () => {
+        utils.UpdateInfosData({tvshowtimefeed: showsTo}, config('INFOS_PATH'), () => {
             next();
             const imediateStart = config('START_SERVER_WHENE_FOUND');
             if (imediateStart) {
                 sources.start();
             }
         });
+
+
     });
 });
 
@@ -56,5 +58,4 @@ require('dns').lookup(require('os').hostname(), function(err, add) {
 })
 
 // TO ADD cinemalek
-// TO ADD notification 'https://api.simplepush.io/send/8BQi8a/Wow/So easy'
 // TODO: check for last queue element error Unexpected end of JSON input

@@ -11,11 +11,12 @@ const myCache = new NodeCache({ stdTTL: 60 * 60 * 24, checkperiod: 120 });
 const Bypasser = require('node-bypasser');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
+const low = require("lowdb");
 
 function getHtml(url, json, method = "GET", form = {}, headers = {}) {
     url = encodeURI(url);
     return fetch(url, {
-            timeout: 10000,
+            timeout: 20000,
             method,
             body: generateFormData(form),
             headers
@@ -61,31 +62,26 @@ function parseCookies(res) {
 }
 
 function getInfosData(INFOS_PATH) {
-    delete require.cache[require.resolve(INFOS_PATH)];
-    try {
-        return require(INFOS_PATH);
-    } catch (e) {
-        return require(INFOS_PATH);
-    }
+    return low(INFOS_PATH).getState();
 }
 
 
 function UpdateInfosData(obj, INFOS_PATH, cb) {
-    const OldData = getInfosData(INFOS_PATH);
-    updateJSON(extend(OldData, obj), INFOS_PATH, cb);
+    low(INFOS_PATH).assign(obj).write();
+    if(cb) cb();
 }
 
 
 function BuildNextElement(infos, INFOS_PATH, QUEUEPATH, cb, forced) {
     let queueData = getQueueSync(QUEUEPATH),
-        result = queueData.filter(item => !item.done && (parseInt(infos.queue) != (queueData.length - 1) ? true : !item.tried));
+        result = queueData.filter(item => !item.done && (parseInt(infos.queue) != (queueData.length - 1) ? true : !item.tried)),
+        infosdb = low(INFOS_PATH);
 
     infos.queue = (parseInt(infos.queue) + 1).toString();
     if (parseInt(infos.queue) > (queueData.length - 1) && result.length > 0) infos.queue = "0";
 
-    UpdateInfosData(infos, INFOS_PATH, () => {
-        cb(infos);
-    });
+    infosdb.get().assing({queue: infos.queue}).write();
+    cb(infosdb.getState());
 }
 
 function ElementDone(QUEUEPATH, index, not) {
@@ -120,11 +116,7 @@ function addToQueue(QUEUEPATH, arr, done) {
 }
 
 function updateJSON(object, path, done) {
-    fs.writeFile(path, JSON.stringify(object, null, 3), function(err) {
-        if (err) return console.log(err, true);
-        if (done)
-            done()
-    });
+    low(path).assign(object).write();
 }
 
 function ObjectSize(object) {
@@ -168,8 +160,7 @@ function getQueue(QUEUEPATH, force = false) {
             return reject();
         } else {
 
-            delete require.cache[require.resolve(QUEUEPATH)];
-            const data = require(QUEUEPATH);
+            const data = low(QUEUEPATH).getState();
 
             if (ObjectSize(data) <= 0 && !force) {
                 console.log("Data is empty please try again.".red);
@@ -183,12 +174,7 @@ function getQueue(QUEUEPATH, force = false) {
 
 function getQueueSync(QUEUEPATH) {
     if (!fs.existsSync(QUEUEPATH)) return [];
-    delete require.cache[require.resolve(QUEUEPATH)];
-    try {
-        return require(QUEUEPATH);
-    } catch (e) {
-        return require(QUEUEPATH);
-    }
+    return low(QUEUEPATH).getState();
 }
 
 function getQueueValue(QUEUEPATH, index) {
@@ -210,6 +196,7 @@ function clearQueue(QUEUEPATH, cb) {
             if (cb)
                 cb()
         })
+        if(cb) cb()
     }).catch(err => {
         if (cb) cb(err)
     });

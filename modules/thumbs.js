@@ -36,7 +36,7 @@ function checkThumbs(cb){
 function deleteThumb(uri){
     const filename = path.basename(uri, path.extname(uri)) + ".png",
         thumbPath = path.join(global.thumbsDir, filename);
-        
+
     utils.deleteFile(thumbPath);
 }
 

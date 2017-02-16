@@ -22,6 +22,7 @@
     "fluent-ffmpeg": "^2.1.0",
     "form-data": "^2.1.2",
     "google-search": "0.0.5",
+    "lowdb": "^0.15.5",
     "node-bypasser": "^1.7.0",
     "node-cache": "^4.1.1",
     "node-fetch": "^1.6.3",

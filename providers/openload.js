@@ -3,14 +3,14 @@ const utils = require("../utils/utils");
 const Q = require("q");
 
 /* OpenloadDecoder - A script which will be executed by Duktape to extract Openload links
- * 
+ *
  * JavaScript (for Duktape Java) port of openload urlresolver plugin by tknorris.
  *
- * Original plugin in Python : 
+ * Original plugin in Python :
  * https://github.com/tknorris/script.module.urlresolver/blob/master/lib/urlresolver/plugins/ol_gmu.py
- * 
+ *
  * Copyright (C) 2016 NitroXenon
- * 
+ *
  * This software is released under the GPLv3 License.
 openload.io urlresolver plugin
 Copyright (C) 2015 tknorris
@@ -240,4 +240,8 @@ module.exports = function(url) {
     return utils.getHtml(url).then($ => {
         return { url: JSON.parse(OpenloadDecoder.decode($.html()))[0], code: url };
     });
+
+    // return utils.getHtml(`http://video-downloader.herokuapp.com/download?url=${url}`, true).then(data => {
+    //     return { url: data.streamUrl, code: url };
+    // });
 }

@@ -79,7 +79,7 @@ function getMediaUrlFor(data, details, overWrite) {
         console.log("Next Element".green)
         MoveToNext(data.name, details.index)
     }).catch(({ next, index, code }) => {
-        if (index != undefined) TryNextProv(src, data, details, code, index);
+        if (index == null || index != undefined) TryNextProv(src, data, details, code, index);
         if (next != undefined) {
             console.log("Passing this episode".red);
             MoveToNext(data.name, details.index, true)

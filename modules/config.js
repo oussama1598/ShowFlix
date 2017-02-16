@@ -1,9 +1,7 @@
 const path = require("path");
+const low = require("lowdb");
+const db = low(path.join(__dirname, "../data/config.json"));
 
 module.exports = (CNST) => {
-    delete require.cache[require.resolve('../data/config')];
-    const data = require('../data/config');
-
-    if(CNST) return data[CNST] ? data[CNST] : null;
-    if(!CNST) return data;
+    return db.get(CNST).value() ? db.get(CNST).value() : null;
 }
