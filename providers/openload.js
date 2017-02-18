@@ -238,7 +238,7 @@ module.exports = function(url) {
     console.log("OpenLoad start parsing")
 
     return utils.getHtml(url).then($ => {
-        return { url: JSON.parse(OpenloadDecoder.decode($.html()))[0], code: url };
+        return JSON.parse(OpenloadDecoder.decode($.html()))[0];
     });
 
     // return utils.getHtml(`http://video-downloader.herokuapp.com/download?url=${url}`, true).then(data => {

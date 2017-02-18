@@ -1,17 +1,6 @@
 const utils = require("../utils/utils");
-const Q = require("q");
-const request = require("request");
-var $;
 
-function loadHtml(url, done) {
-    utils.getHtml(url).then(html => {
-        console.log("KeeLoad HTML loaded!");
-        $ = html;
-        done();
-    })
-}
-
-function getUrl() {
+function getUrl($) {
     let results = [];
 
     $("source").each(function() {
@@ -22,12 +11,7 @@ function getUrl() {
 }
 
 module.exports = function(url) {
-    const defer = Q.defer();
-    console.log("KeeLoad start parsing")
-
-    loadHtml(url, () => {
-        defer.resolve({ url: getUrl(), code: url });
-    });
-
-    return defer.promise;
+    return utils.getHtml(url).then($ => {
+        return getUrl($);
+    })
 }

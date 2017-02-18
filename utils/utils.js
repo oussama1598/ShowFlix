@@ -7,7 +7,10 @@ const _ = require("underscore");
 const extend = require("extend");
 const path = require("path");
 const NodeCache = require("node-cache");
-const myCache = new NodeCache({ stdTTL: 60 * 60 * 24, checkperiod: 120 });
+const myCache = new NodeCache({
+    stdTTL: 60 * 60 * 24,
+    checkperiod: 120
+});
 const Bypasser = require('node-bypasser');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
@@ -68,7 +71,7 @@ function getInfosData(INFOS_PATH) {
 
 function UpdateInfosData(obj, INFOS_PATH, cb) {
     low(INFOS_PATH).assign(obj).write();
-    if(cb) cb();
+    if (cb) cb();
 }
 
 
@@ -80,7 +83,10 @@ function BuildNextElement(infos, INFOS_PATH, QUEUEPATH, cb, forced) {
     infos.queue = (parseInt(infos.queue) + 1).toString();
     if (parseInt(infos.queue) > (queueData.length - 1) && result.length > 0) infos.queue = "0";
 
-    infosdb.get().assing({queue: infos.queue}).write();
+    infosdb.assign({
+        queue: infos.queue
+    }).write();
+
     cb(infosdb.getState());
 }
 
@@ -89,10 +95,12 @@ function ElementDone(QUEUEPATH, index, not) {
         getQueue(QUEUEPATH).then(data => {
             data[index].done = !not;
             data[index].tried = true;
-            updateJSON(data, QUEUEPATH, () => {
-                resolve();
-            })
-        }).catch(() => { reject() })
+
+            low(QUEUEPATH).setState(data);
+            resolve();
+        }).catch(() => {
+            reject()
+        })
     })
 }
 
@@ -133,7 +141,13 @@ function deleteFile(uri) {
         fs.exists(uri, (err, exists) => {
             if (err || !exists) reject("This File does not exist");
 
-            del(uri, { force: true }).then(() => { resolve() }).catch(err => { reject(err) });
+            del(uri, {
+                force: true
+            }).then(() => {
+                resolve()
+            }).catch(err => {
+                reject(err)
+            });
         })
     })
 }
@@ -181,8 +195,14 @@ function getQueueValue(QUEUEPATH, index) {
     return Q.Promise((resolve, reject) => {
         getQueue(QUEUEPATH).then(data => {
             const arr = data.filter((val, key) => key === index);
-            if (arr.length > 0) { resolve(arr[0]) } else { reject(); }
-        }).catch(err => { reject(err) });
+            if (arr.length > 0) {
+                resolve(arr[0])
+            } else {
+                reject();
+            }
+        }).catch(err => {
+            reject(err)
+        });
     })
 }
 
@@ -192,11 +212,9 @@ function clearQueue(QUEUEPATH, cb) {
         _.each(data, (val, key) => {
             if (!val.done) newArr.push(val);
         });
-        updateJSON(newArr, QUEUEPATH, () => {
-            if (cb)
-                cb()
-        })
-        if(cb) cb()
+        low(QUEUEPATH).setState(newArr);
+
+        if (cb) cb()
     }).catch(err => {
         if (cb) cb(err)
     });
@@ -214,9 +232,14 @@ function fixInt(num) {
     return isNaN(parseInt(num)) ? null : parseInt(num);
 }
 
-function deleteFromQueue({ episode, season, name }, queuepath) {
+function deleteFromQueue({
+    episode,
+    season,
+    name
+}, queuepath) {
     return Q.Promise((resolve, reject) => {
         getQueue(queuepath, true).then(data => {
+
             for (let i = data.length - 1; i >= 0; i--) {
                 const val = data[i];
                 if (val.name === name && val.episode == episode && val.season == season) {
@@ -224,9 +247,8 @@ function deleteFromQueue({ episode, season, name }, queuepath) {
                 }
             }
 
-            updateConfig(data, queuepath, function() {
-                resolve();
-            });
+            low(queuepath).setState(data);
+            resolve();
         }).catch(err => {
             reject(err);
         });

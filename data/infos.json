@@ -1,57 +1,62 @@
 {
-   "queue": "1",
-   "providers": {
-      "mosalsl": {
-         "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
-         "name": "the flash",
-         "season": 3
-      },
-      "seri-ar": {
-         "url": "http://www.seri-ar.com/2016/07/suits-season-6.html",
-         "name": "suits",
-         "season": 6
-      },
-      "cera": {
-         "url": "http://cera.online/mosalsal-the-blacklist-episode-1-season-4-s04e01-watch-cima4u-download-translated-egfire-tv-series.html",
-         "name": "blacklist",
-         "season": 4
-      },
-      "4helal": {
-         "url": "http://www.4helal.tv/v/Series-The-100-S04-E03-watch-video.html",
-         "name": "the 100",
-         "season": 4
-      },
-      "4filmk": {
-         "url": "http://www.4filmk.tv/show_online/مسلسل-marvels-agents-of-s-h-i-e-l-d-s04e01-حلقة-1-موسم-4-مترجم/",
-         "name": "agents of shield",
-         "season": 4
-      }
-   },
-   "tvshowtimefeed": [
-      {
-         "name": "the blacklist",
-         "lastSeason": 4,
-         "lasEpisode": 13
-      },
-      {
-         "name": "the flash",
-         "lastSeason": 3,
-         "lasEpisode": 12
-      },
-      {
-         "name": "lucifer",
-         "lastSeason": 2,
-         "lasEpisode": 13
-      },
-      {
-         "name": "suits",
-         "lastSeason": 6,
-         "lasEpisode": 13
-      },
-      {
-         "name": "the 100",
-         "lastSeason": 4,
-         "lasEpisode": 3
-      }
-   ]
+  "queue": "0",
+  "providers": {
+    "mosalsl": {
+      "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
+      "name": "the flash",
+      "season": 3
+    },
+    "seri-ar": {
+      "url": "http://www.seri-ar.com/2016/07/suits-season-6.html",
+      "name": "suits",
+      "season": 6
+    },
+    "cera": {
+      "url": "http://cera.online/series-the-blacklist-episode-14-season-4-s04e14-watch-cima4u-download-translated-egfire-tv-video.html",
+      "name": "the blacklist",
+      "season": 4
+    },
+    "4helal": {
+      "url": "http://www.4helal.tv/v/Series-The-100-S04-E03-watch-video.html",
+      "name": "the 100",
+      "season": 4
+    },
+    "4filmk": {
+      "url": "http://www.4filmk.tv/show_online/مسلسل-marvels-agents-of-s-h-i-e-l-d-s04e01-حلقة-1-موسم-4-مترجم/",
+      "name": "agents of shield",
+      "season": 4
+    },
+    "cimaclub": {
+      "url": "http://cimaclub.com/مسلسل-suits-الموسم-السادس-الحلقة-14-الرابعة-ع/?view=1",
+      "name": "suits",
+      "season": 6
+    }
+  },
+  "tvshowtimefeed": [
+    {
+      "name": "the blacklist",
+      "lastSeason": 4,
+      "lasEpisode": 13
+    },
+    {
+      "name": "the flash",
+      "lastSeason": 3,
+      "lasEpisode": 12
+    },
+    {
+      "name": "lucifer",
+      "lastSeason": 2,
+      "lasEpisode": 13
+    },
+    {
+      "name": "suits",
+      "lastSeason": 6,
+      "lasEpisode": 13
+    },
+    {
+      "name": "the 100",
+      "lastSeason": 4,
+      "lasEpisode": 3
+    }
+  ]
 }

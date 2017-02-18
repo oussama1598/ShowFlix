@@ -19,7 +19,10 @@ function get(name) {
 function add(arr) {
     if (arr.constructor === Array) {
         arr.forEach(name => {
-            sources.push({ name, require: require(`./${name}`) });
+            sources.push({
+                name,
+                require: require(`./${name}`)
+            });
         });
     }
 }
@@ -33,7 +36,9 @@ function MoveToNext(name, key, notDone) {
                 infos = i;
                 parseQueue();
             });
-        }).catch(() => { global.NOMORE = true });
+        }).catch(() => {
+            global.NOMORE = true
+        });
     }
 }
 
@@ -44,7 +49,12 @@ function parseQueue() {
         el.index = parseInt(infos.queue);
 
         if (!el.done) {
-            getMediaUrlFor({ name: el.provider, prov: 0, code: null, index: null }, el);
+            getMediaUrlFor({
+                name: el.provider,
+                prov: 0,
+                code: null,
+                index: null
+            }, el);
         } else {
             MoveToNext(el.provider, el.index);
         }
@@ -56,7 +66,12 @@ function parseQueue() {
 
 function TryNextProv(src, data, details, code, index) {
     src.canNextProvider(data.prov).then(num => {
-        data = { name: data.name, prov: num, code, index };
+        data = {
+            name: data.name,
+            prov: num,
+            code,
+            index
+        };
         getMediaUrlFor(data, details, true);
     }).catch(() => {
         MoveToNext(data.name, details.index, true)
@@ -69,16 +84,30 @@ function getMediaUrlFor(data, details, overWrite) {
     src.parseUrl(details, data.code).then(code => {
         if (!code) {
             console.log("Can't parse this url check again".red);
-            return Promise.reject({ next: true });
+            return Promise.reject({
+                next: true
+            });
         }
-        return src.decodeForProvider(code, data.prov)
-    }).then(({ url, code }) => {
+        return src.decodeForProvider(code, data.prov).then(url => {
+            return {
+                url,
+                code
+            };
+        });
+    }).then(({
+        url,
+        code
+    }) => {
         console.log(`Url Found ${url}`.green);
         return downloader.download(url, details, data.index, overWrite, code)
     }).then(() => {
         console.log("Next Element".green)
         MoveToNext(data.name, details.index)
-    }).catch(({ next, index, code }) => {
+    }).catch(({
+        next,
+        index,
+        code
+    }) => {
         if (index == null || index != undefined) TryNextProv(src, data, details, code, index);
         if (next != undefined) {
             console.log("Passing this episode".red);
@@ -95,11 +124,18 @@ function addtoQueue(details, ParticularEpisode, withoutSearch) {
             details,
             ParticularEpisode,
             withoutSearch
-        }, ({ url, provider }) => {
+        }, ({
+            url,
+            provider
+        }) => {
             let infos = utils.getInfosData(config('INFOS_PATH'));
             details.providerUrl = url;
 
-            infos.providers[provider] = { url: url, name: details.keyword, season: details.season };
+            infos.providers[provider] = {
+                url: url,
+                name: details.keyword,
+                season: details.season
+            };
 
             utils.UpdateInfosData(infos, config('INFOS_PATH'));
 
@@ -118,7 +154,12 @@ function clearQueue(cb) {
     utils.clearQueue(config('QUEUEPATH'), cb);
 }
 
-function search({ index, details, ParticularEpisode, withoutSearch }, success, error) {
+function search({
+    index,
+    details,
+    ParticularEpisode,
+    withoutSearch
+}, success, error) {
     if (withoutSearch) return success(withoutSearch);
 
     const prov = sources[index].require;
@@ -134,23 +175,37 @@ function search({ index, details, ParticularEpisode, withoutSearch }, success, e
     details.keyword = details.keyword.toLowerCase();
 
     if (!ParticularEpisode && SearchInfos && SearchInfos.name === details.keyword && SearchInfos.season === details.season) {
-        success({ url: infos.providers[prov.name].url, provider: prov.name });
+        success({
+            url: infos.providers[prov.name].url,
+            provider: prov.name
+        });
     } else {
         if (prov.cansearch()) {
             prov.search(details, ParticularEpisode).then(url => {
-                success({ url, provider: prov.name });
+                success({
+                    url,
+                    provider: prov.name
+                });
             }).catch(err => {
                 if (index === (sources.length - 1)) {
                     error(err);
                 } else {
-                    search({ index: ++index, details, ParticularEpisode }, success, error);
+                    search({
+                        index: ++index,
+                        details,
+                        ParticularEpisode
+                    }, success, error);
                 }
             });
         } else {
             if (index === (sources.length - 1)) {
                 error("Can't Find anything");
             } else {
-                search({ index: ++index, details, ParticularEpisode }, success, error);
+                search({
+                    index: ++index,
+                    details,
+                    ParticularEpisode
+                }, success, error);
             }
         }
     }
@@ -166,6 +221,7 @@ function start(index) {
         clearQueue(err => {
             if (!err) {
                 infos.queue = index === null ? -1 : index;
+
                 utils.BuildNextElement(infos, config('INFOS_PATH'), config("QUEUEPATH"), () => {
                     _log("Parsing Started".yellow);
                     resolve();
@@ -196,7 +252,7 @@ function parseProviderFromUrl(url) {
     return null;
 }
 
-add(["4filmk", "cera", "seri-ar", "4helal", "mosalsl"]);
+add(["cimaclub", "4filmk", "cera", "seri-ar", "4helal", "mosalsl"]);
 
 module.exports = {
     addtoQueue,

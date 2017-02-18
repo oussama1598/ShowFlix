@@ -1,11 +1,11 @@
 [
-   {
-      "provider": "4helal",
-      "url": "http://www.4helal.tv/v/Series-The-100-S04-E03-watch-video.html",
-      "name": "the 100",
-      "episode": 3,
-      "season": 4,
-      "done": true,
-      "tried": true
-   }
+  {
+    "provider": "cimaclub",
+    "url": "http://cimaclub.com/مسلسل-legion-الموسم-الاول-الحلقة-1-الاولى/",
+    "name": "legion",
+    "episode": 1,
+    "season": 1,
+    "done": false,
+    "tried": true
+  }
 ]

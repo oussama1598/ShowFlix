@@ -17,6 +17,6 @@ module.exports = function(url) {
             if (res > lastRes.res) lastRes = { res, src: val.src };
         })
 
-        return { url: lastRes.src, code: url };
+        return lastRes.src;
     })
 }

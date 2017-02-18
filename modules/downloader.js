@@ -12,7 +12,7 @@ function download(url, details, index, overWrite, code) {
 
         if (!url) {
             console.log("No stream found".red);
-            return reject({ index: null });
+            return reject({ index: null, code});
         }
 
         if (index === null) {
