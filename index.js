@@ -46,8 +46,6 @@ require("./modules/tvShowTime").watch((data, next) => {
     });
 });
 
-//sources.addOnetoQueue('mosalsl', {url, name, episode, season});
-
 require('dns').lookup(require('os').hostname(), function(err, add) {
     server.on("error", err => {
         console.log(`Can't start http server. ${err.toString()}`.red, true);
@@ -57,5 +55,4 @@ require('dns').lookup(require('os').hostname(), function(err, add) {
     });
 })
 
-// TO ADD cinemalek
-// TODO: check for last queue element error Unexpected end of JSON input
+// TODO: add providers automaticaly

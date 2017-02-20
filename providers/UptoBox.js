@@ -13,7 +13,7 @@ function getUrl($) {
 module.exports = function(url) {
     console.log("Uptobox start parsing")
 
-    utils.getHtml(url).then($ => {
+    return utils.getHtml(url).then($ => {
         console.log("Uptobox HTML loaded!");
         return getUrl($);
     });

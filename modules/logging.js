@@ -11,7 +11,7 @@ module.exports = io => {
         if (config("ENABLE_SERVER_LOGGING")) _log(data);
 
         if (phoneLog && config("ENABLE_PHONE_LOGGIN") && config("SIMPLE_PUSH_ID") !== "" && typeof data === "string") {
-            request.get(encodeURI(`${config("SIMPLE_PUSH_URL")}${config("SIMPLE_PUSH_ID")}/showFlix Notification/${data}`));
+            request.get(encodeURI(`${config("SIMPLE_PUSH_URL")}${config("SIMPLE_PUSH_ID")}/showFlix Notification/${colors.stripColors(data)}`));
         }
 
         if (!onlyServer && config("ENABLE_CLIENT_LOGGING")) {

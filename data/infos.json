@@ -1,5 +1,5 @@
 {
-  "queue": "0",
+  "queue": "1",
   "providers": {
     "mosalsl": {
       "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
@@ -7,9 +7,9 @@
       "season": 3
     },
     "seri-ar": {
-      "url": "http://www.seri-ar.com/2016/07/suits-season-6.html",
-      "name": "suits",
-      "season": 6
+      "url": "http://www.seri-ar.com/2016/10/black-mirror-season-3.html",
+      "name": "black mirror",
+      "season": 3
     },
     "cera": {
       "url": "http://cera.online/series-the-blacklist-episode-14-season-4-s04e14-watch-cima4u-download-translated-egfire-tv-video.html",
@@ -27,9 +27,9 @@
       "season": 4
     },
     "cimaclub": {
-      "url": "http://cimaclub.com/مسلسل-suits-الموسم-السادس-الحلقة-14-الرابعة-ع/?view=1",
-      "name": "suits",
-      "season": 6
+      "url": "http://cimaclub.com/the-blacklist-الموسم-الرابع-الحلقة-14-الرابعة-عشر/?view=1",
+      "name": "the blacklist",
+      "season": 4
     }
   },
   "tvshowtimefeed": [

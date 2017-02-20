@@ -4,6 +4,7 @@ const utils = require("../utils/utils");
 const path = require("path");
 const _ = require('underscore');
 const config = require("./config");
+const fs = require("fs");
 
 let tempraryFiles = [];
 
@@ -12,16 +13,15 @@ module.exports = () => {
         .on("add", uri => {
             uri = path.basename(uri);
 
-            if (!searchForPath(uri) && !searchWithinGlobal(uri)) {
+            if (!searchForPath(uri) && (searchWithinGlobal(uri) === false)) {
                 addPath(uri, thumbs.thumbExists(uri));
             }
         })
         .on("change", uri => {
             uri = path.basename(uri);
-
             const index = searchForPath(uri);
 
-            if (index) {
+            if (index && fs.statSync(uri)["size"] < parseInt(config("FILE_TRESHOLD_SIZE"))) {
                 clearTimeout(tempraryFiles[index].timeout);
 
                 tempraryFiles.splice(index, 1);
@@ -55,7 +55,9 @@ function addPath(path, imediatly) {
 
     tempraryFiles.push({
         path,
-        timeout: setTimeout(() => { addtoGlobal(path) }, 10000)
+        timeout: setTimeout(() => {
+            addtoGlobal(path)
+        }, 10000)
     })
 }
 
@@ -69,20 +71,14 @@ function addtoGlobal(path, imediatly) {
     }
 }
 
-function searchForPath(path) {
-    for (file in tempraryFiles) {
-        if (tempraryFiles[file].path === path) {
-            return file;
-        }
-    }
-    return false;
+
+
+function searchForPath(uri) {
+    const result = tempraryFiles.filter(item => item.path === path);
+    return result[0] ? tempraryFiles.indexOf(result[0]) : false;
 }
 
-function searchWithinGlobal(path) {
-    for (file in global.Files) {
-        if (global.Files[file] === path) {
-            return file;
-        }
-    }
-    return false;
+function searchWithinGlobal(uri) {
+    const result = global.Files.filter(item => item === uri);
+    return result[0] ? global.Files.indexOf(result[0]) : false;
 }
