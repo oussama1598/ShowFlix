@@ -1,83 +1,11 @@
 [
   {
-    "provider": "seri-ar",
-    "url": "http://adf.ly/1fEnzF",
-    "name": "black mirror",
-    "episode": 5,
+    "provider": "4helal",
+    "url": "http://www.4helal.tv/v/series-The-Flash-S03-E13-watch-video.html",
+    "name": "the flash",
+    "episode": 13,
     "season": 3,
     "done": true,
     "tried": true
-  },
-  {
-    "provider": "cimaclub",
-    "url": "http://cimaclub.com/مسلسل-travelers-الموسم-الاول-الحلقة-2-الثانية/",
-    "name": "travelers",
-    "episode": 2,
-    "season": 1,
-    "done": false,
-    "tried": false
-  },
-  {
-    "provider": "cimaclub",
-    "url": "http://cimaclub.com/travelers-الموسم-الاول-الحلقة-3-الثالثة/",
-    "name": "travelers",
-    "episode": 3,
-    "season": 1,
-    "done": false,
-    "tried": false
-  },
-  {
-    "provider": "cimaclub",
-    "url": "http://cimaclub.com/مسلسل-travelers-الموسم-الاول-الحلقة-4-الرابعة/",
-    "name": "travelers",
-    "episode": 4,
-    "season": 1,
-    "done": false,
-    "tried": false
-  },
-  {
-    "provider": "cimaclub",
-    "url": "http://cimaclub.com/مسلسل-travelers-الموسم-الاول-الحلقة-5-الخامسة/",
-    "name": "travelers",
-    "episode": 5,
-    "season": 1,
-    "done": false,
-    "tried": false
-  },
-  {
-    "provider": "cimaclub",
-    "url": "http://cimaclub.com/مسلسل-travelers-الموسم-الاول-الحلقة-6-السادسة/",
-    "name": "travelers",
-    "episode": 6,
-    "season": 1,
-    "done": false,
-    "tried": false
-  },
-  {
-    "provider": "cimaclub",
-    "url": "http://cimaclub.com/مسلسل-travelers-الموسم-الاول-الحلقة-7-السابعة/",
-    "name": "travelers",
-    "episode": 7,
-    "season": 1,
-    "done": false,
-    "tried": false
-  },
-  {
-    "provider": "cimaclub",
-    "url": "http://cimaclub.com/مسلسل-travelers-الموسم-الاول-الحلقة-8-الثامنة/",
-    "name": "travelers",
-    "episode": 8,
-    "season": 1,
-    "done": false,
-    "tried": false
-  },
-  {
-    "provider": "cimaclub",
-    "url": "http://cimaclub.com/مسلسل-travelers-الموسم-الاول-الحلقة-9-التاسعة/",
-    "name": "travelers",
-    "episode": 9,
-    "season": 1,
-    "done": false,
-    "tried": false
   }
 ]

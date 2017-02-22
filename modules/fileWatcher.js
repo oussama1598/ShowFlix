@@ -18,12 +18,15 @@ module.exports = () => {
             }
         })
         .on("change", uri => {
+            const fullpath = uri;
+
             uri = path.basename(uri);
             const index = searchForPath(uri);
 
-            if (index && fs.statSync(uri)["size"] < parseInt(config("FILE_TRESHOLD_SIZE"))) {
-                clearTimeout(tempraryFiles[index].timeout);
+            if (index === false) return;
 
+            if (fs.statSync(fullpath)["size"] < parseInt(config("FILE_TRESHOLD_SIZE"))) {
+                clearTimeout(tempraryFiles[index].timeout);
                 tempraryFiles.splice(index, 1);
                 addPath(uri);
             }
@@ -33,12 +36,12 @@ module.exports = () => {
 
             const index = searchForPath(uri),
                 globalIndex = searchWithinGlobal(uri);
-            if (index) {
+            if (index !== false) {
                 clearTimeout(tempraryFiles[index].timeout);
                 tempraryFiles.splice(index, 1);
             }
 
-            if (globalIndex) global.Files.splice(globalIndex, 1);
+            if (globalIndex !== false) global.Files.splice(globalIndex, 1);
 
             thumbs.deleteThumb(uri);
 
@@ -56,8 +59,8 @@ function addPath(path, imediatly) {
     tempraryFiles.push({
         path,
         timeout: setTimeout(() => {
-            addtoGlobal(path)
-        }, 10000)
+            addtoGlobal(path);
+        }, 5000)
     })
 }
 
@@ -74,7 +77,7 @@ function addtoGlobal(path, imediatly) {
 
 
 function searchForPath(uri) {
-    const result = tempraryFiles.filter(item => item.path === path);
+    const result = tempraryFiles.filter(item => item.path === uri);
     return result[0] ? tempraryFiles.indexOf(result[0]) : false;
 }
 

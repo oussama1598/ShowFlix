@@ -67,6 +67,7 @@ module.exports = extend(true, {
                         desc = $(this).find("p").text().toLowerCase(),
                         title = $(this).find("h2").text().toLowerCase();
 
+                    //_log(desc);
                     const matcheResults = [desc.indexOf(matches[0])];
 
                     if (matcheResults[0] > -1) {

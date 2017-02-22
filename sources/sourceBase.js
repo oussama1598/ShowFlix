@@ -46,9 +46,14 @@ module.exports = {
                 const Urls = _this.BuildUrlsSource($, details);
 
                 let interval = [],
-                    { from, to } = details;
+                    {
+                        from,
+                        to
+                    } = details;
 
                 to = (details.to === "f") ? utils.getLastEpisode(Urls) : (isNaN(details.to) ? details.to : parseInt(details.to));
+
+                _log(from, to);
 
                 for (episode in Urls) {
                     episode = parseInt(episode);
@@ -89,13 +94,20 @@ module.exports = {
     parseUrl: function(details, code) {
         const _this = this,
             SourceName = _this.name,
-            { episode, season, url, name } = details;
+            {
+                episode,
+                season,
+                url,
+                name
+            } = details;
 
         if (code) return Promise.resolve(code);
 
         console.log(`Parsing ${name} S${season}E${episode} From ${SourceName}`.green)
         return _this.Parse(url).catch(() => {
-            return { next: true };
+            return {
+                next: true
+            };
         });
     },
     compareTwoTitles: function(keyword, title, str, fn) {
@@ -114,7 +126,10 @@ module.exports = {
             }
         }
 
-        fn({ count, results });
+        fn({
+            count,
+            results
+        });
     },
     cansearch: function() {
         return this.canSearch;

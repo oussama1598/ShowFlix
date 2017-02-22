@@ -70,6 +70,7 @@ module.exports = extend(true, {
                         title = val.title.toLowerCase().replace("مسلسل", "").trim(),
                         matcheResults = [title.indexOf(matches[0]), title.indexOf(matches[1])];
 
+
                     if (matcheResults[0] > -1 && matcheResults[1] > -1) {
                         const matchString = [
                             title.substr(matcheResults[0] + matches[0].length)[0] === " ",

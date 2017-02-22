@@ -137,7 +137,7 @@ function addtoQueue(details, ParticularEpisode, withoutSearch) {
                 season: details.season
             };
 
-            utils.UpdateInfosData(infos, config('INFOS_PATH'));
+            utils.UpdateInfosData({providers: infos.providers}, config("INFOS_PATH"));
 
             get(provider).addToQueueFromTo(details, config('QUEUEPATH')).then(() => {
                 resolve();

@@ -8,6 +8,7 @@ const server = http.createServer(app);
 const sources = require("./sources/sources");
 const utils = require("./utils/utils");
 const bodyParser = require('body-parser');
+const nodeCleanup = require('node-cleanup');
 
 global.fileDowns = [];
 global.Files = [];
@@ -53,6 +54,11 @@ require('dns').lookup(require('os').hostname(), function(err, add) {
     server.listen(config('PORT'), () => {
         console.log(`Server is up and running access it at: http://${add}:${config('PORT')}`, true)
     });
+})
+
+// kill curl in exit
+nodeCleanup(() => {
+    if(global.Dl) global.Dl.getCurl().kill();
 })
 
 // TODO: add providers automaticaly

@@ -96,7 +96,7 @@ function ElementDone(QUEUEPATH, index, not) {
             data[index].done = !not;
             data[index].tried = true;
 
-            low(QUEUEPATH).setState(data);
+            updateState(data, QUEUEPATH);
             resolve();
         }).catch(() => {
             reject()
@@ -212,7 +212,7 @@ function clearQueue(QUEUEPATH, cb) {
         _.each(data, (val, key) => {
             if (!val.done) newArr.push(val);
         });
-        low(QUEUEPATH).setState(newArr);
+        updateState(newArr, QUEUEPATH)
 
         if (cb) cb()
     }).catch(err => {
@@ -247,7 +247,7 @@ function deleteFromQueue({
                 }
             }
 
-            low(queuepath).setState(data);
+            updateState(data, queuepath)
             resolve();
         }).catch(err => {
             reject(err);
@@ -283,10 +283,15 @@ function generateFormData(obj) {
 function getLastEpisode(obj) {
     let last = 0;
     Object.keys(obj).forEach(episode => {
+        episode = parseInt(episode);
         if (episode > last) last = episode;
     });
 
     return last;
+}
+
+function updateState(data, URI){
+  low(URI).setState(data);
 }
 
 module.exports = {
@@ -311,5 +316,6 @@ module.exports = {
     deleteFromQueue,
     pad,
     Bypass,
-    getLastEpisode
+    getLastEpisode,
+    updateState
 }
