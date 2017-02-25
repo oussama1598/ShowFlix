@@ -62,3 +62,5 @@ nodeCleanup(() => {
 })
 
 // TODO: add providers automaticaly
+
+// TODO: add json data for downloads to prevent non wanted behaviours

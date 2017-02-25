@@ -40,7 +40,7 @@ module.exports = {
                 season: 0,
                 from: 0,
                 to: "f" // f for finish
-            }, details)
+            }, details);
 
             utils.getHtml(details.providerUrl).then($ => {
                 const Urls = _this.BuildUrlsSource($, details);
@@ -52,8 +52,6 @@ module.exports = {
                     } = details;
 
                 to = (details.to === "f") ? utils.getLastEpisode(Urls) : (isNaN(details.to) ? details.to : parseInt(details.to));
-
-                _log(from, to);
 
                 for (episode in Urls) {
                     episode = parseInt(episode);

@@ -1,5 +1,5 @@
 {
-  "queue": "1",
+  "queue": "0",
   "providers": {
     "mosalsl": {
       "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
@@ -7,9 +7,9 @@
       "season": 3
     },
     "seri-ar": {
-      "url": "http://www.seri-ar.com/2016/10/black-mirror-season-3.html",
-      "name": "black mirror",
-      "season": 3
+      "url": "http://www.seri-ar.com/2017/01/the-blacklist-season-4.html",
+      "name": "the blacklist",
+      "season": 4
     },
     "cera": {
       "url": "http://cera.online/series-the-blacklist-episode-14-season-4-s04e14-watch-cima4u-download-translated-egfire-tv-video.html",
@@ -17,18 +17,18 @@
       "season": 4
     },
     "4helal": {
-      "url": "http://www.4helal.tv/v/series-The-Flash-S03-E13-watch-video.html",
-      "name": "the flash",
-      "season": 3
+      "url": "http://www.4helal.tv/v/Series-The-100-S04-E04-watch-video.html",
+      "name": "the 100",
+      "season": 4
     },
     "4filmk": {
-      "url": "http://www.4filmk.tv/show_online/مسلسل-marvels-agents-of-s-h-i-e-l-d-s04e01-حلقة-1-موسم-4-مترجم/",
-      "name": "agents of shield",
+      "url": "http://www.4filmk.tv/show_online/الحلقة-4-مسلسل-the-100-s04e04-الموسم-الرابع-مترجم/",
+      "name": "the 100",
       "season": 4
     },
     "cimaclub": {
-      "url": "http://cimaclub.com/the-blacklist-الموسم-الرابع-الحلقة-14-الرابعة-عشر/?view=1",
-      "name": "the blacklist",
+      "url": "http://cimaclub.com/مسلسل-the-100-الموسم-الرابع-الحلقة-4-الرابعة/?view=1",
+      "name": "the 100",
       "season": 4
     }
   },
@@ -36,7 +36,7 @@
     {
       "name": "the blacklist",
       "lastSeason": 4,
-      "lasEpisode": 14
+      "lasEpisode": 15
     },
     {
       "name": "the flash",
@@ -51,11 +51,16 @@
     {
       "name": "suits",
       "lastSeason": 6,
-      "lasEpisode": 14
+      "lasEpisode": 15
     },
     {
       "name": "the 100",
       "lastSeason": 4,
+      "lasEpisode": 4
+    },
+    {
+      "name": "legion",
+      "lastSeason": 1,
       "lasEpisode": 3
     }
   ]

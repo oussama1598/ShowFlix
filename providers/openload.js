@@ -237,11 +237,11 @@ function aadecode(text) {
 module.exports = function(url) {
     console.log("OpenLoad start parsing")
 
-    return utils.getHtml(url).then($ => {
-        return JSON.parse(OpenloadDecoder.decode($.html()))[0];
-    });
-
-    // return utils.getHtml(`http://video-downloader.herokuapp.com/download?url=${url}`, true).then(data => {
-    //     return { url: data.streamUrl, code: url };
+    // return utils.getHtml(url).then($ => {
+    //     return JSON.parse(OpenloadDecoder.decode($.html()))[0];
     // });
+
+    return utils.getHtml(`http://video-downloader.herokuapp.com/download?url=${url}`, true).then(data => {
+        return data.streamUrl;
+    });
 }

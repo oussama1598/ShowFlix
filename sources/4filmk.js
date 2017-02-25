@@ -7,14 +7,18 @@ const Q = require("q");
 
 module.exports = extend(true, {
     name: "4filmk",
-    providerCodes: [{ name: "openload" }],
+    providerCodes: [{
+        name: "openload"
+    }],
     canSearch: true,
     Url: "4filmk.tv",
     decodeForProvider: function(Ecode, prov) {
         const provDetails = this.providerCodes[prov],
             provider = providers.get(provDetails.name);
 
-        return utils.getHtml(Ecode, false, "POST", { viewMovie: true }, {
+        return utils.getHtml(Ecode, false, "POST", {
+            viewMovie: true
+        }, {
             'Content-Type': 'application/x-www-form-urlencoded'
         }).then($ => {
             let toReturn;
@@ -24,16 +28,19 @@ module.exports = extend(true, {
             });
             return provider(toReturn);
         }).catch(err => {
-            return Promise.reject({ next: true });
+            return Promise.reject({
+                next: true
+            });
         });
     },
     BuildUrlsSource: function($, infos) {
         let Urls = {};
-        $(".blocksFilms").eq(0).find(".moviefilm a").each(function() {
-            const url = decodeURI($(this).attr("href")),
-                Enumber = url.match(/e(\d+)/)[1];
+        $(".blocksFilms").eq(0).find(".moviefilm").each(function() {
+            const url = decodeURI($(this).find("a").eq(0).attr("href")),
+                season = url.match(/s(\d+)/),
+                episode = url.match(/e(\d+)/);
 
-            Urls[Enumber] = url;
+            if (season && season[1] == infos.season && episode) Urls[episode[1]] = url;
         })
         return Urls;
     },
@@ -56,7 +63,10 @@ module.exports = extend(true, {
                 query += `e{matches[1]}`;
             }
 
-            utils.searchAPI(CX).build({ q: query, num: 10 }, (err, res) => {
+            utils.searchAPI(CX).build({
+                q: query,
+                num: 10
+            }, (err, res) => {
                 if (err) {
                     reject("Something went wrong!");
                     return;

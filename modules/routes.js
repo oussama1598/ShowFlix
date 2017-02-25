@@ -164,13 +164,14 @@ module.exports = app => {
         }
 
         const Url = provName ? {
-            url: req.body.url,
+            url: decodeURI(req.body.url),
             provider: provName
         } : null;
-
+        
         sources.addtoQueue({ keyword, season, from, to }, null, Url).then(() => {
             res.send({ status: true })
         }).catch(error => {
+            _log(error);
             res.send({ status: false, error })
         });
     })

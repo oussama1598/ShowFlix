@@ -27,7 +27,7 @@ function getHtml(url, json, method = "GET", form = {}, headers = {}) {
         .then(res => {
             return res.text();
         }).then(body => {
-            return json ? body : cheerio.load(body);
+            return json ? JSON.parse(body) : cheerio.load(body);
         }).catch(err => {
             console.log(err.toString().red);
             return err;

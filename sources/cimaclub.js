@@ -12,9 +12,9 @@ module.exports = extend(true, {
     providerCodes: [{
         code: 1,
         name: "openload"
-    },{
-      code: 4,
-      name: "estream"
+    }, {
+        code: 4,
+        name: "estream"
     }],
     canSearch: true,
     Url: "cimaclub.com",
@@ -64,32 +64,19 @@ module.exports = extend(true, {
 
                 $(".moviesBlocks .movie a").each(function() {
                     let url = decodeURI($(this).attr("href")),
-                        desc = $(this).find("p").text().toLowerCase(),
                         title = $(this).find("h2").text().toLowerCase();
 
-                    //_log(desc);
-                    const matcheResults = [desc.indexOf(matches[0])];
-
-                    if (matcheResults[0] > -1) {
-                        const matchString = [
-                            desc.substr(matcheResults[0] + matches[0].length)[0]
-                        ];
-
-
-                        if (matchString[0] === "e" || matchString[0] === " ") {
-                            _this.compareTwoTitles(title, q, " ", result => {
-                                if (result.count >= q.split(" ").length) {
-                                    if (!alreadyFound) {
-                                        alreadyFound = true;
-                                        resolve(`${url}?view=1`);
-                                    }
-                                } else {
-                                    reject("Can't find any url");
-                                }
-                            })
-
+                    _this.compareTwoTitles(title, q, " ", result => {
+                        if (result.count >= q.split(" ").length) {
+                            if (!alreadyFound) {
+                                alreadyFound = true;
+                                resolve(`${url}?view=1`);
+                            }
+                        } else {
+                            reject("Can't find any url");
                         }
-                    }
+                    })
+
                 })
                 if (!alreadyFound) reject("Can't find any url");
             })
