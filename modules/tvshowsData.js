@@ -25,7 +25,11 @@ function parseFromFilename(filename) {
     season = season.replace("s", "");
     episode = episode.replace("e", "");
 
-    return { season, episode, serieName }
+    return {
+        season,
+        episode,
+        serieName
+    }
 }
 
 function getEpisodeDataByQuery(episodes) {
@@ -35,9 +39,7 @@ function getEpisodeDataByQuery(episodes) {
         const url = ENDPOINT.replace("%query%", key);
 
         promise.push(utils.getHtml(url, true).then(json => {
-            json = JSON.parse(json);
             addEpisodes(val, json)
-
         }).catch(() => {
             addEpisodes(val);
         }))
@@ -56,7 +58,7 @@ function getEpisodeDataByQuery(episodes) {
         })
     }
 
-    function Sort(){
+    function Sort() {
         return _(toReturn).chain().sortBy('seaon').sortBy('episode').sortBy('serieName');
     }
 

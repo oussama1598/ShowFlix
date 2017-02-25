@@ -167,7 +167,7 @@ module.exports = app => {
             url: decodeURI(req.body.url),
             provider: provName
         } : null;
-        
+
         sources.addtoQueue({ keyword, season, from, to }, null, Url).then(() => {
             res.send({ status: true })
         }).catch(error => {
