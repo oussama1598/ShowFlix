@@ -5,7 +5,7 @@
     "name": "the 100",
     "episode": 4,
     "season": 4,
-    "done": true,
+    "done": false,
     "tried": true
   }
 ]
