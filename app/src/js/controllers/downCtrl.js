@@ -10,9 +10,9 @@ angular.module('showFlex').controller('downCtrl', ["$scope", "socketEvt", "$root
         }
 
         $scope.init = function() {
-            $http.get("/downloads").then(function(res) {
+            $http.get("api/downloads").then(function(res) {
                 $scope.loading = false;
-                $scope.downloads = res.data;
+                $scope.files = res.data;
             })
         }
 

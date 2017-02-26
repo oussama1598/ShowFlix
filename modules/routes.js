@@ -10,10 +10,11 @@ const tvshowTime = require("./tvShowTime");
 const mediasHandler = require("./mediasHandler");
 const async = require("async");
 const config = require("./config");
+const apiRoutes = require("express").Router();
 
 module.exports = app => {
 
-    app.get("/downloads", (req, res) => {
+    apiRoutes.get("/downloads", (req, res) => {
         res.send(downloadsCtrl.getAll());
     })
 
@@ -176,4 +177,7 @@ module.exports = app => {
             res.send({ status: false, error })
         });
     })
+
+    // use apiRoutes in the /api route
+    app.use("/api", apiRoutes);
 }
