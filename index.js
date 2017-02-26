@@ -70,7 +70,8 @@ server.listen(config('PORT'), () => {
     // get the local ip address
     const ip = require("ip").address();
 
-    console.log(`Server is up and running access it at: http://${ip}:${config('PORT')}`, true)
+    // _log is the interval console.log 
+    _log(`Server is up and running access it at: http://${ip}:${config('PORT')}`);
 });
 
 // kill curl in exit
