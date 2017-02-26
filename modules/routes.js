@@ -5,6 +5,7 @@ const tvShowsData = require("./tvshowsData");
 const stream = require("./stream");
 const utils = require("../utils/utils");
 const sources = require("../sources/sources");
+const downloadsCtrl = require("../controllers/downloadsCtrl");
 const tvshowTime = require("./tvShowTime");
 const mediasHandler = require("./mediasHandler");
 const async = require("async");
@@ -13,7 +14,7 @@ const config = require("./config");
 module.exports = app => {
 
     app.get("/downloads", (req, res) => {
-        res.send(global.fileDowns);
+        res.send(downloadsCtrl.getAll());
     })
 
     app.get("/queue", (req, res) => {

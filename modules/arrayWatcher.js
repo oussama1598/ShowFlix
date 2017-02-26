@@ -4,13 +4,15 @@ const utils = require("../utils/utils");
 const config = require("./config");
 const _ = require("underscore");
 
-function Watcher(arr, delay, queue) {
+function Watcher(delay, fn) {
     this.last = [];
     setInterval(() => {
-    	if(queue) arr = utils.getQueueSync(config("QUEUEPATH"));
+        // this function will be called to retreive the data
+        const arr = fn();
+        
         const deff = utils.arrayDeffrence(arr, this.last);
 
-        if (deff.length > 0 || arr.length === 0 && this.last.length > 0)  {
+        if (deff.length > 0 || arr.length === 0 && this.last.length > 0) {
             this.last = _.map(arr, _.clone);
             this.emit("changed", arr);
         }

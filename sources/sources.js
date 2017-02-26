@@ -64,14 +64,15 @@ function parseQueue() {
     });
 }
 
-function TryNextProv(src, data, details, code, index) {
+function TryNextProv(src, data, details, code) {
     src.canNextProvider(data.prov).then(num => {
+        // build up the next data to be sent to the getMediaUrl and then to the downloader
         data = {
             name: data.name,
             prov: num,
-            code,
-            index
+            code
         };
+        // here where is the downloader being called
         getMediaUrlFor(data, details, true);
     }).catch(() => {
         MoveToNext(data.name, details.index, true)
@@ -98,18 +99,22 @@ function getMediaUrlFor(data, details, overWrite) {
         url,
         code
     }) => {
-        console.log(`Url Found ${url}`.green);
-        return downloader.download(url, details, data.index, overWrite, code)
+        if (!url) console.log(`Url Found ${url}`.green);
+        // add needed information to the details to determine the exact file in downloads data
+        details.providerCode = data.prov;
+        details.code = code;
+
+        return downloader(url, details, overWrite)
     }).then(() => {
         console.log("Next Element".green)
         MoveToNext(data.name, details.index)
     }).catch(({
         next,
-        index,
         code
     }) => {
-        if (index == null || index != undefined) TryNextProv(src, data, details, code, index);
-        if (next != undefined) {
+        if (next == undefined) {
+            TryNextProv(src, data, details, code)
+        } else {
             console.log("Passing this episode".red);
             MoveToNext(data.name, details.index, true)
         }
@@ -137,7 +142,9 @@ function addtoQueue(details, ParticularEpisode, withoutSearch) {
                 season: details.season
             };
 
-            utils.UpdateInfosData({providers: infos.providers}, config("INFOS_PATH"));
+            utils.UpdateInfosData({
+                providers: infos.providers
+            }, config("INFOS_PATH"));
 
             get(provider).addToQueueFromTo(details, config('QUEUEPATH')).then(() => {
                 resolve();

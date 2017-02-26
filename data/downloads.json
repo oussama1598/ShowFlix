@@ -1,0 +1,38 @@
+{
+  "downloads": [
+    {
+      "code": "19146",
+      "providerCode": 0,
+      "filename": "mr robot s1e1.mp4",
+      "serieName": "mr robot",
+      "episode": 1,
+      "season": 1,
+      "progress": {
+        "progress": "4.9",
+        "written": "1.57 MB",
+        "size": "31.86 MB",
+        "speed": "149KB/s"
+      },
+      "started": true,
+      "error": false,
+      "finished": false
+    },
+    {
+      "code": "19146",
+      "providerCode": 1,
+      "filename": "mr robot s1e1.mp4",
+      "serieName": "mr robot",
+      "episode": 1,
+      "season": 1,
+      "progress": {
+        "progress": "0.2",
+        "written": "964 KB",
+        "size": "450.41 MB",
+        "speed": "100KB/s"
+      },
+      "started": true,
+      "error": false,
+      "finished": false
+    }
+  ]
+}

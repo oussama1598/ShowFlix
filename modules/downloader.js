@@ -2,43 +2,63 @@ const Q = require("q");
 const colors = require('colors');
 const filedownloader = require("filedownloader");
 const config = require("./config");
+const downloadsCtrl = require("../controllers/downloadsCtrl");
+const filesize = require("filesize");
 
 
-function download(url, details, index, overWrite, code) {
+module.exports = (url, details, overWrite) => { // remove the index and overWrite
     return Q.Promise((resolve, reject) => {
-        let defer = Q.defer(),
-            fileDowns = global.fileDowns,
-            filename = `${details.name} s${details.season}e${details.episode}.mp4`;
+        const filename = `${details.name} s${details.season}e${details.episode}.mp4`,
+            code = details.code, // this is the episode code or url
+            providerCode = details.providerCode, // the provider code ex: 0, 1, 2...
+            // added additional data to the search obj an order to find the exact item
+            searchObj = {
+                filename,
+                code,
+                providerCode: details.providerCode
+            };
 
+        // check if the url is not null or undefined
         if (!url) {
             console.log("No stream found".red);
-            return reject({ index: null, code});
+            // reject the promise with code => is the episode code
+            return reject({
+                code
+            });
         }
 
-        if (index === null) {
-            index = fileDowns.length;
-            fileDowns.push({
-                filename,
-                serieName: details.name,
-                episode: details.episode,
-                season: details.season,
-                started: false,
-                progress: {},
-                error: false,
-                finished: false
-            })
-        }
+        // this is used down in the code to determine if the file is already started to download or is it a new one
+        const dataExists = downloadsCtrl.itemExists(searchObj);
 
+
+        // search if there an entry to the exact same download if there is use it else create new one
+        if (!dataExists) downloadsCtrl.addItem({
+            code,
+            providerCode,
+            filename,
+            serieName: details.name,
+            episode: details.episode,
+            season: details.season,
+            progress: {},
+            started: false,
+            error: false,
+            finished: false
+        });
+
+        // creating new filedownload instance and assigning it to the gloval.Dl
         global.Dl = new filedownloader({
             url: encodeURI(url),
             saveas: filename,
             saveto: config('SAVETOFOLDER'),
             resume: true,
-            deleteIfExists: config('DELETEIFEXISTS') || overWrite
+            // this is telling the filedownload to delete the file if there no record of it and it does exist
+            deleteIfExists: config('DELETEIFEXISTS') || !dataExists
         }).on("start", () => {
-            fileDowns[index].started = true;
-            fileDowns[index].error = false;
-            fileDowns[index].finished = false;
+            downloadsCtrl.updateItem(searchObj, {
+                started: true,
+                error: false,
+                finished: false
+            });
 
             console.log(`Started ${filename}`.green)
 
@@ -50,27 +70,32 @@ function download(url, details, index, overWrite, code) {
                 console.log("", true);
             }
 
-            fileDowns[index].progress = {
-                progress: pr.progress,
-                written: byteToMB(pr.dataWritten),
-                size: byteToMB(pr.filesize),
-                speed: pr.speed
-            };
+            downloadsCtrl.updateItem(searchObj, {
+                progress: {
+                    progress: pr.progress,
+                    written: filesize(pr.dataWritten),
+                    size: filesize(pr.filesize),
+                    speed: pr.speed
+                }
+            })
         }).on("end", () => {
             resolve();
             console.log(`${details.name} s${details.season}e${details.episode} Finished`.green, true, true);
-            fileDowns[index].finished = true;
+
+            downloadsCtrl.updateItem(searchObj, {
+                finished: true
+            });
 
         }).on("error", err => {
-            fileDowns[index].error = true;
             console.log(err.red);
-            reject({ index, code });
+
+            downloadsCtrl.updateItem(searchObj, {
+                error: true
+            })
+            // if any error emited reject with code to try the next provider or just pass the episode
+            reject({
+                code
+            });
         })
     });
 }
-
-function byteToMB(bytes) {
-    return (bytes / 1024 / 1024).toFixed(2) + 'MB';
-}
-
-module.exports = { download };
