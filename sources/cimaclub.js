@@ -10,10 +10,7 @@ const SEARCHURL = "http://cimaclub.com/?s=";
 module.exports = extend(true, {
     name: "cimaclub",
     providerCodes: [{
-        code: 1,
-        name: "openload"
-    }, {
-        code: 4,
+        code: 2,
         name: "estream"
     }],
     canSearch: true,

@@ -1,11 +1,11 @@
 [
   {
-    "provider": "cera",
-    "url": "http://cera.online/series-mr-robot-season-1-episode-1-s01e01-watch-cima4u-download-translated-egfire-tv-video.html",
-    "name": "mr robot",
-    "episode": 1,
-    "season": 1,
-    "done": false,
+    "provider": "cimaclub",
+    "url": "http://cimaclub.com/مسلسل-the-flash-الموسم-3-الحلقة-14-الرابعة-عشر/",
+    "name": "the flash",
+    "episode": 14,
+    "season": 3,
+    "done": true,
     "tried": true
   }
 ]

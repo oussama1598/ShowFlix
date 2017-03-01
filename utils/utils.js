@@ -74,22 +74,6 @@ function UpdateInfosData(obj, INFOS_PATH, cb) {
     if (cb) cb();
 }
 
-
-function BuildNextElement(infos, INFOS_PATH, QUEUEPATH, cb, forced) {
-    let queueData = getQueueSync(QUEUEPATH),
-        result = queueData.filter(item => !item.done && (parseInt(infos.queue) != (queueData.length - 1) ? true : !item.tried)),
-        infosdb = low(INFOS_PATH);
-
-    infos.queue = (parseInt(infos.queue) + 1).toString();
-    if (parseInt(infos.queue) > (queueData.length - 1) && result.length > 0) infos.queue = "0";
-
-    infosdb.assign({
-        queue: infos.queue
-    }).write();
-
-    cb(infosdb.getState());
-}
-
 function ElementDone(QUEUEPATH, index, not) {
     return Q.Promise((resolve, reject) => {
         getQueue(QUEUEPATH).then(data => {
@@ -204,7 +188,7 @@ function getQueueValue(QUEUEPATH, index) {
             reject(err)
         });
     })
-}
+} // to be deleted
 
 function clearQueue(QUEUEPATH, cb) {
     getQueue(QUEUEPATH).then(data => {
@@ -218,7 +202,7 @@ function clearQueue(QUEUEPATH, cb) {
     }).catch(err => {
         if (cb) cb(err)
     });
-}
+} // to be deleted
 
 function searchAPI(cx) {
     return require("../modules/searchAPI")(cx);
@@ -296,14 +280,12 @@ function updateState(data, URI){
 
 module.exports = {
     getHtml,
-    BuildNextElement,
     addToQueue,
     ObjectSize,
     deleteFile,
     filesUpdated,
     arrayDeffrence,
     getQueueValue,
-    ElementDone,
     clearQueue,
     searchAPI,
     getInfosData,

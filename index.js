@@ -9,6 +9,8 @@ const sources = require("./sources/sources");
 const utils = require("./utils/utils");
 const bodyParser = require('body-parser');
 const nodeCleanup = require('node-cleanup');
+const dbHandler = require("./modules/db-handler");
+
 
 global.Files = []; // medias array to store the videos in it
 global.NOMORE = true; // this variable is telling weather the server is running or not
@@ -61,18 +63,16 @@ require("./modules/tvShowTime").watch((data, next) => {
 });
 
 // attach function to the server error event to catch errors
-server.on("error", err => {
-    console.log(`Can't start http server. ${err.toString()}`.red, true);
-});
+server.on("error", err => console.log(`Can't start http server. ${err.toString()}`.red, true));
 
 // start the server
-server.listen(config('PORT'), () => {
-    // get the local ip address
-    const ip = require("ip").address();
-
-    // _log is the interval console.log 
-    _log(`Server is up and running access it at: http://${ip}:${config('PORT')}`);
-});
+// server.listen(config('PORT'), () => {
+//     // get the local ip address
+//     const ip = require("ip").address();
+//
+//     // _log is the interval console.log
+//     _log(`Server is up and running access it at: http://${ip}:${config('PORT')}`);
+// });
 
 // kill curl in exit
 nodeCleanup(() => {

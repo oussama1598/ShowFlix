@@ -5,63 +5,73 @@ const colors = require("colors");
 const path = require("path");
 const fs = require("fs");
 const config = require("../modules/config");
+const dbHandler = require("../modules/db-handler");
 
-let sources = [];
+// load the dbs
+const infosdb = new dbHandler(config("INFOS_PATH"), {
+    queue: "0",
+    sources: [],
+    tvshowtimefeed: []
+});
+
+const queuedb = new dbHandler(config("QUEUEPATH"), []);
 
 function get(name) {
-    for (key in sources) {
-        if (sources[key].name === name)
-            return sources[key].require;
-    }
-    throw (new Error("This source can't be found"));
+    // find the source by name
+    const source = infosdb.find("sources", {
+        name
+    }).value();
+
+    // if the source is not found
+    if (!source) throw (new Error("This source can't be found"));
+
+    // if found return its name with the js file
+    return {
+        name,
+        require: require(`./${name}`)
+    };
 }
 
 function add(arr) {
-    if (arr.constructor === Array) {
-        arr.forEach(name => {
-            sources.push({
-                name,
-                require: require(`./${name}`)
-            });
-        });
-    }
+    // adds to the infos db
 }
 
-function MoveToNext(name, key, notDone) {
-    if (!global.NOMORE) {
-        let infos = utils.getInfosData(config('INFOS_PATH'));
+function MoveToNext(details, notDone) { // details are episode name, number season
+    if (global.NOMORE) return; // this will return without doing nothing if the parsing is Stopped
 
-        utils.ElementDone(config('QUEUEPATH'), key, notDone).then(() => {
-            utils.BuildNextElement(infos, config('INFOS_PATH'), config('QUEUEPATH'), i => {
-                infos = i;
-                parseQueue();
-            });
-        }).catch(() => {
-            global.NOMORE = true
-        });
-    }
+    queuedb.db().find(details).assign({
+        done: !not,
+        tried: true
+    }).write(); // update the queue element with done and tried
+
+    BuildNextElement(queuedb.get("queue").value()).then(() => {
+        parseQueue();
+    }); // build the next element means add one to queue index
 }
 
 function parseQueue() {
-    let infos = utils.getInfosData(config('INFOS_PATH'));
+    const queueData = queuedb.db(), // get the db instance
+        index = infosdb.get("queue").value(), // get the queue index
+        episodeEl = queueData.value()[index]; // get the queue index
 
-    utils.getQueueValue(config('QUEUEPATH'), parseInt(infos.queue)).then(el => {
-        el.index = parseInt(infos.queue);
+    if (queueData.value().length === 0 || !episodeEl) {
+        console.log("All Done".green);
+        global.NOMORE = true; // stop the parsing
+        return; // exit this function with nothing
+    }
 
-        if (!el.done) {
-            getMediaUrlFor({
-                name: el.provider,
-                prov: 0,
-                code: null,
-                index: null
-            }, el);
-        } else {
-            MoveToNext(el.provider, el.index);
-        }
-    }).catch(() => {
-        console.log("All Done".green)
-        global.NOMORE = true;
-    });
+    episodeEl.index = parseInt(index); // add the index to it cause its needed in some functions
+
+    if (!episodeEl.done) {
+        getMediaUrlFor({
+            name: el.provider,
+            prov: 0,
+            code: null,
+            index: null
+        }, episodeEl); // the episodeEl here is called details in some functions
+    } else {
+        MoveToNext(episodeEl); //if the episodeEl is already downloaded move to the next one
+    }
 }
 
 function TryNextProv(src, data, details, code) {
@@ -75,7 +85,7 @@ function TryNextProv(src, data, details, code) {
         // here where is the downloader being called
         getMediaUrlFor(data, details, true);
     }).catch(() => {
-        MoveToNext(data.name, details.index, true)
+        MoveToNext(details, true); // details is the episode name and season and episode Number
     })
 }
 
@@ -99,7 +109,7 @@ function getMediaUrlFor(data, details, overWrite) {
         url,
         code
     }) => {
-        if (!url) console.log(`Url Found ${url}`.green);
+        if (url) console.log(`Url Found ${url}`.green);
         // add needed information to the details to determine the exact file in downloads data
         details.providerCode = data.prov;
         details.code = code;
@@ -107,7 +117,7 @@ function getMediaUrlFor(data, details, overWrite) {
         return downloader(url, details, overWrite)
     }).then(() => {
         console.log("Next Element".green)
-        MoveToNext(data.name, details.index)
+        MoveToNext(details);
     }).catch(({
         next,
         code
@@ -116,7 +126,7 @@ function getMediaUrlFor(data, details, overWrite) {
             TryNextProv(src, data, details, code)
         } else {
             console.log("Passing this episode".red);
-            MoveToNext(data.name, details.index, true)
+            MoveToNext(details, true); // move to the next one
         }
     })
 }
@@ -133,7 +143,7 @@ function addtoQueue(details, ParticularEpisode, withoutSearch) {
             url,
             provider
         }) => {
-            let infos = utils.getInfosData(config('INFOS_PATH'));
+            let infos = utils.getInfosData(config('INFOS_PATH')); // can be improved
             details.providerUrl = url;
 
             infos.providers[provider] = {
@@ -157,8 +167,15 @@ function addtoQueue(details, ParticularEpisode, withoutSearch) {
     })
 }
 
-function clearQueue(cb) {
-    utils.clearQueue(config('QUEUEPATH'), cb);
+function clearQueue() {
+    // retreive queue data
+    const data = queuedb.db();
+
+    // check if the data is empty if so reject the promise
+    if (data.value().length == 0) return Promise.reject("Data is empty please try again.");
+
+    //if all good the resolve the promise
+    return Promise.resolve();
 }
 
 function search({
@@ -218,34 +235,43 @@ function search({
     }
 }
 
+function BuildNextElement(index = -1) { // the queue index default to -1
+    const db = queuedb.db(),
+        data = db.value(),
+        // if the index is the last one do not repeat those who are already tried
+        results = db.filter(item => !item.done && (parseInt(index) != (data.length - 1) ? true : !item.tried));
+
+    index = (parseInt(index) + 1).toString(); // this simply adds one to the index and converts it to a string
+    if (parseInt(index) > (data.length - 1) && results.length > 0) infos.queue = "0"; // this returns to the first element in the queue
+
+    infosdb.update("queue", index); // update the queue index in infos db
+    return Promise.resolve(); // resolve the promise
+}
+
 function start(index) {
-    return Q.Promise((resolve, reject) => {
-        if (!global.NOMORE) return resolve();
-        let infos = utils.getInfosData(config('INFOS_PATH'));
+    if (!global.NOMORE) return Promise().resolve(); // if the parsing is already started then do nothing
 
-        global.NOMORE = false;
+    global.NOMORE = false; // set the parsing as started (NOTE: this will change later)
 
-        clearQueue(err => {
-            if (!err) {
-                infos.queue = index === null ? -1 : index;
-
-                utils.BuildNextElement(infos, config('INFOS_PATH'), config("QUEUEPATH"), () => {
-                    _log("Parsing Started".yellow);
-                    resolve();
-                    parseQueue();
-                });
-            } else {
-                reject(err);
-                global.NOMORE = true;
-            }
+    // remove finished episodes
+    return clearQueue().then(() => {
+        // build the next episode
+        return BuildNextElement(index == null ? -1 : index).then(() => { // if the we have an index set it to it or use -1
+            _log("Parsing Started".yellow); // log to the terminal that the parse is started
+            parseQueue();
         });
+    }).catch(err => {
+        console.log(err.red); // log the error to the client
+
+        global.NOMORE = true; // set the parsing to stopped (NOTE: this will change later)
+        return err; // return the error
     })
 }
 
 function stop(name) {
-    global.NOMORE = true;
+    global.NOMORE = true; // should be changed to something more convinient
     _log("Parsing Stopped".yellow);
-    if (global.Dl) global.Dl.pause();
+    if (global.Dl) global.Dl.pause(); // pause the download
 }
 
 function parseProviderFromUrl(url) {
@@ -267,5 +293,6 @@ module.exports = {
     stop,
     clearQueue,
     search,
-    parseProviderFromUrl
+    parseProviderFromUrl,
+    BuildNextElement
 };

@@ -74,7 +74,7 @@ module.exports = (url, details, overWrite) => { // remove the index and overWrit
                 progress: {
                     progress: pr.progress,
                     written: filesize(pr.dataWritten),
-                    size: filesize(pr.filesize),
+                    size: filesize(pr.filesize ? pr.filesize: 0),
                     speed: pr.speed
                 }
             })

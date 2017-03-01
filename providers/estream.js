@@ -22,6 +22,7 @@ function getUrl($) {
 }
 
 module.exports = function(url) {
+    _log(url)
     console.log("estream start parsing")
     return utils.getHtml(url).then($ => {
         console.log("estream HTML loaded!");

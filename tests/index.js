@@ -1,3 +1,6 @@
-var ip = require('ip');
+const low = require("lowdb");
 
-console.log(ip.address())
+
+const values = low("../data/queue.json").get();
+
+console.log(values.value());
