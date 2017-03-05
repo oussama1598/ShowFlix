@@ -1,8 +1,7 @@
-const Ev = require("events");
+const Ev = require('events');
 const util = require('util');
-const utils = require("../utils/utils");
-const config = require("./config");
-const _ = require("underscore");
+const utils = require('../utils/utils');
+const _ = require('underscore');
 
 function Watcher(delay, fn) {
     this.last = [];
@@ -13,9 +12,9 @@ function Watcher(delay, fn) {
         // get the diffrence between two arrays
         const deff = utils.arrayDeffrence(arr, this.last);
 
-        if (deff.length > 0 || arr.length === 0 && this.last.length > 0) {
+        if (deff.length > 0 || (arr.length === 0 && this.last.length) > 0) {
             this.last = _.map(arr, _.clone);
-            this.emit("changed", arr);
+            this.emit('changed', arr);
         }
     }, delay);
 }

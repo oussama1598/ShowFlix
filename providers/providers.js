@@ -1,6 +1,3 @@
-const utils = require("../utils/utils");
-const Q = require("q");
-
 const providers = {};
 
 function add(arr) {
@@ -15,7 +12,7 @@ function get(name) {
     return providers[name];
 }
 
-add(["openload", "keeload", "UptoBox", "top4top", "googleDrive", "thevideo", "estream"]);
+add(['openload', 'keeload', 'UptoBox', 'top4top', 'googleDrive', 'thevideo', 'estream']);
 
 module.exports = {
     add,

@@ -1,27 +1,29 @@
-const utils = require("../utils/utils");
-const urlParser = require('url');
-const colors = require('colors');
-const extend = require("extend");
+const utils = require('../utils/utils');
+const extend = require('extend');
+const _ = require('underscore');
 
 module.exports = {
     name: undefined,
     providerCodes: [],
     canSearch: undefined,
     Url: undefined,
-    addToQueueFromTo: function(details) { // replace with get {name, episode, season, from, to}
+    addToQueueFromTo(details) { // replace with get {name, episode, season, from, to}
         return this.BuildUrls(details).then(urls => {
-            const queue = global.queuedb.db().get("queue"); // get the queue array
+            const queue = global.queuedb.db().get('queue'); // get the queue array
             urls.forEach(item => { // go throw all the urls
-                if (!queue.find(item).value()) queue.push(item).write(); // if the item exist don't add it to the queue if not simply add it
+                if (!queue.find(item).value()) {
+                    // if the item exist don't add it to the queue if not simply add it
+                    queue.push(item).write();
+                }
             });
             console.log(`${urls.length} Episode(s) added to the queue`.yellow);
-        })
+        });
     },
-    BuildUrls: function(details) {
-        if (!details.season) return Promise.reject();
+    BuildUrls(_details) {
+        let details = _details; // set local details object
+        const SourceName = this.name; // get the source name
 
-        const _this = this,
-            SourceName = _this.name;
+        if (!details.season) return Promise.reject(); // if theres no season reject
 
         details.from = utils.fixInt(details.from);
         details.season = utils.fixInt(details.season);
@@ -30,80 +32,83 @@ module.exports = {
             keyword: null,
             season: 0,
             from: 0,
-            to: "f" // f for finish
+            to: 'f' // f for finish
         }, details);
 
         return utils.getHtml(details.providerUrl).then($ => {
-            const Urls = _this.BuildUrlsSource($, details); // get the list of all episodes in this season
+            // get the list of all episodes in this season
+            const Urls = this.BuildUrlsSource($, details);
+            const interval = [];
+            const from = details.from;
 
-            let interval = [],
-                {
-                    from,
-                    to
-                } = details;
+            let to = details.to;
 
-            to = (details.to === "f") ? utils.getLastEpisode(Urls) : (isNaN(details.to) ? details.to : parseInt(details.to));
+            to = (to === 'f') ? utils.getLastEpisode(Urls) : parseInt(to, 10);
 
-            for (episode in Urls) {
-                episode = parseInt(episode);
-                if (Urls.hasOwnProperty(episode)) {
-                    if (episode >= parseInt(from) && parseInt(episode) <= to) {
-                        interval.push({
-                            provider: SourceName,
-                            url: Urls[episode],
-                            name: details.keyword,
-                            episode,
-                            season: details.season,
-                            done: false,
-                            tried: false
-                        });
-                    }
+            _.each(Object.keys(Urls), _episode => {
+                const episode = parseInt(_episode, 10);
+                if (episode >= parseInt(from, 10) && episode <= to) {
+                    interval.push({
+                        provider: SourceName,
+                        url: Urls[episode],
+                        name: details.keyword,
+                        episode,
+                        season: details.season,
+                        done: false,
+                        tried: false
+                    });
                 }
+            });
+
+            if (!interval.length) {
+                // if nothin found reject the promise
+                return Promise.reject('Nothing Found');
             }
 
-            if (!interval.length) return Promise.reject("Nothing Found"); // if nothin found reject the promise
-
             return interval;
-        })
+        });
     },
-    canNextProvider: function(prov) {
+    canNextProvider(_prov) {
+        let prov = _prov;
+
         ++prov; // add one to provider
 
         if (prov < this.providerCodes.length) {
-            console.log("Trying Next provider".red);
+            console.log('Trying Next provider'.red);
             return Promise.resolve(prov);
-        } else {
-            console.log("Passing this episode".red);
-            return Promise.reject();
         }
+
+        console.log('Passing this episode'.red);
+        return Promise.reject();
     },
-    parseUrl: function(details, code) {
-        const SourceName = this.name,
-            {
-                episode,
-                season,
-                url,
-                name
-            } = details;
+    parseUrl(details, code) {
+        const SourceName = this.name;
+        const {
+            episode,
+            season,
+            url,
+            name
+        } = details;
 
         if (code) return Promise.resolve(code);
 
-        console.log(`Parsing ${name} S${season}E${episode} From ${SourceName}`.green)
-        return this.Parse(url).catch(() => {
-            return {
-                next: true
-            };
-        });
+        console.log(`Parsing ${name} S${season}E${episode} From ${SourceName}`.green);
+        return this.Parse(url).catch(() => ({
+            next: true
+        }));
     },
-    compareTwoTitles: function(keyword, title, str, fn) {
-        let results = [],
-            count = 0;
+    compareTwoTitles(_keyword, _title, str, fn) {
+        const results = [];
+
+        let count = 0;
+        let keyword = _keyword;
+        let title = _title;
 
         keyword = keyword.toLowerCase().split(str);
         title = title.toLowerCase().split(str);
 
-        for (word of title) {
-            for (item of keyword) {
+        for (const word of title) {
+            for (const item of keyword) {
                 if (word.indexOf(item) > -1 || item.indexOf(word) > -1) {
                     results.push(word);
                     ++count;
@@ -116,7 +121,7 @@ module.exports = {
             results
         });
     },
-    cansearch: function() {
+    cansearch() {
         return this.canSearch;
-    }
-}
+    },
+};

@@ -1,22 +1,30 @@
-const Q = require("q");
-const utils = require("../utils/utils");
-const _ = require("underscore");
+const utils = require('../utils/utils');
+const _ = require('underscore');
 
-module.exports = function(url) {
-    console.log("googleDrive start parsing")
-    _log(url)
+module.exports = function (_url) {
+    let url = _url;
+
+    console.log('googleDrive start parsing');
+    _log(url);
 
     url = `http://api.getlinkdrive.com/getlink?url=${url}`;
 
     return utils.getHtml(url, true).then(res => {
-      
-        let lastRes = { res: 0, src: null };
+        let lastRes = {
+            res: 0,
+            src: null
+        };
         _.each(res, val => {
-            const res = parseInt(val.res.replace("p", ""));
+            const resolution = parseInt(val.res.replace('p', ''), 10);
 
-            if (res > lastRes.res) lastRes = { res, src: val.src };
-        })
+            if (resolution > lastRes.res) {
+                lastRes = {
+                    resolution,
+                    src: val.src
+                };
+            }
+        });
 
         return lastRes.src;
-    })
-}
+    });
+};

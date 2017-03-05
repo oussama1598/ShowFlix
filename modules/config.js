@@ -1,7 +1,6 @@
-const path = require("path");
-const low = require("lowdb");
-const db = low(path.join(__dirname, "../data/config.json"));
+const path = require('path');
+const low = require('lowdb');
 
-module.exports = (CNST) => {
-    return db.get(CNST).value() ? db.get(CNST).value() : null;
-}
+const db = low(path.join(__dirname, '../data/config.json'));
+
+module.exports = CNST => db.get(CNST).value();

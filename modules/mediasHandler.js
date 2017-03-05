@@ -1,17 +1,17 @@
-const async = require("async");
-const tvShowsData = require("./tvshowsData");
-const Q = require("q");
-const path = require("path");
-const fs = require("fs");
-const config = require("./config");
-const filesize = require("filesize");
+const async = require('async');
+const tvShowsData = require('./tvshowsData');
+const Q = require('q');
+const path = require('path');
+const fs = require('fs');
+const config = require('./config');
+const filesize = require('filesize');
 
 function getMedias() {
     return Q.Promise(resolve => {
-        let episodes = {};
+        const episodes = {};
         async.forEach(global.Files, (file, cb) => {
-            const metadata = tvShowsData.parseFromFilename(file),
-                fullPath = path.join(config("SAVETOFOLDER"), file);
+            const metadata = tvShowsData.parseFromFilename(file);
+            const fullPath = path.join(config('SAVETOFOLDER'), file);
 
             if (!episodes[metadata.serieName]) episodes[metadata.serieName] = [];
 
@@ -21,19 +21,19 @@ function getMedias() {
                 episodes[metadata.serieName].push({
                     filename: path.basename(file),
                     serieName: metadata.serieName,
-                    episode: parseInt(metadata.episode),
-                    season: parseInt(metadata.season),
+                    episode: parseInt(metadata.episode, 10),
+                    season: parseInt(metadata.season, 10),
                     streamUrl: encodeURI(`/stream/${file}`),
                     thumbUrl: encodeURI(`/thumb/${file}`),
                     fileDetails: {
                         fullPath,
-                        size: filesize(stats["size"])
+                        size: filesize(stats.size)
                     }
-                })
+                });
+            });
 
-            })
             cb();
-        }, err => {
+        }, () => {
             tvShowsData.getEpisodeDataByQuery(episodes)
                 .then(Files => {
                     resolve(Files);
@@ -47,4 +47,4 @@ function getMedias() {
 
 module.exports = {
     getMedias
-}
+};
