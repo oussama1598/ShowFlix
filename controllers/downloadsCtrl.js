@@ -1,6 +1,5 @@
 const low = require("lowdb");
 const config = require("../modules/config");
-const dbHandler = require("../modules/db-handler");
 
 function getData() {
     // get new instance of lowdb in order to refresh the data

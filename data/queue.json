@@ -1,11 +1,3 @@
-[
-  {
-    "provider": "cimaclub",
-    "url": "http://cimaclub.com/مسلسل-the-flash-الموسم-3-الحلقة-14-الرابعة-عشر/",
-    "name": "the flash",
-    "episode": 14,
-    "season": 3,
-    "done": true,
-    "tried": true
-  }
-]
+{
+  "queue": []
+}

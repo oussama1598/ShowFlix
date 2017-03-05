@@ -49,7 +49,7 @@ module.exports = io => {
         })
     })
 
-    new arrayWatcher(1000, () => utils.getQueueSync(config("QUEUEPATH"))).on("changed", (changes, added) => {
+    new arrayWatcher(1000, () => global.queuedb.db().value()).on("changed", (changes, added) => {
         _.each(io.sockets.sockets, sk => {
             sk._emit("queueChanged", changes);
         })

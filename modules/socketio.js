@@ -9,14 +9,17 @@ module.exports = app => {
 
     io.on("connection", socket => {
         socket._emit = (evt, data) => {
-            socket.emit("all", { evt, data })
+            socket.emit("all", {
+                evt,
+                data
+            })
         }
-        
+
         socket.on("serverStat", () => {
             socket._emit("serverStat", {
                 running: !NOMORE,
-                queueIndex: utils.getInfosData(config("INFOS_PATH")).queue,
-                queueCount: utils.getQueueSync(config("QUEUEPATH")).length
+                queueIndex: global.infosdb.db().get("queue").value(), // get the queue index
+                queueCount: global.queuedb.db().get("queue").value().length // get queue count
             });
         })
     })

@@ -5,31 +5,16 @@ const colors = require("colors");
 const path = require("path");
 const fs = require("fs");
 const config = require("../modules/config");
-const dbHandler = require("../modules/db-handler");
-
-// load the dbs
-const infosdb = new dbHandler(config("INFOS_PATH"), {
-    queue: "0",
-    sources: [],
-    tvshowtimefeed: []
-});
-
-const queuedb = new dbHandler(config("QUEUEPATH"), []);
 
 function get(name) {
-    // find the source by name
-    const source = infosdb.find("sources", {
+    const source = global.infosdb.db().get("sources").find({
         name
-    }).value();
+    }).value(); // find the source by name
 
-    // if the source is not found
-    if (!source) throw (new Error("This source can't be found"));
+    if (!source) throw (new Error("This source can't be found")); // if the source is not found
 
-    // if found return its name with the js file
-    return {
-        name,
-        require: require(`./${name}`)
-    };
+    // if found return the js file as form of require
+    return require(`./${name}`);
 }
 
 function add(arr) {
@@ -39,19 +24,21 @@ function add(arr) {
 function MoveToNext(details, notDone) { // details are episode name, number season
     if (global.NOMORE) return; // this will return without doing nothing if the parsing is Stopped
 
-    queuedb.db().find(details).assign({
-        done: !not,
+    global.queuedb.db().get("queue").find({
+        url: details.url
+    }).assign({
+        done: !notDone,
         tried: true
     }).write(); // update the queue element with done and tried
 
-    BuildNextElement(queuedb.get("queue").value()).then(() => {
+    BuildNextElement(global.infosdb.db().get("queue").value()).then(() => {
         parseQueue();
     }); // build the next element means add one to queue index
 }
 
 function parseQueue() {
-    const queueData = queuedb.db(), // get the db instance
-        index = infosdb.get("queue").value(), // get the queue index
+    const queueData = global.queuedb.db().get("queue"), // get the db instance
+        index = global.infosdb.db().get("queue").value(), // get the queue index
         episodeEl = queueData.value()[index]; // get the queue index
 
     if (queueData.value().length === 0 || !episodeEl) {
@@ -64,7 +51,7 @@ function parseQueue() {
 
     if (!episodeEl.done) {
         getMediaUrlFor({
-            name: el.provider,
+            name: episodeEl.provider,
             prov: 0,
             code: null,
             index: null
@@ -143,21 +130,10 @@ function addtoQueue(details, ParticularEpisode, withoutSearch) {
             url,
             provider
         }) => {
-            let infos = utils.getInfosData(config('INFOS_PATH')); // can be improved
-            details.providerUrl = url;
+            details.providerUrl = url; // add url to the details i need it next (eplaination needed here)
 
-            infos.providers[provider] = {
-                url: url,
-                name: details.keyword,
-                season: details.season
-            };
-
-            utils.UpdateInfosData({
-                providers: infos.providers
-            }, config("INFOS_PATH"));
-
-            get(provider).addToQueueFromTo(details, config('QUEUEPATH')).then(() => {
-                resolve();
+            get(provider).addToQueueFromTo(details).then(() => { // this tels the provider to add the episodes to the queue
+                resolve(); // this have to change
             }).catch(err => {
                 reject(err);
             });
@@ -168,11 +144,10 @@ function addtoQueue(details, ParticularEpisode, withoutSearch) {
 }
 
 function clearQueue() {
-    // retreive queue data
-    const data = queuedb.db();
+    const data = global.queuedb.db().get("queue"); // retreive queue data
+    data.remove(item => item.done).write(); // remove finished items
 
-    // check if the data is empty if so reject the promise
-    if (data.value().length == 0) return Promise.reject("Data is empty please try again.");
+    if (data.value().length == 0) return Promise.reject("Data is empty please try again."); // check if the data is empty if so reject the promise
 
     //if all good the resolve the promise
     return Promise.resolve();
@@ -186,44 +161,19 @@ function search({
 }, success, error) {
     if (withoutSearch) return success(withoutSearch);
 
-    const prov = sources[index].require;
+    const provName = global.infosdb.db().get(`sources[${index}]`).value().name, // get the source from db using an index (NOTE: this has to change)
+        prov = get(provName); // get the source require
 
-    let infos = utils.getInfosData(config('INFOS_PATH'));
-    let SearchInfos = infos.providers[prov.name];
+    if (prov.cansearch()) {
 
-    if (SearchInfos) {
-        SearchInfos.name = SearchInfos.name ? SearchInfos.name.toLowerCase() : null;
-        SearchInfos.season = SearchInfos.season ? SearchInfos.season : null;
-    }
-
-    details.keyword = details.keyword.toLowerCase();
-
-    if (!ParticularEpisode && SearchInfos && SearchInfos.name === details.keyword && SearchInfos.season === details.season) {
-        success({
-            url: infos.providers[prov.name].url,
-            provider: prov.name
-        });
-    } else {
-        if (prov.cansearch()) {
-            prov.search(details, ParticularEpisode).then(url => {
-                success({
-                    url,
-                    provider: prov.name
-                });
-            }).catch(err => {
-                if (index === (sources.length - 1)) {
-                    error(err);
-                } else {
-                    search({
-                        index: ++index,
-                        details,
-                        ParticularEpisode
-                    }, success, error);
-                }
+        prov.search(details, ParticularEpisode).then(url => {
+            success({
+                url,
+                provider: provName
             });
-        } else {
+        }).catch(err => {
             if (index === (sources.length - 1)) {
-                error("Can't Find anything");
+                error(err);
             } else {
                 search({
                     index: ++index,
@@ -231,20 +181,31 @@ function search({
                     ParticularEpisode
                 }, success, error);
             }
+        });
+
+    } else {
+        if (index === (sources.length - 1)) {
+            error("Can't Find anything");
+        } else {
+            search({
+                index: ++index,
+                details,
+                ParticularEpisode
+            }, success, error);
         }
     }
 }
 
 function BuildNextElement(index = -1) { // the queue index default to -1
-    const db = queuedb.db(),
+    const db = global.queuedb.db().get("queue"),
         data = db.value(),
         // if the index is the last one do not repeat those who are already tried
         results = db.filter(item => !item.done && (parseInt(index) != (data.length - 1) ? true : !item.tried));
-
     index = (parseInt(index) + 1).toString(); // this simply adds one to the index and converts it to a string
+
     if (parseInt(index) > (data.length - 1) && results.length > 0) infos.queue = "0"; // this returns to the first element in the queue
 
-    infosdb.update("queue", index); // update the queue index in infos db
+    global.infosdb.db().set("queue", index).write(); // update the queue index in infos db
     return Promise.resolve(); // resolve the promise
 }
 
@@ -284,8 +245,6 @@ function parseProviderFromUrl(url) {
 
     return null;
 }
-
-add(["cimaclub", "4filmk", "cera", "seri-ar", "4helal", "mosalsl"]);
 
 module.exports = {
     addtoQueue,

@@ -19,7 +19,7 @@ module.exports = app => {
     })
 
     app.get("/queue", (req, res) => {
-        res.send(utils.getQueueSync(config("QUEUEPATH")));
+        res.send(global.queuedb.db().get("queue").value());
     })
 
 
@@ -36,7 +36,11 @@ module.exports = app => {
         const uri = path.join(config('SAVETOFOLDER'), req.params.filename);
 
         fs.exists(uri, exists => {
-            if (exists) { stream(uri, req, res); } else { res.sendStatus(404) }
+            if (exists) {
+                stream(uri, req, res);
+            } else {
+                res.sendStatus(404)
+            }
         })
     })
 
@@ -58,14 +62,22 @@ module.exports = app => {
         const uri = path.join(config('SAVETOFOLDER'), req.params.filename);
 
         utils.deleteFile(uri).then(() => {
-            res.send({ status: true });
+            res.send({
+                status: true
+            });
         }).catch(error => {
-            res.send({ status: false, error });
+            res.send({
+                status: false,
+                error
+            });
         });
     })
 
     app.get("/tvshowfeed", (req, res) => {
-        if (!req.query.code) return res.send({ status: "error", error: "code is required" });
+        if (!req.query.code) return res.send({
+            status: "error",
+            error: "code is required"
+        });
 
         tvshowTime.getAuth(req.query.code).then(access_token => {
             let conf = config();
@@ -74,39 +86,58 @@ module.exports = app => {
                 res.redirect("/")
             });
         }).catch(error => {
-            res.send({ status: "error", error })
+            res.send({
+                status: "error",
+                error
+            })
         })
 
     })
 
     app.get("/start", (req, res) => {
-        if (!global.NOMORE) return res.send({ running: NOMORE, error: "Can't you should stop the parsing first" });
-        if (req.query.index && isNaN(parseInt(req.query.index))) return res.send({ running: !NOMORE, error: "The index must be a number" });
+        if (!global.NOMORE) return res.send({
+            running: NOMORE,
+            error: "Can't you should stop the parsing first"
+        });
+        if (req.query.index && isNaN(parseInt(req.query.index))) return res.send({
+            running: !NOMORE,
+            error: "The index must be a number"
+        });
 
 
         const index = req.query.index ? parseInt(req.query.index) - 1 : null;
         sources.start(index).then(() => {
-            res.send({ running: !NOMORE });
+            res.send({
+                running: !NOMORE
+            });
         }).catch(error => {
-            res.send({ running: !NOMORE, error });
+            res.send({
+                running: !NOMORE,
+                error
+            });
         })
     });
 
     app.get("/stop", (req, res) => {
         sources.stop();
-        res.send({ running: !NOMORE });
+        res.send({
+            running: !NOMORE
+        });
     });
 
     app.get("/state", (req, res) => {
         res.send({
             running: !NOMORE,
-            queueIndex: utils.getInfosData(config("INFOS_PATH")).queue,
-            queueCount: utils.getQueueSync(config("QUEUEPATH")).length
+            queueIndex: global.infosdb.db().get("queue").value(), // get the queue index
+            queueCount: global.queuedb.db().get("queue").value().length // get queue count
         });
     })
 
     app.get("/search", (req, res) => {
-        if (!req.query.keyword || isNaN(req.query.season)) return res.send({ status: false, error: "Can't find any url" });
+        if (!req.query.keyword || isNaN(req.query.season)) return res.send({
+            status: false,
+            error: "Can't find any url"
+        });
         sources.search({
             index: 0,
             details: {
@@ -115,54 +146,80 @@ module.exports = app => {
             },
             ParticularEpisode: req.query.episode
         }, data => {
-            res.send({ status: true, url: data.url });
+            res.send({
+                status: true,
+                url: data.url
+            });
         }, error => {
-            res.send({ status: false, error })
-        })
-    })
-
-    app.get("/shows/:page", (req, res) => {
-        if (isNaN(req.params.page)) return res.send({});
-        if (utils.cache().get(`shows/${req.params.page}`)) return res.send(utils.cache().get(`shows/${req.params.page}`));
-
-        tvShowsData.getShows(parseInt(req.params.page)).then(data => {
-
-            utils.cache().set(`shows/${req.params.page}`, JSON.parse(data));
-            res.send(JSON.parse(data));
-        }).catch(err => {
-            res.send({});
+            res.send({
+                status: false,
+                error
+            })
         })
     })
 
     app.post("/queue", (req, res) => {
-        let { name, season, episode } = req.body;
+        let {
+            name,
+            season,
+            episode
+        } = req.body;
 
         season = utils.fixInt(season);
         episode = utils.fixInt(episode);
 
-        if (name === null || season === null || episode === null) return res.send({ status: false, error: "data not completed" });
+        if (name === null || season === null || episode === null) return res.send({
+            status: false,
+            error: "data not completed"
+        });
 
 
-        utils.deleteFromQueue({ name, episode, season }, config("QUEUEPATH")).then(() => {
-            res.send({ status: true });
+        utils.deleteFromQueue({
+            name,
+            episode,
+            season
+        }, config("QUEUEPATH")).then(() => {
+            res.send({
+                status: true
+            });
         }).catch(error => {
-            res.send({ status: false, error })
+            res.send({
+                status: false,
+                error
+            })
         });
     })
 
     app.post("/addToqueue", (req, res) => {
-        if (!req.body) return res.send({ status: false, error: "data not completed" });
+        if (!req.body) return res.send({
+            status: false,
+            error: "data not completed"
+        });
 
-        let { keyword, season, to, from } = req.body, provName;
+        let {
+            keyword,
+            season,
+            to,
+            from
+        } = req.body, provName;
         season = utils.fixInt(season);
         from = utils.fixInt(from);
 
-        if (!keyword || !season || !from || !to) return res.send({ status: false, error: "data not completed" });
-        if (to !== "f" && to < from) return res.send({ status: false, error: "from can't be less that to" });
+        if (!keyword || !season || !from || !to) return res.send({
+            status: false,
+            error: "data not completed"
+        });
+        if (to !== "f" && to < from) return res.send({
+            status: false,
+            error: "from can't be less that to"
+        });
 
         if (req.body.url) {
             provName = sources.parseProviderFromUrl(req.body.url);
-            if (!provName) return res.send({ status: false, error: "Url provider not found" });
+            if (!provName) return res.send({
+                status: false,
+                error: "Url provider not found"
+            });
         }
 
         const Url = provName ? {
@@ -170,11 +227,21 @@ module.exports = app => {
             provider: provName
         } : null;
 
-        sources.addtoQueue({ keyword, season, from, to }, null, Url).then(() => {
-            res.send({ status: true })
+        sources.addtoQueue({
+            keyword,
+            season,
+            from,
+            to
+        }, null, Url).then(() => {
+            res.send({
+                status: true
+            })
         }).catch(error => {
             _log(error);
-            res.send({ status: false, error })
+            res.send({
+                status: false,
+                error
+            })
         });
     })
 

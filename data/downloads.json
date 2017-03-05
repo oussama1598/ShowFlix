@@ -118,6 +118,108 @@
       "started": true,
       "error": false,
       "finished": true
+    },
+    {
+      "code": "38624",
+      "providerCode": 0,
+      "filename": "the 100 s4e5.mp4",
+      "serieName": "the 100",
+      "episode": 5,
+      "season": 4,
+      "progress": {
+        "progress": 100,
+        "written": "281.89 MB",
+        "size": "281.89 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "38627",
+      "providerCode": 0,
+      "filename": "legion s1e4.mp4",
+      "serieName": "legion",
+      "episode": 4,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "327.89 MB",
+        "size": "327.89 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "38632",
+      "providerCode": 0,
+      "filename": "suits s6e16.mp4",
+      "serieName": "suits",
+      "episode": 16,
+      "season": 6,
+      "progress": {
+        "progress": 100,
+        "written": "208.34 MB",
+        "size": "208.34 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "30794",
+      "providerCode": 0,
+      "filename": "travelers s1e10.mp4",
+      "serieName": "travelers",
+      "episode": 10,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "236.06 MB",
+        "size": "236.06 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "30820",
+      "providerCode": 0,
+      "filename": "travelers s1e11.mp4",
+      "serieName": "travelers",
+      "episode": 11,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "245.18 MB",
+        "size": "245.18 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "30827",
+      "providerCode": 0,
+      "filename": "travelers s1e12.mp4",
+      "serieName": "travelers",
+      "episode": 12,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "237.38 MB",
+        "size": "237.38 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
     }
   ]
 }

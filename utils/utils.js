@@ -66,7 +66,7 @@ function parseCookies(res) {
 
 function getInfosData(INFOS_PATH) {
     return low(INFOS_PATH).getState();
-}
+} // to be deleted soon
 
 
 function UpdateInfosData(obj, INFOS_PATH, cb) {
@@ -84,25 +84,6 @@ function ElementDone(QUEUEPATH, index, not) {
             resolve();
         }).catch(() => {
             reject()
-        })
-    })
-}
-
-function addToQueue(QUEUEPATH, arr, done) {
-    getQueue(QUEUEPATH, true).then(data => {
-        for (let i = arr.length - 1; i >= 0; i--) {
-            const val = arr[i],
-                result = data.filter(val1 => (val1.episode === val.episode && val1.season === val.season) && val1.name === val.name);
-            if (result.length > 0) {
-                arr.splice(i, 1);
-            }
-
-        }
-
-        data = data.concat(arr);
-        updateJSON(data, QUEUEPATH, () => {
-            if (done)
-                done();
         })
     })
 }
@@ -137,9 +118,9 @@ function deleteFile(uri) {
 }
 
 function arrayDeffrence(array) {
-    var rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
+    let rest = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
 
-    var containsEquals = function(obj, target) {
+    let containsEquals = function(obj, target) {
         if (obj == null) return false;
         return _.any(obj, function(value) {
             return _.isEqual(value, target);
@@ -168,12 +149,8 @@ function getQueue(QUEUEPATH, force = false) {
             resolve(data);
         }
     })
-}
+} // this should be deleted soon
 
-function getQueueSync(QUEUEPATH) {
-    if (!fs.existsSync(QUEUEPATH)) return [];
-    return low(QUEUEPATH).getState();
-}
 
 function getQueueValue(QUEUEPATH, index) {
     return Q.Promise((resolve, reject) => {
@@ -210,7 +187,7 @@ function searchAPI(cx) {
 
 function updateConfig(obj, queuepath, cb) {
     updateJSON(obj, queuepath, cb);
-}
+} // to be deleted
 
 function fixInt(num) {
     return isNaN(parseInt(num)) ? null : parseInt(num);
@@ -237,7 +214,7 @@ function deleteFromQueue({
             reject(err);
         });
     });
-}
+} // to be deleted
 
 function pad(num, size) {
     let s = num.toString();
@@ -280,7 +257,6 @@ function updateState(data, URI){
 
 module.exports = {
     getHtml,
-    addToQueue,
     ObjectSize,
     deleteFile,
     filesUpdated,
@@ -292,7 +268,6 @@ module.exports = {
     UpdateInfosData,
     updateConfig,
     getQueue,
-    getQueueSync,
     cache,
     fixInt,
     deleteFromQueue,

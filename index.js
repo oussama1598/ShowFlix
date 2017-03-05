@@ -38,9 +38,20 @@ require("./modules/thumbs").init(() => {
     require("./modules/fileWatcher")();
 });
 
+// init dbs as global instances
+global.infosdb = new dbHandler(config("INFOS_PATH"), {
+    queue: "0",
+    sources: [],
+    tvshowtimefeed: []
+});
+global.queuedb = new dbHandler(config("QUEUEPATH"), {
+    queue: []
+});
+
 // watch tvshowtime feed
 require("./modules/tvShowTime").watch((data, next) => {
     // add episode to the queue
+    _log(data)
     sources.addtoQueue(data, data.from).then(() => {
         _log(`Found ${data.keyword} From tvShowTime`);
         let infos = utils.getInfosData(config('INFOS_PATH')),
@@ -66,13 +77,13 @@ require("./modules/tvShowTime").watch((data, next) => {
 server.on("error", err => console.log(`Can't start http server. ${err.toString()}`.red, true));
 
 // start the server
-// server.listen(config('PORT'), () => {
-//     // get the local ip address
-//     const ip = require("ip").address();
-//
-//     // _log is the interval console.log
-//     _log(`Server is up and running access it at: http://${ip}:${config('PORT')}`);
-// });
+server.listen(config('PORT'), () => {
+    // get the local ip address
+    const ip = require("ip").address();
+
+    // _log is the interval console.log
+    _log(`Server is up and running access it at: http://${ip}:${config('PORT')}`);
+});
 
 // kill curl in exit
 nodeCleanup(() => {

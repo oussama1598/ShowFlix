@@ -1,64 +1,55 @@
 {
-    "queue": "3",
-    "sources": [{
-        "name": "cimaclub"
-    }],
-    "providers": {
-        "mosalsl": {
-            "url": "http://mosalsl.com/index.php/series/flash-all-seasons/",
-            "name": "the flash",
-            "season": 3
-        },
-        "seri-ar": {
-            "url": "http://www.seri-ar.com/2017/01/travelers.html",
-            "name": "travelers",
-            "season": 1
-        },
-        "cera": {
-            "url": "http://cera.online/series-mr-robot-season-1-episode-1-s01e01-watch-cima4u-download-translated-egfire-tv-video.html",
-            "name": "mr robot",
-            "season": 1
-        },
-        "4filmk": {
-            "url": "http://www.4filmk.tv/show_online/الحلقة-10-مسلسل-mr-robot-s01e10-موسم-1-مترجم-اون-لاين/",
-            "name": "mr.robot",
-            "season": 1
-        },
-        "cimaclub": {
-            "url": "http://cimaclub.com/مسلسل-the-flash-الموسم-3-الحلقة-14-الرابعة-عشر/?view=1",
-            "name": "the flash",
-            "season": 3
-        }
+  "queue": "2",
+  "sources": [
+    {
+      "name": "cimaclub"
     },
-    "tvshowtimefeed": [{
-            "name": "the blacklist",
-            "lastSeason": 4,
-            "lasEpisode": 15
-        },
-        {
-            "name": "the flash",
-            "lastSeason": 3,
-            "lasEpisode": 14
-        },
-        {
-            "name": "lucifer",
-            "lastSeason": 2,
-            "lasEpisode": 13
-        },
-        {
-            "name": "suits",
-            "lastSeason": 6,
-            "lasEpisode": 15
-        },
-        {
-            "name": "the 100",
-            "lastSeason": 4,
-            "lasEpisode": 4
-        },
-        {
-            "name": "legion",
-            "lastSeason": 1,
-            "lasEpisode": 3
-        }
-    ]
+    {
+      "name": "4filmk"
+    },
+    {
+      "name": "cera"
+    },
+    {
+      "name": "seri-ar"
+    },
+    {
+      "name": "4helal"
+    },
+    {
+      "name": "mosalsl"
+    }
+  ],
+  "tvshowtimefeed": [
+    {
+      "name": "the blacklist",
+      "lastSeason": 4,
+      "lasEpisode": 15
+    },
+    {
+      "name": "the flash",
+      "lastSeason": 3,
+      "lasEpisode": 14
+    },
+    {
+      "name": "lucifer",
+      "lastSeason": 2,
+      "lasEpisode": 13
+    },
+    {
+      "name": "suits",
+      "lastSeason": 6,
+      "lasEpisode": 16
+    },
+    {
+      "name": "the 100",
+      "lastSeason": 4,
+      "lasEpisode": 5
+    },
+    {
+      "name": "legion",
+      "lastSeason": 1,
+      "lasEpisode": 4
+    }
+  ]
 }
