@@ -1,17 +1,23 @@
 const Q = require('q');
 const cheerio = require('cheerio');
-const fs = require('fs');
 const del = require('del');
 const _ = require('underscore');
 const NodeCache = require('node-cache');
 const Bypasser = require('node-bypasser');
 const fetch = require('node-fetch');
 const low = require('lowdb');
+const search = require('../modules/searchAPI');
 
 const myCache = new NodeCache({
     stdTTL: 60 * 60 * 24,
     checkperiod: 120
 });
+
+const ObjectSize = object => Object.keys(object).length;
+const deleteFile = uri => del(uri, {
+    force: true
+});
+const searchAPI = cx => search(cx);
 
 function getHtml(_url, json, method = 'GET', form = {}, headers = {}) {
     const url = encodeURI(_url);
@@ -47,59 +53,14 @@ function filesUpdated() {
     cache().delete('medias');
 }
 
-function getInfosData(INFOS_PATH) {
-    return low(INFOS_PATH).getState();
-} // to be deleted soon
-
-
-function UpdateInfosData(obj, INFOS_PATH, cb) {
-    low(INFOS_PATH).assign(obj).write();
-    if (cb) cb();
-}
-
-function updateJSON(object, path) {
-    low(path).assign(object).write();
-}
-
-const ObjectSize = object => Object.keys(object).length;
-
-function deleteFile(uri) {
-    return Q.Promise((resolve, reject) => {
-        fs.exists(uri, (error, exists) => {
-            if (error || !exists) reject('This File does not exist');
-
-            del(uri, {
-                force: true
-            }).then(() => {
-                resolve();
-            }).catch(err => {
-                reject(err);
-            });
-        });
-    });
-}
-
-function arrayDeffrence(array) {
-    const rest = Array.prototype.concat.apply(
-        Array.prototype,
-        Array.prototype.slice.call(arguments, 1)
-    );
-
+function arrayDeffrence(_arr, _target) {
     const containsEquals = (obj, target) => {
         if (obj == null) return false;
         return _.any(obj, value => _.isEqual(value, target));
     };
 
-    return _.filter(array, value => !containsEquals(rest, value));
+    return _.filter(_arr, value => !containsEquals(_target, value));
 }
-
-function searchAPI(cx) {
-    return require('../modules/searchAPI')(cx);
-}
-
-function updateConfig(obj, queuepath, cb) {
-    updateJSON(obj, queuepath, cb);
-} // to be deleted
 
 function fixInt(num) {
     return isNaN(parseInt(num, 10)) ? null : parseInt(num, 10);
@@ -174,9 +135,6 @@ module.exports = {
     filesUpdated,
     arrayDeffrence,
     searchAPI,
-    getInfosData,
-    UpdateInfosData,
-    updateConfig,
     cache,
     fixInt,
     pad,
