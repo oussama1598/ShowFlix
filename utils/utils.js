@@ -5,7 +5,6 @@ const _ = require('underscore');
 const NodeCache = require('node-cache');
 const Bypasser = require('node-bypasser');
 const fetch = require('node-fetch');
-const low = require('lowdb');
 const search = require('../modules/searchAPI');
 
 const myCache = new NodeCache({
@@ -124,10 +123,6 @@ function getLastEpisode(obj) {
     return last;
 }
 
-function updateState(data, URI) {
-    low(URI).setState(data);
-}
-
 module.exports = {
     getHtml,
     ObjectSize,
@@ -139,6 +134,5 @@ module.exports = {
     fixInt,
     pad,
     Bypass,
-    getLastEpisode,
-    updateState
+    getLastEpisode
 };
