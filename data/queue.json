@@ -1,3 +1,13 @@
 {
-  "queue": []
+  "queue": [
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-1-season-1-s01e01-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 1,
+      "season": 1,
+      "done": true,
+      "tried": true
+    }
+  ]
 }

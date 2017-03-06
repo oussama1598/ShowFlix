@@ -8,7 +8,6 @@ function Watcher(delay, fn) {
     setInterval(() => {
         // this function will be called to retreive the data
         const arr = fn();
-
         // get the diffrence between two arrays
         const deff = utils.arrayDeffrence(arr, this.last);
 

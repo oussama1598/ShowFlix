@@ -22,7 +22,7 @@ module.exports = extend(true, {
             'Content-Type': 'application/x-www-form-urlencoded'
         }).then($ => {
             let toReturn;
-            $('iframe').each(function() {
+            $('iframe').each(function () {
                 const url = $(this).attr('src');
                 if (url.indexOf(provDetails.name) > -1) toReturn = url;
             });
@@ -35,7 +35,7 @@ module.exports = extend(true, {
     },
     BuildUrlsSource($, infos) {
         const Urls = {};
-        $('.blocksFilms').eq(0).find('.moviefilm').each(function() {
+        $('.blocksFilms').eq(0).find('.moviefilm').each(function () {
             const url = decodeURI($(this).find('a').eq(0).attr('href'));
             const season = url.match(/s(\d+)/);
             const episode = url.match(/e(\d+)/);
@@ -74,7 +74,7 @@ module.exports = extend(true, {
                 q = q.replace(/\s+/g, '-');
 
                 _.each(res.items, item => {
-                    const url = res.items[item].link.toLowerCase();
+                    const url = item.link.toLowerCase();
                     const matcheResults = [
                         url.indexOf(matches[0]),
                         ParticularEpisode ? url.indexOf(matches[1]) : 1

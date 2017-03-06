@@ -18,7 +18,7 @@ module.exports = () => {
         })
         .on('change', _uri => {
             const fullpath = _uri;
-            const uri = path.basename(uri);
+            const uri = path.basename(_uri);
             const index = searchForPath(uri);
 
             if (index === false) return;

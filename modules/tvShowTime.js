@@ -1,49 +1,25 @@
 const req = require('request');
-const Q = require('q');
-const utils = require('../utils/utils');
 const config = require('./config');
 const async = require('async');
+const utils = require('../utils/utils');
 
 const TVST_CLIENT_ID = config('TVST_CLIENT_ID');
 const TVST_CLIENT_SECRET = config('TVST_CLIENT_SECRET');
 const TVST_ACCESS_TOKEN_URI = config('TVST_ACCESS_TOKEN_URI');
 const TVST_LIBRARY_URI = config('TVST_LIBRARY_URI');
-const TVST_CHECKIN_URI = config('TVST_CHECKIN_URI');
 
 let RUN = false;
 let TIMER = false;
 
-function isWatched(serieName, season, episode) {
-    const filename = `filename=${serieName} s${season}e${episode}`;
-    const ACCESS_TOKEN = config('ACCESS_TOKEN');
-
-    return utils.getHtml(`${TVST_CHECKIN_URI}?${filename}&access_token=${ACCESS_TOKEN}`, true)
-        .then(data =>
-            JSON.parse(data).code === 1
-        );
-}
-
 function getAuth(code) {
-    return Q.Promise((resolve, reject) => {
-        const form = {
-            client_id: TVST_CLIENT_ID,
-            client_secret: TVST_CLIENT_SECRET,
-            code
-        };
-        const url = TVST_ACCESS_TOKEN_URI;
+    const form = {
+        client_id: TVST_CLIENT_ID,
+        client_secret: TVST_CLIENT_SECRET,
+        code
+    };
+    const url = TVST_ACCESS_TOKEN_URI;
 
-        req.post({
-            url,
-            form
-        }, (err, res, _body) => {
-            const body = (err || res.statusCode !== 200) ? null : JSON.parse(_body);
-            if (err || res.statusCode !== 200 || body.result === 'KO') {
-                return reject(err || body.message);
-            }
-
-            resolve(body.access_token);
-        });
-    });
+    return utils.getHtml(url, true, 'POST', form).then(body => body.access_token);
 }
 
 function getTowatch(_page, cb, add) {
@@ -121,8 +97,8 @@ function getTowatch(_page, cb, add) {
             });
         } else {
             const delay = (
-              (new Date(parseFloat(res.headers['x-ratelimit-reset']) * 1000).getTime() / 1000) -
-              (new Date().getTime() / 1000)) + 10;
+                (new Date(parseFloat(res.headers['x-ratelimit-reset']) * 1000).getTime() / 1000) -
+                (new Date().getTime() / 1000)) + 10;
             setTimeout(() => {
                 getTowatch(page, cb, add);
             }, delay * 1000);
@@ -154,6 +130,5 @@ function stop() {
 module.exports = {
     getAuth,
     watch,
-    stop,
-    isWatched
+    stop
 };

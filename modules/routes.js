@@ -154,12 +154,12 @@ module.exports = app => {
                 season: parseInt(req.query.season, 10)
             },
             ParticularEpisode: req.query.episode
-        }, data => {
+        }).then(data => {
             res.send({
                 status: true,
                 url: data.url
             });
-        }, error => {
+        }).catch(error => {
             res.send({
                 status: false,
                 error

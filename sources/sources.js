@@ -1,4 +1,3 @@
-const Q = require('q');
 const downloader = require('../modules/downloader');
 
 function get(name) {
@@ -10,6 +9,10 @@ function get(name) {
 
     // if found return the js file as form of require
     return require(`./${name}`);
+}
+
+function getSources() {
+    return global.infosdb.db().get('sources').value();
 }
 
 function MoveToNext(details, notDone) { // details are episode name, number season
@@ -34,15 +37,16 @@ function parseQueue() {
     const index = global.infosdb.db().get('queue').value(); // get the queue index
     const episodeEl = queueData.value()[index]; // get the queue index
 
-    if (queueData.value().length === 0 || !episodeEl) {
+    if (queueData.value().length === 0) { // check if theres more episodes
         console.log('All Done'.green);
         global.NOMORE = true; // stop the parsing
         return; // exit this function with nothing
     }
 
-    episodeEl.index = parseInt(index, 10); // add the index to it cause its needed in some functions
+    if (!episodeEl.done || !episodeEl) { // if the episode is done or does not exist
+        // add the index to it cause its needed in some functions
+        episodeEl.index = parseInt(index, 10);
 
-    if (!episodeEl.done) {
         getMediaUrlFor({
             name: episodeEl.provider,
             prov: 0,
@@ -111,28 +115,19 @@ function getMediaUrlFor(data, details, overWrite) {
 
 
 function addtoQueue(details, ParticularEpisode, withoutSearch) {
-    return Q.Promise((resolve, reject) => {
-        search({
-            index: 0,
-            details,
-            ParticularEpisode,
-            withoutSearch
-        }, ({
-            url,
-            provider
-        }) => {
-            const newDetails = details;
-            newDetails.providerUrl = url; // Add url to the details
-
-            // this tels the provider to add the episodes to the queue
-            get(provider).addToQueueFromTo(newDetails).then(() => {
-                resolve(); // this have to change
-            }).catch(err => {
-                reject(err);
-            });
-        }, err => {
-            reject(err);
-        });
+    return search({
+        index: 0,
+        details,
+        ParticularEpisode,
+        withoutSearch
+    }).then(({
+        url,
+        provider
+    }) => {
+        const newDetails = details;
+        newDetails.providerUrl = url; // Add url to the details
+        // this tels the provider to add the episodes to the queue
+        return get(provider).addToQueueFromTo(newDetails);
     });
 }
 
@@ -154,8 +149,8 @@ function search({
     details,
     ParticularEpisode,
     withoutSearch
-}, success, error) {
-    if (withoutSearch) return success(withoutSearch);
+}) {
+    if (withoutSearch) return Promise.resolve(withoutSearch);
 
     // get the source from db using an index (NOTE: this has to change)
     const provName = global.infosdb.db().get(`sources[${index}]`).value().name;
@@ -163,32 +158,21 @@ function search({
 
     let itemIndex = index;
 
-    if (prov.cansearch()) {
-        prov.search(details, ParticularEpisode).then(url => {
-            success({
-                url,
-                provider: provName
-            });
-        }).catch(err => {
-            if (index === (sources.length - 1)) {
-                error(err);
-            } else {
-                search({
-                    index: ++itemIndex,
-                    details,
-                    ParticularEpisode
-                }, success, error);
-            }
-        });
-    } else if (index === (sources.length - 1)) {
-        error('Can\'t Find anything');
-    } else {
-        search({
+    if (!prov.cansearch()) return Promise.reject();
+
+    return prov.search(details, ParticularEpisode).then(url => ({
+        url,
+        provider: provName
+    })).catch(() => {
+        // this means that we got into all sources but nothing returened
+        if ((getSources().length - 1) === itemIndex) return Promise.reject('Nothing found');
+        // if we still have sources the search into the next one
+        return search({
             index: ++itemIndex,
             details,
             ParticularEpisode
-        }, success, error);
-    }
+        });
+    });
 }
 
 function BuildNextElement(index = -1) { // the queue index default to -1
@@ -209,7 +193,7 @@ function BuildNextElement(index = -1) { // the queue index default to -1
         global.infosdb.db().set('queue', '0').write();
     }
 
-    global.infosdb.db().set('queue', index).write(); // update the queue index in infos db
+    global.infosdb.db().set('queue', itemIndex).write(); // update the queue index in infos db
     return Promise.resolve(); // resolve the promise
 }
 

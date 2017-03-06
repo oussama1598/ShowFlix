@@ -1,4 +1,3 @@
 {
-  "extends": "rallycoding",
-  "nomon": true
+  "extends": "rallycoding"
 }

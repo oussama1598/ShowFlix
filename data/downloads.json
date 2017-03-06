@@ -220,6 +220,23 @@
       "started": true,
       "error": false,
       "finished": true
+    },
+    {
+      "code": "362309",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e1.mp4",
+      "serieName": "12 monkeys",
+      "episode": 1,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "298.32 MB",
+        "size": "298.32 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
     }
   ]
 }
