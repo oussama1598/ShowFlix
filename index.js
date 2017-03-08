@@ -70,8 +70,7 @@ require('./modules/tvShowTime').watch((data, next) => {
         .write();
 
         next(); // check the next episode
-
-        //if (config('START_SERVER_WHENE_FOUND')) sources.start();
+        if (config('START_SERVER_WHENE_FOUND')) sources.start();
     });
 });
 
