@@ -2,7 +2,6 @@ const http = require('http');
 const express = require('express');
 const config = require('./modules/config');
 const sources = require('./sources/sources');
-const utils = require('./utils/utils');
 const bodyParser = require('body-parser');
 const nodeCleanup = require('node-cleanup');
 const dbHandler = require('./modules/db-handler');
@@ -61,22 +60,18 @@ require('./modules/tvShowTime').watch((data, next) => {
     sources.addtoQueue(data, data.from).then(() => {
         global.log(`Found ${data.keyword} From tvShowTime`);
 
-        const infos = utils.getInfosData(config('INFOS_PATH'));
-        const showsTo = infos.tvshowtimefeed;
+        global.infosdb.db().get('tvshowtimefeed').find({
+            name: data.keyword
+        })
+        .assign({
+            lastSeason: data.season,
+            lastEpisode: data.number
+        })
+        .write();
 
-        // update the infos with the new details
-        showsTo[data.index].lastSeason = data.season;
-        showsTo[data.index].lasEpisode = data.number;
+        next(); // check the next episode
 
-        utils.UpdateInfosData({
-            tvshowtimefeed: showsTo
-        }, config('INFOS_PATH'), () => {
-            next();
-            const imediateStart = config('START_SERVER_WHENE_FOUND');
-            if (imediateStart) {
-                sources.start();
-            }
-        });
+        //if (config('START_SERVER_WHENE_FOUND')) sources.start();
     });
 });
 

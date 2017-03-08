@@ -5,7 +5,7 @@ const send = require('send');
 
 module.exports = (uri, req, res) => {
     if (!req.query.ffmpeg) {
-        return send(uri, req).pipe(res);
+        return send(req, uri).pipe(res);
     }
     return transcode(uri, res, req.query.ffmpeg);
 };

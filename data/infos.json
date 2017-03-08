@@ -1,5 +1,5 @@
 {
-  "queue": "1",
+  "queue": "12",
   "sources": [
     {
       "name": "cimaclub"
@@ -24,32 +24,32 @@
     {
       "name": "the blacklist",
       "lastSeason": 4,
-      "lasEpisode": 15
+      "lastEpisode": 15
     },
     {
       "name": "the flash",
       "lastSeason": 3,
-      "lasEpisode": 14
+      "lastEpisode": 15
     },
     {
       "name": "lucifer",
       "lastSeason": 2,
-      "lasEpisode": 13
+      "lastEpisode": 13
     },
     {
       "name": "suits",
       "lastSeason": 6,
-      "lasEpisode": 16
+      "lastEpisode": 16
     },
     {
       "name": "the 100",
       "lastSeason": 4,
-      "lasEpisode": 5
+      "lastEpisode": 5
     },
     {
       "name": "legion",
       "lastSeason": 1,
-      "lasEpisode": 4
+      "lastEpisode": 4
     }
   ]
 }

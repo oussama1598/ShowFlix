@@ -237,6 +237,40 @@
       "started": true,
       "error": false,
       "finished": true
+    },
+    {
+      "code": "362310",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e2.mp4",
+      "serieName": "12 monkeys",
+      "episode": 2,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "256.01 MB",
+        "size": "256.01 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362311",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e3.mp4",
+      "serieName": "12 monkeys",
+      "episode": 3,
+      "season": 1,
+      "progress": {
+        "progress": "26.6",
+        "written": "83.52 MB",
+        "size": "314.55 MB",
+        "speed": "93KB/s"
+      },
+      "started": true,
+      "error": false,
+      "finished": false
     }
   ]
 }

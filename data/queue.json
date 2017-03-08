@@ -2,11 +2,110 @@
   "queue": [
     {
       "provider": "cera",
-      "url": "http://cera.online/series-12-monkeys-episode-1-season-1-s01e01-mosalsal-video-motarjam-translated-download-watch.html",
+      "url": "http://cera.online/series-12-monkeys-episode-3-season-1-s01e03-mosalsal-video-motarjam-translated-download-watch.html",
       "name": "12 monkeys",
-      "episode": 1,
+      "episode": 3,
       "season": 1,
-      "done": true,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-4-season-1-s01e04-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 4,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-5-season-1-s01e05-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 5,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-6-season-1-s01e06-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 6,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-7-season-1-s01e07-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 7,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-8-season-1-s01e08-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 8,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-9-season-1-s01e09-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 9,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-10-season-1-s01e10-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 10,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-11-season-1-s01e11-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 11,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-12-season-1-s01e12-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 12,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cera",
+      "url": "http://cera.online/series-12-monkeys-episode-13-season-1-s01e13-mosalsal-video-motarjam-translated-download-watch.html",
+      "name": "12 monkeys",
+      "episode": 13,
+      "season": 1,
+      "done": false,
+      "tried": false
+    },
+    {
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-the-flash-الموسم-3-الحلقة-15-الخامسة-عشر/",
+      "name": "the flash",
+      "episode": 15,
+      "season": 3,
+      "done": false,
       "tried": true
     }
   ]

@@ -57,7 +57,7 @@ function getTowatch(_page, cb, add) {
                         const lastSeenSeason = val.last_seen ? val.last_seen.season_number : null;
 
                         const lastSeen = {
-                            number: (show[0].lasEpisode) ? show[0].lasEpisode : lastSeenNumber,
+                            number: (show[0].lastEpisode) ? show[0].lastEpisode : lastSeenNumber,
                             season: (show[0].lastSeason) ? show[0].lastSeason : lastSeenSeason
                         };
 
@@ -74,8 +74,7 @@ function getTowatch(_page, cb, add) {
                                 keyword: show[0].name,
                                 from,
                                 season: season_number,
-                                number,
-                                index: showsTo.indexOf(show[0])
+                                number
                             }, () => {
                                 callback();
                             });

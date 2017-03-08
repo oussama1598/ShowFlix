@@ -11,7 +11,14 @@ module.exports = {
         return this.BuildUrls(details).then(urls => {
             const queue = global.queuedb.db().get('queue'); // get the queue array
             urls.forEach(item => { // go throw all the urls
-                if (!queue.find(item).value()) {
+                const exists = queue.find({
+                    name: item.name,
+                    episode: item.episode,
+                    season: item.season
+                }).value(); // this const is used for simplicity
+                // exclusind tried and done from the search
+                
+                if (!exists) {
                     // if the item exist don't add it to the queue if not simply add it
                     queue.push(item).write();
                 }
