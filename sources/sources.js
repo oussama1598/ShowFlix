@@ -181,7 +181,7 @@ function BuildNextElement(index = -1) { // the queue index default to -1
     // if the index is the last one do not repeat those who are already tried
     const results = db.filter(item =>
         !item.done && (parseInt(index, 10) !== (data.length - 1) ? true : !item.tried)
-    );
+    ).value();
 
     let itemIndex = index; // for the index and easy typing
 
@@ -191,6 +191,7 @@ function BuildNextElement(index = -1) { // the queue index default to -1
     // this returns to the first element in the queue
     if (parseInt(itemIndex, 10) > (data.length - 1) && results.length > 0) {
         global.infosdb.db().set('queue', '0').write();
+        return Promise.resolve();
     }
 
     global.infosdb.db().set('queue', itemIndex).write(); // update the queue index in infos db

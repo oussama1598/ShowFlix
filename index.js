@@ -58,19 +58,23 @@ global.queuedb = new dbHandler(config('QUEUEPATH'), {
 require('./modules/tvShowTime').watch((data, next) => {
     // add episode to the queue
     sources.addtoQueue(data, data.from).then(() => {
+        // get last element's index
+        const lastIndex = global.queuedb.db().get('queue').value().length - 1;
+
         global.log(`Found ${data.keyword} From tvShowTime`);
 
         global.infosdb.db().get('tvshowtimefeed').find({
-            name: data.keyword
-        })
-        .assign({
-            lastSeason: data.season,
-            lastEpisode: data.number
-        })
-        .write();
+                name: data.keyword
+            })
+            .assign({
+                lastSeason: data.season,
+                lastEpisode: data.number
+            })
+            .write();
 
         next(); // check the next episode
-        if (config('START_SERVER_WHENE_FOUND')) sources.start();
+
+        if (config('START_SERVER_WHENE_FOUND')) sources.start(lastIndex - 1);
     });
 });
 

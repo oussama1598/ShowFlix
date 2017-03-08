@@ -73,8 +73,8 @@ function addtoGlobal(Path, imediatly) {
 
     if (!imediatly) {
         utils.filesUpdated();
-        tempraryFiles.splice(searchForPath(path), 1);
-        thumbs.generate(path);
+        tempraryFiles.splice(searchForPath(Path), 1);
+        thumbs.generate(Path);
     }
 }
 

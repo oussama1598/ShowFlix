@@ -263,10 +263,78 @@
       "episode": 3,
       "season": 1,
       "progress": {
-        "progress": "26.6",
-        "written": "83.52 MB",
+        "progress": 100,
+        "written": "314.55 MB",
         "size": "314.55 MB",
-        "speed": "93KB/s"
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "39383",
+      "providerCode": 0,
+      "filename": "the flash s3e15.mp4",
+      "serieName": "the flash",
+      "episode": 15,
+      "season": 3,
+      "progress": {
+        "progress": 100,
+        "written": "264.13 MB",
+        "size": "264.13 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362312",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e4.mp4",
+      "serieName": "12 monkeys",
+      "episode": 4,
+      "season": 1,
+      "progress": {
+        "progress": "69.8",
+        "written": "171.72 MB",
+        "size": "246.09 MB",
+        "speed": "58KB/s"
+      },
+      "started": true,
+      "error": true,
+      "finished": false
+    },
+    {
+      "code": "362313",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e5.mp4",
+      "serieName": "12 monkeys",
+      "episode": 5,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "217.1 MB",
+        "size": "217.1 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362314",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e6.mp4",
+      "serieName": "12 monkeys",
+      "episode": 6,
+      "season": 1,
+      "progress": {
+        "progress": "28.1",
+        "written": "65.06 MB",
+        "size": "231.7 MB",
+        "speed": "15KB/s"
       },
       "started": true,
       "error": false,

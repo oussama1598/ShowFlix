@@ -1,4 +1,3 @@
-const Q = require('q');
 const cheerio = require('cheerio');
 const del = require('del');
 const _ = require('underscore');
@@ -17,6 +16,11 @@ const deleteFile = uri => del(uri, {
     force: true
 });
 const searchAPI = cx => search(cx);
+const cache = () => ({
+    get: key => myCache.get(key),
+    set: (key, data) => myCache.set(key, data),
+    delete: key => myCache.del(key)
+});
 
 function getHtml(_url, json, method = 'GET', form = {}, headers = {}) {
     const url = encodeURI(_url);
@@ -34,18 +38,6 @@ function getHtml(_url, json, method = 'GET', form = {}, headers = {}) {
             console.log(err.toString().red);
             return err;
         });
-}
-
-function cache() {
-    return {
-        get: key => myCache.get(key),
-        set: (key, data) => {
-            myCache.set(key, data);
-        },
-        delete: key => {
-            myCache.del(key);
-        }
-    };
 }
 
 function filesUpdated() {
@@ -95,7 +87,7 @@ function pad(num, size) {
 }
 
 function Bypass(url) {
-    return Q.Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         new Bypasser(url).decrypt((err, result) => {
             if (err) return reject();
             resolve(result);

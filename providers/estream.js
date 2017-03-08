@@ -2,9 +2,7 @@ const utils = require('../utils/utils');
 const _ = require('underscore');
 
 function getUrl($) {
-    const results = [];
-
-    let better = null;
+    let results = [];
 
     $('source').each(function () {
         const quality = $(this).attr('res');
@@ -15,20 +13,16 @@ function getUrl($) {
         });
     });
 
-    _.each(results, item => {
-        if (
-            item.quality &&
-            (!better || (parseInt(better.quality, 10) < parseInt(item.quality, 10)))
-        ) {
-            better = item;
-        }
-    });
+    results = _.chain(results)
+        .filter(item => item.quality)
+        .sortBy(item => -parseInt(item.quality, 10))
+        .value();
 
-    return better.streamUrl;
+    return results[0].streamUrl;
 }
 
-module.exports = function (url) {
-    _log(url);
+module.exports = url => {
+    global.log(url);
     console.log('estream start parsing');
     return utils.getHtml(url).then($ => {
         console.log('estream HTML loaded!');
