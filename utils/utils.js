@@ -21,28 +21,21 @@ const cache = () => ({
     set: (key, data) => myCache.set(key, data),
     delete: key => myCache.del(key)
 });
-
-function getHtml(_url, json, method = 'GET', form = {}, headers = {}) {
-    const url = encodeURI(_url);
-    return fetch(url, {
-            timeout: 20000,
-            method,
-            body: generateFormData(form),
-            headers
-        })
-        .then(res => res.text())
-        .then(body => {
-            if (json) return JSON.parse(body);
-            return cheerio.load(body);
-        }).catch(err => {
-            console.log(err.toString().red);
-            return err;
-        });
-}
-
-function filesUpdated() {
-    cache().delete('medias');
-}
+const getHtml = (_url, json, method = 'GET', form = {}, headers = {}) => fetch(encodeURI(_url), {
+        timeout: 20000,
+        method,
+        body: generateFormData(form),
+        headers
+    })
+    .then(res => res.text())
+    .then(body => {
+        if (json) return JSON.parse(body);
+        return cheerio.load(body);
+    }).catch(err => {
+        console.log(err.toString().red);
+        return err;
+    });
+const filesUpdated = () => cache().delete('medias');
 
 function arrayDeffrence(_arr, _target) {
     const containsEquals = (obj, target) => {
