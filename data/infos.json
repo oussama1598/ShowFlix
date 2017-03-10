@@ -1,5 +1,5 @@
 {
-  "queue": "2",
+  "queue": "5",
   "sources": [
     {
       "name": "cimaclub"
@@ -49,7 +49,10 @@
     {
       "name": "legion",
       "lastSeason": 1,
-      "lastEpisode": 4
+      "lastEpisode": 5
+    },
+    {
+      "name": "the catch"
     }
   ]
 }

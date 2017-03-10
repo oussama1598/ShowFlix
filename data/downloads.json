@@ -297,14 +297,14 @@
       "episode": 4,
       "season": 1,
       "progress": {
-        "progress": "69.8",
-        "written": "171.72 MB",
+        "progress": 100,
+        "written": "246.09 MB",
         "size": "246.09 MB",
-        "speed": "58KB/s"
+        "speed": 0
       },
       "started": true,
-      "error": true,
-      "finished": false
+      "error": false,
+      "finished": true
     },
     {
       "code": "362313",
@@ -331,14 +331,150 @@
       "episode": 6,
       "season": 1,
       "progress": {
-        "progress": "37.1",
-        "written": "85.95 MB",
+        "progress": 100,
+        "written": "231.7 MB",
         "size": "231.7 MB",
-        "speed": "48KB/s"
+        "speed": 0
       },
       "started": true,
       "error": false,
+      "finished": true
+    },
+    {
+      "code": "362315",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e7.mp4",
+      "serieName": "12 monkeys",
+      "episode": 7,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "231.21 MB",
+        "size": "231.21 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "39510",
+      "providerCode": 0,
+      "filename": "legion s1e5.mp4",
+      "serieName": "legion",
+      "episode": 5,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "267.4 MB",
+        "size": "267.4 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362316",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e8.mp4",
+      "serieName": "12 monkeys",
+      "episode": 8,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "242.51 MB",
+        "size": "242.51 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362317",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e9.mp4",
+      "serieName": "12 monkeys",
+      "episode": 9,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "289.4 MB",
+        "size": "289.4 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362318",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e10.mp4",
+      "serieName": "12 monkeys",
+      "episode": 10,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "261.46 MB",
+        "size": "261.46 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362319",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e11.mp4",
+      "serieName": "12 monkeys",
+      "episode": 11,
+      "season": 1,
+      "progress": {
+        "progress": "30.7",
+        "written": "83.69 MB",
+        "size": "272.6 MB",
+        "speed": "19KB/s"
+      },
+      "started": true,
+      "error": true,
       "finished": false
+    },
+    {
+      "code": "362320",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e12.mp4",
+      "serieName": "12 monkeys",
+      "episode": 12,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "245.45 MB",
+        "size": "245.45 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362321",
+      "providerCode": 2,
+      "filename": "12 monkeys s1e13.mp4",
+      "serieName": "12 monkeys",
+      "episode": 13,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "250.92 MB",
+        "size": "250.92 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
     }
   ]
 }

@@ -39,7 +39,7 @@ global.io = socketIO(server);
 logger(global.io);
 
 // initialize the thumbs delete or create them
-thumbs.init(() => {
+thumbs.init().then(() => {
     // enable files Watcher
     fileWatcher();
 });
@@ -55,7 +55,7 @@ global.queuedb = new dbHandler(config('QUEUEPATH'), {
 });
 
 // watch tvshowtime feed
-require('./modules/tvShowTime').watch((data, next) => {
+require('./modules/tvShowTime').watch(data => {
     // add episode to the queue
     sources.addtoQueue(data, data.from).then(() => {
         // get last element's index
@@ -71,8 +71,6 @@ require('./modules/tvShowTime').watch((data, next) => {
                 lastEpisode: data.number
             })
             .write();
-
-        next(); // check the next episode
 
         if (config('START_SERVER_WHENE_FOUND')) sources.start(lastIndex - 1);
     });

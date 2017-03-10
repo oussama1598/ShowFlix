@@ -64,13 +64,13 @@ function TryNextProv(src, data, details, code) {
             name: data.name,
             prov: num,
             code
-        }, details, true); // here where is the downloader being called
+        }, details); // here where is the downloader being called
     }).catch(() => {
         MoveToNext(details, true); // details is the episode name and season and episode Number
     });
 }
 
-function getMediaUrlFor(data, details, overWrite) {
+function getMediaUrlFor(data, details) {
     const src = get(data.name);
 
     src.parseUrl(details, data.code).then(code => {
@@ -94,7 +94,7 @@ function getMediaUrlFor(data, details, overWrite) {
             newDetails.providerCode = data.prov;
             newDetails.code = code;
 
-            return downloader(url, newDetails, overWrite);
+            return downloader(url, newDetails);
         })
         .then(() => {
             console.log('Next Element'.green);

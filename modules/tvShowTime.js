@@ -75,18 +75,12 @@ function getTowatch(_page, cb, add) {
                                 from,
                                 season: season_number,
                                 number
-                            }, () => {
-                                callback();
                             });
-                        } else {
-                            callback();
                         }
-                    } else {
-                        callback();
                     }
-                } else {
-                    callback();
                 }
+
+                callback();
             }, () => {
                 if (body.shows.length > 0) {
                     getTowatch(++page, cb, add);
@@ -112,7 +106,6 @@ function watch(add) {
     TIMER = setTimeout(() => {
         getTowatch(0, () => {
             if (RUN) watch(add);
-            return;
         }, add);
     }, parseInt(config('FEED_FREQUENCY'), 10));
 }
@@ -121,10 +114,6 @@ function stop() {
     clearTimeout(TIMER);
     RUN = false;
 }
-
-// TODO =>
-// find a way of checking if file is done
-
 
 module.exports = {
     getAuth,
