@@ -1,5 +1,12 @@
 const downloader = require('../modules/downloader');
 
+const getSources = () => global.infosdb.db().get('sources').value();
+
+const parseProviderFromUrl = url => global.infosdb.db().get('sources')
+    .filter(source => url.indexOf(get(source.name).Url) > -1)
+    .value()[0].name; // get the source by url
+
+
 function get(name) {
     const source = global.infosdb.db().get('sources').find({
         name
@@ -9,10 +16,6 @@ function get(name) {
 
     // if found return the js file as form of require
     return require(`./${name}`);
-}
-
-function getSources() {
-    return global.infosdb.db().get('sources').value();
 }
 
 function MoveToNext(details, notDone) { // details are episode name, number season
@@ -37,13 +40,12 @@ function parseQueue() {
     const index = global.infosdb.db().get('queue').value(); // get the queue index
     const episodeEl = queueData.value()[index]; // get the queue index
 
-    if (queueData.value().length === 0) { // check if theres more episodes
+    if (queueData.value().length === 0 || !episodeEl) { // check if theres more episodes
         console.log('All Done'.green);
         global.NOMORE = true; // stop the parsing
         return; // exit this function with nothing
     }
-
-    if (!episodeEl.done || !episodeEl) { // if the episode is done or does not exist
+    if (!episodeEl.done) { // if the episode is done or does not exist
         // add the index to it cause its needed in some functions
         episodeEl.index = parseInt(index, 10);
 
@@ -128,6 +130,7 @@ function addtoQueue(details, ParticularEpisode, withoutSearch) {
         newDetails.providerUrl = url; // Add url to the details
         // this tels the provider to add the episodes to the queue
         return get(provider).addToQueueFromTo(newDetails);
+        // will add search after the not found urls
     });
 }
 
@@ -184,7 +187,6 @@ function BuildNextElement(index = -1) { // the queue index default to -1
     ).value();
 
     let itemIndex = index; // for the index and easy typing
-
     // this simply adds one to the index and converts it to a string
     itemIndex = (parseInt(itemIndex, 10) + 1).toString();
 
@@ -203,7 +205,6 @@ function start(index) {
 
     // if the parsing is already started then do nothing
     if (!global.NOMORE) return Promise().resolve();
-
     global.NOMORE = false; // set the parsing as started (NOTE: this will change later)
 
     // remove finished episodes
@@ -230,18 +231,11 @@ function stop() {
     if (global.Dl) global.Dl.pause(); // pause the download
 }
 
-function parseProviderFromUrl(url) {
-    return global.infosdb.db().get('sources')
-        .filter(source => url.indexOf(get(source.name).Url) > -1)
-        .value()[0].name; // get the source by url
-}
-
 module.exports = {
     addtoQueue,
     start,
     stop,
     clearQueue,
     search,
-    parseProviderFromUrl,
-    BuildNextElement
+    parseProviderFromUrl
 };

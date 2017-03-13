@@ -32,12 +32,10 @@ app.use(express.static('app', {
 
 // the main app routes
 routes(app);
-
 // creating new instance of socketio
 global.io = socketIO(server);
 // enable the logger
 logger(global.io);
-
 // initialize the thumbs delete or create them
 thumbs.init().then(() => {
     // enable files Watcher
@@ -60,9 +58,7 @@ require('./modules/tvShowTime').watch(data => {
     sources.addtoQueue(data, data.from).then(() => {
         // get last element's index
         const lastIndex = global.queuedb.db().get('queue').value().length - 1;
-
         global.log(`Found ${data.keyword} From tvShowTime`);
-
         global.infosdb.db().get('tvshowtimefeed').find({
                 name: data.keyword
             })
@@ -71,20 +67,17 @@ require('./modules/tvShowTime').watch(data => {
                 lastEpisode: data.number
             })
             .write();
-
         if (config('START_SERVER_WHENE_FOUND')) sources.start(lastIndex - 1);
     });
 });
 
 // attach function to the server error event to catch errors
 server.on('error', err => console.log(`Can't start http server. ${err.toString()}`.red, true));
-
 // start the server
 server.listen(config('PORT'), () =>
     // _log is the interval console.log
     global.log(`Server is up and running access it at: http://${IP.address()}:${config('PORT')}`)
 );
-
 // kill curl in exit
 nodeCleanup(() => {
     if (global.Dl) global.Dl.getCurl().kill();

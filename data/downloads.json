@@ -433,14 +433,14 @@
       "episode": 11,
       "season": 1,
       "progress": {
-        "progress": "30.7",
-        "written": "83.69 MB",
+        "progress": 100,
+        "written": "272.6 MB",
         "size": "272.6 MB",
-        "speed": "19KB/s"
+        "speed": 0
       },
       "started": true,
-      "error": true,
-      "finished": false
+      "error": false,
+      "finished": true
     },
     {
       "code": "362320",
@@ -475,6 +475,244 @@
       "started": true,
       "error": false,
       "finished": true
+    },
+    {
+      "code": "39796",
+      "providerCode": 0,
+      "filename": "the catch s2e1.mp4",
+      "serieName": "the catch",
+      "episode": 1,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "258.13 MB",
+        "size": "258.13 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "38882",
+      "providerCode": 0,
+      "filename": "the blacklist redemption s1e2.mp4",
+      "serieName": "the blacklist redemption",
+      "episode": 2,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "261.86 MB",
+        "size": "261.86 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362322",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e1.mp4",
+      "serieName": "12 monkeys",
+      "episode": 1,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "264.43 MB",
+        "size": "264.43 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362323",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e2.mp4",
+      "serieName": "12 monkeys",
+      "episode": 2,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "238.77 MB",
+        "size": "238.77 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362324",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e3.mp4",
+      "serieName": "12 monkeys",
+      "episode": 3,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "255.55 MB",
+        "size": "255.55 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362325",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e4.mp4",
+      "serieName": "12 monkeys",
+      "episode": 4,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "225.22 MB",
+        "size": "225.22 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362326",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e5.mp4",
+      "serieName": "12 monkeys",
+      "episode": 5,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "205.81 MB",
+        "size": "205.81 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362327",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e6.mp4",
+      "serieName": "12 monkeys",
+      "episode": 6,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "226.39 MB",
+        "size": "226.39 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362328",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e7.mp4",
+      "serieName": "12 monkeys",
+      "episode": 7,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "205.98 MB",
+        "size": "205.98 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362329",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e8.mp4",
+      "serieName": "12 monkeys",
+      "episode": 8,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "240.13 MB",
+        "size": "240.13 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362330",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e9.mp4",
+      "serieName": "12 monkeys",
+      "episode": 9,
+      "season": 2,
+      "progress": {
+        "progress": 100,
+        "written": "219.65 MB",
+        "size": "219.65 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "362331",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e10.mp4",
+      "serieName": "12 monkeys",
+      "episode": 10,
+      "season": 2,
+      "progress": {
+        "progress": "89.6",
+        "written": "178.88 MB",
+        "size": "199.7 MB",
+        "speed": "77KB/s"
+      },
+      "started": true,
+      "error": false,
+      "finished": false
+    },
+    {
+      "code": "362332",
+      "providerCode": 2,
+      "filename": "12 monkeys s2e11.mp4",
+      "serieName": "12 monkeys",
+      "episode": 11,
+      "season": 2,
+      "progress": {
+        "progress": "11.6",
+        "written": "29.48 MB",
+        "size": "254.64 MB",
+        "speed": "88KB/s"
+      },
+      "started": true,
+      "error": false,
+      "finished": false
+    },
+    {
+      "code": "37732",
+      "providerCode": 0,
+      "filename": "the blacklist redemption s1e1.mp4",
+      "serieName": "the blacklist redemption",
+      "episode": 1,
+      "season": 1,
+      "progress": {
+        "progress": "3.0",
+        "written": "7.75 MB",
+        "size": "256.69 MB",
+        "speed": "116KB/s"
+      },
+      "started": true,
+      "error": false,
+      "finished": false
     }
   ]
 }

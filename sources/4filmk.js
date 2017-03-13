@@ -42,6 +42,7 @@ module.exports = extend(true, {
 
             if (season && season[1] === infos.season && episode) Urls[episode[1]] = url;
         });
+
         return Urls;
     },
     Parse(SourceUrl) {

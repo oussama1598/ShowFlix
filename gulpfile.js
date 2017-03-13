@@ -5,11 +5,10 @@ const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const livereload = require('gulp-livereload');
 const pump = require('pump');
-const obfuscate = require('gulp-obfuscate');
 const htmlmin = require('gulp-htmlmin');
 
 // --- Basic Tasks ---
-gulp.task('css', function() {
+gulp.task('css', () => {
     pump([
         gulp.src('app/src/css/*.sass'),
         sass({
@@ -22,7 +21,7 @@ gulp.task('css', function() {
     ]);
 });
 
-gulp.task('js', function(cb) {
+gulp.task('js', cb => {
     pump([
         gulp.src('app/src/js/**/*.js'),
         uglify(),
@@ -32,16 +31,16 @@ gulp.task('js', function(cb) {
     ], cb);
 });
 
-gulp.task('html', function(cb) {
+gulp.task('html', cb => {
     pump([
         gulp.src('app/src/views/*.html'),
         htmlmin({ collapseWhitespace: true }),
-        gulp.dest("app/views"),
+        gulp.dest('app/views'),
         livereload(true)
     ], cb);
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', () => {
     livereload.listen();
     gulp.watch('app/src/css/*.sass', ['css']);
     gulp.watch('app/src/js/**/*.js', ['js']);

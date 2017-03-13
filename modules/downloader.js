@@ -90,7 +90,7 @@ module.exports = (url, details) => new Promise((resolve, reject) => {
                 finished: true
             });
 
-            thumbs.generate(); // generate the thumb
+            thumbs.generate(filename); // generate the thumb
             utils.filesUpdated(); // clear the cache
 
             resolve();

@@ -5,6 +5,7 @@ const NodeCache = require('node-cache');
 const Bypasser = require('node-bypasser');
 const fetch = require('node-fetch');
 const search = require('../modules/searchAPI');
+const cloudscraper = require('cloudscraper');
 
 const myCache = new NodeCache({
     stdTTL: 60 * 60 * 24,
@@ -88,6 +89,19 @@ function Bypass(url) {
     });
 }
 
+function byPassCloudflare(url) {
+    return new Promise((resolve, reject) => {
+        cloudscraper.get(encodeURI(url), (err, res, body) => {
+            if (err || res.statusCode !== 200) {
+                global.log(err.toString());
+                return reject(err ? err.toString() : 'Unknown response header');
+            }
+
+            return resolve(cheerio.load(body));
+        });
+    });
+}
+
 function generateFormData(obj) {
     let str = '';
 
@@ -119,5 +133,6 @@ module.exports = {
     fixInt,
     pad,
     Bypass,
-    getLastEpisode
+    getLastEpisode,
+    byPassCloudflare
 };

@@ -3,14 +3,13 @@ const providers = require('../providers/providers');
 const sourceBase = require('./sourceBase');
 const urlParser = require('url');
 const extend = require('extend');
-const Q = require('q');
 
 const SEARCHURL = 'http://cimaclub.com/?s=';
 
 module.exports = extend(true, {
     name: 'cimaclub',
     providerCodes: [{
-        code: 3, // should change
+        code: 4, // should change
         name: 'estream'
     }],
     canSearch: true,
@@ -21,7 +20,7 @@ module.exports = extend(true, {
         const code = provDetails.code;
         const serverUrl = `http://cimaclub.com/wp-content/themes/Cimaclub/servers/server.php?q=${Ecode}&i=${code}`;
 
-        return utils.getHtml(serverUrl).then($ => provider($('iframe').attr('src')));
+        return utils.byPassCloudflare(serverUrl).then($ => provider($('iframe').attr('src')));
     },
     BuildUrlsSource($) {
         const Urls = {};
@@ -38,14 +37,14 @@ module.exports = extend(true, {
         return Urls;
     },
     Parse(SourceUrl) {
-        return utils.getHtml(SourceUrl).then($ => {
+        return utils.byPassCloudflare(SourceUrl).then($ => {
             const url = $('link[rel=\'shortlink\']').attr('href');
             return url ? urlParser.parse(url, true).query.p : false;
         });
     },
     search(details, ParticularEpisode) {
         const $this = this;
-        return Q.Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const season = utils.pad(details.season, 2);
             const episode = ParticularEpisode ? utils.pad(ParticularEpisode, 2) : utils.pad(1, 2);
             const matches = [`s${season}`, `e${episode}`];

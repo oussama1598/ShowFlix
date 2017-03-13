@@ -3,21 +3,16 @@ const config = require('./config');
 const async = require('async');
 const utils = require('../utils/utils');
 
-const TVST_CLIENT_ID = config('TVST_CLIENT_ID');
-const TVST_CLIENT_SECRET = config('TVST_CLIENT_SECRET');
-const TVST_ACCESS_TOKEN_URI = config('TVST_ACCESS_TOKEN_URI');
-const TVST_LIBRARY_URI = config('TVST_LIBRARY_URI');
-
 let RUN = false;
 let TIMER = false;
 
 function getAuth(code) {
     const form = {
-        client_id: TVST_CLIENT_ID,
-        client_secret: TVST_CLIENT_SECRET,
+        client_id: config('TVST_CLIENT_ID'),
+        client_secret: config('TVST_CLIENT_SECRET'),
         code
     };
-    const url = TVST_ACCESS_TOKEN_URI;
+    const url = config('TVST_ACCESS_TOKEN_URI');
 
     return utils.getHtml(url, true, 'POST', form).then(body => body.access_token);
 }
@@ -30,7 +25,7 @@ function getTowatch(_page, cb, add) {
     if (!showsTo || !ACCESS_TOKEN) return;
 
     req.get({
-        url: TVST_LIBRARY_URI,
+        url: config('TVST_LIBRARY_URI'),
         qs: {
             access_token: ACCESS_TOKEN,
             limit: 40,
@@ -39,7 +34,7 @@ function getTowatch(_page, cb, add) {
     }, (err, res, _body) => {
         const body = (err || res.statusCode !== 200) ? null : JSON.parse(_body);
 
-        if (err || res.statusCode !== 200 || body.result === 'KO') return;
+        if (!body || body.result === 'KO') return;
 
         if (res.headers['x-ratelimit-remaining'] > 0) {
             async.forEach(body.shows, (val, callback) => {
@@ -48,17 +43,15 @@ function getTowatch(_page, cb, add) {
                         number,
                         season_number
                     } = val.last_aired;
+                    const show = showsTo.find(item =>
+                        item.name.toLowerCase() === removeParenthesis(val.name.toLowerCase()));
 
-                    const show = showsTo.filter(item =>
-                        val.name.toLowerCase().indexOf(item.name) > -1);
-
-                    if (show.length > 0) {
+                    if (show) {
                         const lastSeenNumber = val.last_seen ? val.last_seen.number : null;
                         const lastSeenSeason = val.last_seen ? val.last_seen.season_number : null;
-
                         const lastSeen = {
-                            number: (show[0].lastEpisode) ? show[0].lastEpisode : lastSeenNumber,
-                            season: (show[0].lastSeason) ? show[0].lastSeason : lastSeenSeason
+                            number: show.lastEpisode ? show.lastEpisode : lastSeenNumber,
+                            season: show.lastSeason ? show.lastSeason : lastSeenSeason
                         };
 
                         if (
@@ -71,7 +64,7 @@ function getTowatch(_page, cb, add) {
                                 number;
 
                             add({
-                                keyword: show[0].name,
+                                keyword: show.name,
                                 from,
                                 season: season_number,
                                 number
@@ -113,6 +106,10 @@ function watch(add) {
 function stop() {
     clearTimeout(TIMER);
     RUN = false;
+}
+
+function removeParenthesis(str) {
+    return str.indexOf('(') > -1 ? str.substr(0, str.indexOf('(')).trim() : str;
 }
 
 module.exports = {
