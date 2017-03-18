@@ -1,5 +1,5 @@
 {
-  "queue": "0",
+  "queue": "11",
   "sources": [
     {
       "name": "cimaclub"
@@ -29,7 +29,7 @@
     {
       "name": "the flash",
       "lastSeason": 3,
-      "lastEpisode": 15
+      "lastEpisode": 16
     },
     {
       "name": "lucifer",
@@ -44,17 +44,20 @@
     {
       "name": "the 100",
       "lastSeason": 4,
-      "lastEpisode": 5
+      "lastEpisode": 6
     },
     {
       "name": "legion",
       "lastSeason": 1,
-      "lastEpisode": 5
+      "lastEpisode": 6
     },
     {
       "name": "the catch",
       "lastSeason": 2,
       "lastEpisode": 1
+    },
+    {
+      "name": "iron fist"
     }
   ]
 }

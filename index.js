@@ -68,7 +68,7 @@ require('./modules/tvShowTime').watch(data => {
             })
             .write();
         if (config('START_SERVER_WHENE_FOUND')) sources.start(lastIndex - 1);
-    });
+    }).catch(() => {});
 });
 
 // attach function to the server error event to catch errors

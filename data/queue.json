@@ -2,15 +2,6 @@
   "queue": [
     {
       "provider": "cimaclub",
-      "url": "http://cimaclub.com/the-blacklist-redemption-الموسم-1-الحلقة-1-الاولى/?view=1",
-      "name": "the blacklist redemption",
-      "episode": 1,
-      "season": 1,
-      "done": false,
-      "tried": true
-    },
-    {
-      "provider": "cimaclub",
       "url": "http://cimaclub.com/the-blacklist-redemption-الموسم-1-الحلقة-3-الثالثة/?view=1",
       "name": "the blacklist redemption",
       "episode": 3,
@@ -19,40 +10,94 @@
       "tried": true
     },
     {
-      "provider": "cera",
-      "url": "http://cera.online/series-12-monkeys-episode-10-season-2-s02e10-mosalsal-video-motarjam-translated-download-watch.html",
-      "name": "12 monkeys",
-      "episode": 10,
-      "season": 2,
-      "done": false,
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-1-الاولى-cima4u/?view=1",
+      "name": "iron fist",
+      "episode": 1,
+      "season": 1,
+      "done": true,
       "tried": true
     },
     {
-      "provider": "cera",
-      "url": "http://cera.online/series-12-monkeys-episode-11-season-2-s02e11-mosalsal-video-motarjam-translated-download-watch.html",
-      "name": "12 monkeys",
-      "episode": 11,
-      "season": 2,
-      "done": false,
-      "tried": false
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-2-الثانية/?view=1",
+      "name": "iron fist",
+      "episode": 2,
+      "season": 1,
+      "done": true,
+      "tried": true
     },
     {
-      "provider": "cera",
-      "url": "http://cera.online/series-12-monkeys-episode-12-season-2-s02e12-mosalsal-video-motarjam-translated-download-watch.html",
-      "name": "12 monkeys",
-      "episode": 12,
-      "season": 2,
-      "done": false,
-      "tried": false
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-3-الثالثة/?view=1",
+      "name": "iron fist",
+      "episode": 3,
+      "season": 1,
+      "done": true,
+      "tried": true
     },
     {
-      "provider": "cera",
-      "url": "http://cera.online/series-12-monkeys-episode-13-season-2-s02e13-mosalsal-video-motarjam-translated-download-watch.html",
-      "name": "12 monkeys",
-      "episode": 13,
-      "season": 2,
-      "done": false,
-      "tried": false
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-4-الرابعة/?view=1",
+      "name": "iron fist",
+      "episode": 4,
+      "season": 1,
+      "done": true,
+      "tried": true
+    },
+    {
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-5-الخامسة/?view=1",
+      "name": "iron fist",
+      "episode": 5,
+      "season": 1,
+      "done": true,
+      "tried": true
+    },
+    {
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-6-السادسة/?view=1",
+      "name": "iron fist",
+      "episode": 6,
+      "season": 1,
+      "done": true,
+      "tried": true
+    },
+    {
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-7-السابعة/?view=1",
+      "name": "iron fist",
+      "episode": 7,
+      "season": 1,
+      "done": true,
+      "tried": true
+    },
+    {
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-8-الثامنة/?view=1",
+      "name": "iron fist",
+      "episode": 8,
+      "season": 1,
+      "done": true,
+      "tried": true
+    },
+    {
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-9-التاسعة/?view=1",
+      "name": "iron fist",
+      "episode": 9,
+      "season": 1,
+      "done": true,
+      "tried": true
+    },
+    {
+      "provider": "cimaclub",
+      "url": "http://cimaclub.com/مسلسل-iron-fist-الموسم-الاول-الحلقة-10-العاشرة/?view=1",
+      "name": "iron fist",
+      "episode": 10,
+      "season": 1,
+      "done": true,
+      "tried": true
     }
   ]
 }

@@ -1,135 +1,16 @@
 {
   "downloads": [
     {
-      "code": "19146",
-      "providerCode": 0,
-      "filename": "mr robot s1e1.mp4",
-      "serieName": "mr robot",
-      "episode": 1,
-      "season": 1,
-      "progress": {
-        "progress": "4.9",
-        "written": "1.57 MB",
-        "size": "31.86 MB",
-        "speed": "149KB/s"
-      },
-      "started": true,
-      "error": false,
-      "finished": false
-    },
-    {
-      "code": "19146",
-      "providerCode": 1,
-      "filename": "mr robot s1e1.mp4",
-      "serieName": "mr robot",
-      "episode": 1,
-      "season": 1,
-      "progress": {
-        "progress": "0.2",
-        "written": "964 KB",
-        "size": "450.41 MB",
-        "speed": "100KB/s"
-      },
-      "started": true,
-      "error": false,
-      "finished": false
-    },
-    {
-      "code": "26989",
-      "providerCode": 0,
-      "filename": "travelers s1e5.mp4",
-      "serieName": "travelers",
-      "episode": 5,
-      "season": 1,
-      "progress": {
-        "progress": "NaN",
-        "written": "36 B",
-        "size": "0 B",
-        "speed": "0KB/s"
-      },
-      "started": true,
-      "error": true,
-      "finished": false
-    },
-    {
-      "code": "https://openload.co/embed/ZyYnJ5ZqfLg/",
-      "providerCode": 0,
-      "filename": "travelers s1e5.mp4",
-      "serieName": "travelers",
-      "episode": 5,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "31.86 MB",
-        "size": "31.86 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "https://drive.google.com/file/d/0B7jtzRFiDn88OEN0dHViZUhEazA/view?usp=sharing",
-      "providerCode": 0,
-      "filename": "travelers s1e5.mp4",
-      "serieName": "travelers",
-      "episode": 5,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "169.42 MB",
-        "size": "169.42 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "https://openload.co/embed/dQvU3ous13M/",
-      "providerCode": 0,
-      "filename": "the flash s3e14.mp4",
-      "serieName": "the flash",
-      "episode": 14,
-      "season": 3,
-      "progress": {
-        "progress": "10.3",
-        "written": "3.27 MB",
-        "size": "31.86 MB",
-        "speed": "88KB/s"
-      },
-      "started": true,
-      "error": false,
-      "finished": false
-    },
-    {
-      "code": "38501",
-      "providerCode": 0,
-      "filename": "the flash s3e14.mp4",
-      "serieName": "the flash",
-      "episode": 14,
-      "season": 3,
-      "progress": {
-        "progress": 100,
-        "written": "267.27 MB",
-        "size": "267.27 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "38624",
-      "providerCode": 0,
-      "filename": "the 100 s4e5.mp4",
+      "code": "40700",
+      "providerCode": 2,
+      "filename": "the 100 s4e6.mp4",
       "serieName": "the 100",
-      "episode": 5,
+      "episode": 6,
       "season": 4,
       "progress": {
         "progress": 100,
-        "written": "281.89 MB",
-        "size": "281.89 MB",
+        "written": "295.54 MB",
+        "size": "295.54 MB",
         "speed": 0
       },
       "started": true,
@@ -137,203 +18,16 @@
       "finished": true
     },
     {
-      "code": "38627",
-      "providerCode": 0,
-      "filename": "legion s1e4.mp4",
+      "code": "40724",
+      "providerCode": 2,
+      "filename": "legion s1e6.mp4",
       "serieName": "legion",
-      "episode": 4,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "327.89 MB",
-        "size": "327.89 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "38632",
-      "providerCode": 0,
-      "filename": "suits s6e16.mp4",
-      "serieName": "suits",
-      "episode": 16,
-      "season": 6,
-      "progress": {
-        "progress": 100,
-        "written": "208.34 MB",
-        "size": "208.34 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "30794",
-      "providerCode": 0,
-      "filename": "travelers s1e10.mp4",
-      "serieName": "travelers",
-      "episode": 10,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "236.06 MB",
-        "size": "236.06 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "30820",
-      "providerCode": 0,
-      "filename": "travelers s1e11.mp4",
-      "serieName": "travelers",
-      "episode": 11,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "245.18 MB",
-        "size": "245.18 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "30827",
-      "providerCode": 0,
-      "filename": "travelers s1e12.mp4",
-      "serieName": "travelers",
-      "episode": 12,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "237.38 MB",
-        "size": "237.38 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362309",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e1.mp4",
-      "serieName": "12 monkeys",
-      "episode": 1,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "298.32 MB",
-        "size": "298.32 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362310",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e2.mp4",
-      "serieName": "12 monkeys",
-      "episode": 2,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "256.01 MB",
-        "size": "256.01 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362311",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e3.mp4",
-      "serieName": "12 monkeys",
-      "episode": 3,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "314.55 MB",
-        "size": "314.55 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "39383",
-      "providerCode": 0,
-      "filename": "the flash s3e15.mp4",
-      "serieName": "the flash",
-      "episode": 15,
-      "season": 3,
-      "progress": {
-        "progress": 100,
-        "written": "264.13 MB",
-        "size": "264.13 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362312",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e4.mp4",
-      "serieName": "12 monkeys",
-      "episode": 4,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "246.09 MB",
-        "size": "246.09 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362313",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e5.mp4",
-      "serieName": "12 monkeys",
-      "episode": 5,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "217.1 MB",
-        "size": "217.1 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362314",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e6.mp4",
-      "serieName": "12 monkeys",
       "episode": 6,
       "season": 1,
       "progress": {
         "progress": 100,
-        "written": "231.7 MB",
-        "size": "231.7 MB",
+        "written": "263.33 MB",
+        "size": "263.33 MB",
         "speed": 0
       },
       "started": true,
@@ -341,152 +35,16 @@
       "finished": true
     },
     {
-      "code": "362315",
+      "code": "40827",
       "providerCode": 2,
-      "filename": "12 monkeys s1e7.mp4",
-      "serieName": "12 monkeys",
-      "episode": 7,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "231.21 MB",
-        "size": "231.21 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "39510",
-      "providerCode": 0,
-      "filename": "legion s1e5.mp4",
-      "serieName": "legion",
-      "episode": 5,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "267.4 MB",
-        "size": "267.4 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362316",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e8.mp4",
-      "serieName": "12 monkeys",
-      "episode": 8,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "242.51 MB",
-        "size": "242.51 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362317",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e9.mp4",
-      "serieName": "12 monkeys",
-      "episode": 9,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "289.4 MB",
-        "size": "289.4 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362318",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e10.mp4",
-      "serieName": "12 monkeys",
-      "episode": 10,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "261.46 MB",
-        "size": "261.46 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362319",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e11.mp4",
-      "serieName": "12 monkeys",
-      "episode": 11,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "272.6 MB",
-        "size": "272.6 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362320",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e12.mp4",
-      "serieName": "12 monkeys",
-      "episode": 12,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "245.45 MB",
-        "size": "245.45 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362321",
-      "providerCode": 2,
-      "filename": "12 monkeys s1e13.mp4",
-      "serieName": "12 monkeys",
-      "episode": 13,
-      "season": 1,
-      "progress": {
-        "progress": 100,
-        "written": "250.92 MB",
-        "size": "250.92 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "39796",
-      "providerCode": 0,
-      "filename": "the catch s2e1.mp4",
-      "serieName": "the catch",
+      "filename": "iron fist s1e1.mp4",
+      "serieName": "iron fist",
       "episode": 1,
-      "season": 2,
+      "season": 1,
       "progress": {
         "progress": 100,
-        "written": "258.13 MB",
-        "size": "258.13 MB",
+        "written": "323.1 MB",
+        "size": "323.1 MB",
         "speed": 0
       },
       "started": true,
@@ -494,16 +52,16 @@
       "finished": true
     },
     {
-      "code": "38882",
-      "providerCode": 0,
-      "filename": "the blacklist redemption s1e2.mp4",
-      "serieName": "the blacklist redemption",
+      "code": "40836",
+      "providerCode": 2,
+      "filename": "iron fist s1e2.mp4",
+      "serieName": "iron fist",
       "episode": 2,
       "season": 1,
       "progress": {
         "progress": 100,
-        "written": "261.86 MB",
-        "size": "261.86 MB",
+        "written": "276.61 MB",
+        "size": "276.61 MB",
         "speed": 0
       },
       "started": true,
@@ -511,208 +69,140 @@
       "finished": true
     },
     {
-      "code": "362322",
+      "code": "40855",
       "providerCode": 2,
-      "filename": "12 monkeys s2e1.mp4",
-      "serieName": "12 monkeys",
-      "episode": 1,
-      "season": 2,
-      "progress": {
-        "progress": 100,
-        "written": "264.43 MB",
-        "size": "264.43 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362323",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e2.mp4",
-      "serieName": "12 monkeys",
-      "episode": 2,
-      "season": 2,
-      "progress": {
-        "progress": 100,
-        "written": "238.77 MB",
-        "size": "238.77 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362324",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e3.mp4",
-      "serieName": "12 monkeys",
+      "filename": "iron fist s1e3.mp4",
+      "serieName": "iron fist",
       "episode": 3,
-      "season": 2,
-      "progress": {
-        "progress": 100,
-        "written": "255.55 MB",
-        "size": "255.55 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362325",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e4.mp4",
-      "serieName": "12 monkeys",
-      "episode": 4,
-      "season": 2,
-      "progress": {
-        "progress": 100,
-        "written": "225.22 MB",
-        "size": "225.22 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362326",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e5.mp4",
-      "serieName": "12 monkeys",
-      "episode": 5,
-      "season": 2,
-      "progress": {
-        "progress": 100,
-        "written": "205.81 MB",
-        "size": "205.81 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362327",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e6.mp4",
-      "serieName": "12 monkeys",
-      "episode": 6,
-      "season": 2,
-      "progress": {
-        "progress": 100,
-        "written": "226.39 MB",
-        "size": "226.39 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362328",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e7.mp4",
-      "serieName": "12 monkeys",
-      "episode": 7,
-      "season": 2,
-      "progress": {
-        "progress": 100,
-        "written": "205.98 MB",
-        "size": "205.98 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362329",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e8.mp4",
-      "serieName": "12 monkeys",
-      "episode": 8,
-      "season": 2,
-      "progress": {
-        "progress": 100,
-        "written": "240.13 MB",
-        "size": "240.13 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362330",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e9.mp4",
-      "serieName": "12 monkeys",
-      "episode": 9,
-      "season": 2,
-      "progress": {
-        "progress": 100,
-        "written": "219.65 MB",
-        "size": "219.65 MB",
-        "speed": 0
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "code": "362331",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e10.mp4",
-      "serieName": "12 monkeys",
-      "episode": 10,
-      "season": 2,
-      "progress": {
-        "progress": "89.6",
-        "written": "178.88 MB",
-        "size": "199.7 MB",
-        "speed": "77KB/s"
-      },
-      "started": true,
-      "error": false,
-      "finished": false
-    },
-    {
-      "code": "362332",
-      "providerCode": 2,
-      "filename": "12 monkeys s2e11.mp4",
-      "serieName": "12 monkeys",
-      "episode": 11,
-      "season": 2,
-      "progress": {
-        "progress": "11.6",
-        "written": "29.48 MB",
-        "size": "254.64 MB",
-        "speed": "88KB/s"
-      },
-      "started": true,
-      "error": false,
-      "finished": false
-    },
-    {
-      "code": "37732",
-      "providerCode": 0,
-      "filename": "the blacklist redemption s1e1.mp4",
-      "serieName": "the blacklist redemption",
-      "episode": 1,
       "season": 1,
       "progress": {
-        "progress": "3.0",
-        "written": "7.75 MB",
-        "size": "256.69 MB",
-        "speed": "116KB/s"
+        "progress": 100,
+        "written": "315.19 MB",
+        "size": "315.19 MB",
+        "speed": 0
       },
       "started": true,
       "error": false,
-      "finished": false
+      "finished": true
+    },
+    {
+      "code": "40867",
+      "providerCode": 2,
+      "filename": "iron fist s1e4.mp4",
+      "serieName": "iron fist",
+      "episode": 4,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "288.93 MB",
+        "size": "288.93 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "40868",
+      "providerCode": 2,
+      "filename": "iron fist s1e5.mp4",
+      "serieName": "iron fist",
+      "episode": 5,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "288.36 MB",
+        "size": "288.36 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "40869",
+      "providerCode": 2,
+      "filename": "iron fist s1e6.mp4",
+      "serieName": "iron fist",
+      "episode": 6,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "289.05 MB",
+        "size": "289.05 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "40881",
+      "providerCode": 2,
+      "filename": "iron fist s1e7.mp4",
+      "serieName": "iron fist",
+      "episode": 7,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "253.81 MB",
+        "size": "253.81 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "40899",
+      "providerCode": 2,
+      "filename": "iron fist s1e8.mp4",
+      "serieName": "iron fist",
+      "episode": 8,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "307.83 MB",
+        "size": "307.83 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "40900",
+      "providerCode": 2,
+      "filename": "iron fist s1e9.mp4",
+      "serieName": "iron fist",
+      "episode": 9,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "254.88 MB",
+        "size": "254.88 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "code": "40901",
+      "providerCode": 2,
+      "filename": "iron fist s1e10.mp4",
+      "serieName": "iron fist",
+      "episode": 10,
+      "season": 1,
+      "progress": {
+        "progress": 100,
+        "written": "301.1 MB",
+        "size": "301.1 MB",
+        "speed": 0
+      },
+      "started": true,
+      "error": false,
+      "finished": true
     }
   ]
 }

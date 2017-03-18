@@ -129,6 +129,7 @@ function addtoQueue(details, ParticularEpisode, withoutSearch) {
         const newDetails = details;
         newDetails.providerUrl = url; // Add url to the details
         // this tels the provider to add the episodes to the queue
+        
         return get(provider).addToQueueFromTo(newDetails);
         // will add search after the not found urls
     });

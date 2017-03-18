@@ -8,19 +8,21 @@ const SEARCHURL = 'http://cimaclub.com/?s=';
 
 module.exports = extend(true, {
     name: 'cimaclub',
-    providerCodes: [{
-        code: 4, // should change
-        name: 'estream'
-    }],
+    providerCodes: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    supportedPorvs: ['estream'],
     canSearch: true,
     Url: 'cimaclub.com',
     decodeForProvider(Ecode, prov) {
-        const provDetails = this.providerCodes[prov];
-        const provider = providers.get(provDetails.name);
-        const code = provDetails.code;
+        const code = this.providerCodes[prov];
         const serverUrl = `http://cimaclub.com/wp-content/themes/Cimaclub/servers/server.php?q=${Ecode}&i=${code}`;
 
-        return utils.byPassCloudflare(serverUrl).then($ => provider($('iframe').attr('src')));
+        return utils.byPassCloudflare(serverUrl).then($ => {
+            const url = $('iframe').attr('src');
+            const providerName = this.supportedPorvs.find(item => url.indexOf(item) > -1);
+
+            if (!providerName) return null;
+            return providers.get(providerName)($('iframe').attr('src'));
+        });
     },
     BuildUrlsSource($) {
         const Urls = {};
@@ -52,7 +54,7 @@ module.exports = extend(true, {
 
             let alreadyFound = false;
 
-            utils.getHtml(`${SEARCHURL}${q} ${matches[0]} ${matches[1]}`).then($ => {
+            utils.byPassCloudflare(`${SEARCHURL}${q} ${matches[0]} ${matches[1]}`).then($ => {
                 $('.moviesBlocks .movie a').each(function () {
                     const url = decodeURI($(this).attr('href'));
                     const title = $(this).find('h2').text().toLowerCase();
