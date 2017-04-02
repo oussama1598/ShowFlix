@@ -2,13 +2,13 @@ const utils = require('../utils/utils');
 const providers = require('../providers/providers');
 const sourceBase = require('./sourceBase');
 const extend = require('extend');
-const Q = require('q');
-const _ = require('underscore');
+
+const SEARCHURL = 'http://www.4filmk.tv/?s=';
 
 module.exports = extend(true, {
     name: '4filmk',
     providerCodes: [{
-        name: 'openload'
+        name: 'estream'
     }],
     canSearch: true,
     Url: '4filmk.tv',
@@ -40,42 +40,52 @@ module.exports = extend(true, {
             const season = url.match(/s(\d+)/);
             const episode = url.match(/e(\d+)/);
 
-            if (season && season[1] === infos.season && episode) Urls[episode[1]] = url;
+            if (
+                season &&
+                parseInt(season[1], 10) === infos.season &&
+                episode
+            ) Urls[parseInt(episode[1], 10)] = url;
         });
 
+        const urlDetails = $('.movieTitle span').text().toLowerCase();
+        const episodeMatch = urlDetails.match(/e(\d+)/);
+
+        global.log(episodeMatch);
+
+        if (episodeMatch) {
+            const urlEpisode = parseInt(episodeMatch[1], 10);
+            if (!Urls[urlEpisode]) { // the given episode doesnt exist add it manualy
+                Urls[urlEpisode] = decodeURI($('link[rel=\'canonical\']').attr('href'));
+            }
+        }
+
+        global.log(Urls);
         return Urls;
     },
     Parse(SourceUrl) {
         return Promise.resolve(SourceUrl);
     },
     search(details, ParticularEpisode) {
-        return Q.Promise((resolve, reject) => {
-            const CX = '012052478206051585516:giwv58bp5ze';
+        const $this = this;
+        return new Promise((resolve, reject) => {
             const season = utils.pad(details.season, 2);
             const matches = [`s${season}`];
 
             let q = details.keyword.toLowerCase();
             let alreadyFound = false;
-            let query = `${q} S${season}`;
+            let query = `${q} s${season}`;
 
             if (ParticularEpisode) {
-                matches.push(`s${utils.pad(ParticularEpisode, 2)}`);
-                query += `e{matches[1]}`;
+                matches.push(`e${utils.pad(ParticularEpisode, 2)}`);
+                query += `${matches[1]}`;
             }
 
-            utils.searchAPI(CX).build({
-                q: query,
-                num: 10
-            }, (err, res) => {
-                if (err) {
-                    reject('Something went wrong!');
-                    return;
-                }
-
+            utils.getHtml(`${SEARCHURL}${query}`).then($ => {
                 q = q.replace(/\s+/g, '-');
 
-                _.each(res.items, item => {
-                    const url = item.link.toLowerCase();
+                $('.moviefilm').each(function () {
+                    const url = decodeURI($(this).find('a').eq(0).attr('href'));
+
                     const matcheResults = [
                         url.indexOf(matches[0]),
                         ParticularEpisode ? url.indexOf(matches[1]) : 1
@@ -90,11 +100,11 @@ module.exports = extend(true, {
                         ];
 
                         if (matchString[0] && matchString[1]) {
-                            this.compareTwoTitles(url, q, '-', result => {
+                            $this.compareTwoTitles(url, q, '-', result => {
                                 if (result.count >= q.split('-').length) {
                                     if (!alreadyFound) {
                                         alreadyFound = true;
-                                        resolve(decodeURI(url));
+                                        resolve(url);
                                     }
                                 } else {
                                     reject('Can\'t find any url');

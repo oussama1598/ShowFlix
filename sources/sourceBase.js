@@ -17,7 +17,7 @@ module.exports = {
                     season: item.season
                 }).value(); // this const is used for simplicity
                 // exclusind tried and done from the search
-                
+
                 if (!exists) {
                     // if the item exist don't add it to the queue if not simply add it
                     queue.push(item).write();

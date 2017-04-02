@@ -75,7 +75,7 @@ require('./modules/tvShowTime').watch(data => {
 server.on('error', err => console.log(`Can't start http server. ${err.toString()}`.red, true));
 // start the server
 server.listen(config('PORT'), () =>
-    // _log is the interval console.log
+    // global.log is the internal console.log
     global.log(`Server is up and running access it at: http://${IP.address()}:${config('PORT')}`)
 );
 // kill curl in exit

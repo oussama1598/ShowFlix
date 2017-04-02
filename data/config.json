@@ -10,7 +10,7 @@
    "TVST_LIBRARY_URI": "https://api.tvshowtime.com/v1/library",
    "TVST_CHECKIN_URI": "https://api.tvshowtime.com/v1/checkin",
    "SIMPLE_PUSH_URL": "https://api.simplepush.io/send/",
-   "FEED_FREQUENCY": 5000,
+   "FEED_FREQUENCY": 10000,
    "ACCESS_TOKEN": "9b490ec26ff5c3decfc44e5ffb2dae4f",
    "GOOGLE_API_KEY": "AIzaSyAKaazNPf7-FSKrVRH-sbmKEQTr7icbdRQ",
    "START_SERVER_WHENE_FOUND": true,
