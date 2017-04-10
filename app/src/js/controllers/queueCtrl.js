@@ -13,11 +13,13 @@ angular.module('showFlex').controller('queueCtrl', ["$scope", "socketEvt", "$roo
                     return item.done;
                 }),
                 index = (index - done.length);
-                
+
             $http({
                 method: 'GET',
                 url: "/start",
-                params: { index: index }
+                params: {
+                    index: index
+                }
             }).then(function(res) {
                 if (res.data.error) {
                     Materialize.toast(res.data.error, 4000, "red");
@@ -27,12 +29,16 @@ angular.module('showFlex').controller('queueCtrl', ["$scope", "socketEvt", "$roo
         }
 
         $scope.changed = function(data) {
-            $scope.queue = data;
+            $scope.queue = data.queue;
         }
 
         $scope.deleteFromQueue = function(ev, file, index) {
             $scope.queue.splice(index, 1);
-            $http.post("/queue", { name: file.name, season: file.season, episode: file.episode }).then(function(res) {
+            $http.post("/queue", {
+                name: file.name,
+                season: file.season,
+                episode: file.episode
+            }).then(function(res) {
                 if (res.data.status) {
                     Materialize.toast("Item has been deleted successfly", 4000, "green");
                 }

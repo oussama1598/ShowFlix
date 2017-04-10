@@ -1,5 +1,5 @@
 {
-  "queue": "2",
+  "queue": "1",
   "sources": [
     {
       "name": "cimaclub"
@@ -54,7 +54,7 @@
     {
       "name": "the catch",
       "lastSeason": 2,
-      "lastEpisode": 3
+      "lastEpisode": 5
     },
     {
       "name": "iron fist"

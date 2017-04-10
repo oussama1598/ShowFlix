@@ -4,12 +4,13 @@ const path = require('path');
 const Q = require('q');
 const striptags = require('striptags');
 
-const ENDPOINT = 'http://api.tvmaze.com/singlesearch/shows?q=%query%&embed=episodes';
-const SHOWSENDPOINT = 'http://tvdb-images.herokuapp.com/shows/';
+const ENDPOINT = 'http://api.tvmaze.com/singlesearch/shows?q=%query%';
 
-function getShows(page) {
-    return utils.getHtml(`${SHOWSENDPOINT}${page}`, true);
-}
+const getIMDBByName = name => {
+    return utils.getHtml(ENDPOINT.replace('%query%', name), true)
+        .then(data => data.externals.imdb);
+};
+
 
 function parseFromFilename(filename) {
     let season = filename.match(/s\d+/gi)[0].toLowerCase();
@@ -39,7 +40,7 @@ function getEpisodeDataByQuery(episodes) {
     _.each(episodes, (val, key) => {
         const url = ENDPOINT.replace('%query%', key);
 
-        promise.push(utils.getHtml(url, true).then(json => {
+        promise.push(utils.getHtml(`${url}&embed=episodes`, true).then(json => {
             addEpisodes(val, json);
         }).catch(() => {
             addEpisodes(val);
@@ -76,5 +77,5 @@ function getEpisodeDataByQuery(episodes) {
 module.exports = {
     getEpisodeDataByQuery,
     parseFromFilename,
-    getShows
+    getIMDBByName
 };

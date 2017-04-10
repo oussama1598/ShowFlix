@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('showFlex').controller('downCtrl', ["$scope", "socketEvt", "$rootScope", "$http",
+angular.module('showFlex').controller('downCtrl', ['$scope', 'socketEvt', '$rootScope', '$http',
     function($scope, socketEvt, $rootScope, $http) {
         $scope.files = [];
         $scope.loading = true;
@@ -9,8 +9,15 @@ angular.module('showFlex').controller('downCtrl', ["$scope", "socketEvt", "$root
             $scope.files = data;
         }
 
+        $scope.delete = function (file) {
+          $http.delete('api/downloads', {
+            code: file.code,
+            providerCode: file.providerCode
+          });
+        }
+
         $scope.init = function() {
-            $http.get("api/downloads").then(function(res) {
+            $http.get('api/downloads').then(function(res) {
                 $scope.loading = false;
                 $scope.files = res.data;
             })
@@ -18,13 +25,13 @@ angular.module('showFlex').controller('downCtrl', ["$scope", "socketEvt", "$root
 
         $scope.init();
 
-        socketEvt.add("downloadsChanged", $scope.changed);
+        socketEvt.add('downloadsChanged', $scope.changed);
 
         $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams, options) {
-                if (toState.name !== "app.downloads") {
-                    socketEvt.remove("downloadsChanged", $scope.changed);
+            function(event, toState) {
+                if (toState.name !== 'app.downloads') {
+                    socketEvt.remove('downloadsChanged', $scope.changed);
                 }
-            })
+            });
     }
 ]);

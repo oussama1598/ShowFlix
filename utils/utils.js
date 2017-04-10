@@ -22,8 +22,15 @@ const cache = () => ({
     set: (key, data) => myCache.set(key, data),
     delete: key => myCache.del(key)
 });
-const getHtml = (_url, json, method = 'GET', form = {}, headers = {}) => fetch(encodeURI(_url), {
-        timeout: 20000,
+const getHtml = (
+        _url,
+        json,
+        method = 'GET',
+        form = {},
+        headers = {},
+        timeout = 20000
+    ) => fetch(encodeURI(_url), {
+        timeout,
         method,
         body: generateFormData(form),
         headers
@@ -34,9 +41,22 @@ const getHtml = (_url, json, method = 'GET', form = {}, headers = {}) => fetch(e
         return cheerio.load(body);
     }).catch(err => {
         console.log(err.toString().red);
-        return err;
+        return Promise.reject(err);
     });
 const filesUpdated = () => cache().delete('medias');
+const deleteFromQueue = ({
+    episode,
+    season,
+    name
+}, db) => Promise.resolve().then(() => {
+    db.get('queue')
+        .remove({
+            episode,
+            season,
+            name
+        })
+        .write();
+});
 
 function arrayDeffrence(_arr, _target) {
     const containsEquals = (obj, target) => {
@@ -50,29 +70,6 @@ function arrayDeffrence(_arr, _target) {
 function fixInt(num) {
     return isNaN(parseInt(num, 10)) ? null : parseInt(num, 10);
 }
-
-// function deleteFromQueue({
-//     episode,
-//     season,
-//     name
-// }, queuepath) {
-//     return Q.Promise((resolve, reject) => {
-//         // getQueue(queuepath, true).then(data => {
-//         //
-//         //     for (let i = data.length - 1; i >= 0; i--) {
-//         //         const val = data[i];
-//         //         if (val.name === name && val.episode === episode && val.season === season) {
-//         //             data.splice(i, 1);
-//         //         }
-//         //     }
-//         //
-//         //     updateState(data, queuepath);
-//         //     resolve();
-//         // }).catch(err => {
-//         //     reject(err);
-//         // });
-//     });
-// } // to be deleted
 
 function pad(num, size) {
     let s = num.toString();
@@ -122,6 +119,15 @@ function getLastEpisode(obj) {
     return last;
 }
 
+// replace multiple strings in a string
+const replaceAll = (_str, toReplace, replaceWith) => {
+    let str = _str;
+    toReplace.forEach(item => {
+        str = str.replace(new RegExp(item, 'g'), replaceWith);
+    });
+    return str.trim();
+};
+
 module.exports = {
     getHtml,
     ObjectSize,
@@ -134,5 +140,7 @@ module.exports = {
     pad,
     Bypass,
     getLastEpisode,
-    byPassCloudflare
+    byPassCloudflare,
+    deleteFromQueue,
+    replaceAll
 };

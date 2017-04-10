@@ -1,21 +1,12 @@
 {
   "queue": [
     {
-      "provider": "cimaclub",
-      "url": "http://cimaclub.com/the-blacklist-redemption-الموسم-1-الحلقة-3-الثالثة/?view=1",
-      "name": "the blacklist redemption",
-      "episode": 3,
+      "provider": "4helal",
+      "url": "http://www.4helal.tv/video/15570/watch.html",
+      "name": "preacher",
+      "episode": 1,
       "season": 1,
       "done": false,
-      "tried": true
-    },
-    {
-      "provider": "cimaclub",
-      "url": "http://cimaclub.com/مسلسل-the-100-الموسم-الرابع-الحلقة-8-الثامنة/?view=1",
-      "name": "the 100",
-      "episode": 8,
-      "season": 4,
-      "done": true,
       "tried": true
     }
   ]

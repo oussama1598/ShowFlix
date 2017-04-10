@@ -8,11 +8,14 @@ const dbHandler = require('./modules/db-handler');
 const IP = require('ip');
 
 // project modules
-const routes = require('./modules/routes');
+const routes = require('./routes/routes');
 const socketIO = require('./modules/socketio');
 const logger = require('./modules/logging');
 const thumbs = require('./modules/thumbs');
 const fileWatcher = require('./modules/fileWatcher');
+
+// middlewares
+const expressValidator = require('./middlewares/expressValidator');
 
 // init express and assing it to http server
 const app = express();
@@ -26,6 +29,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
+app.use(expressValidator());
 app.use(express.static('app', {
     maxAge: 3600000
 }));
@@ -51,24 +55,27 @@ global.infosdb = new dbHandler(config('INFOS_PATH'), {
 global.queuedb = new dbHandler(config('QUEUEPATH'), {
     queue: []
 });
+global.downloadsdb = new dbHandler(config('DOWNLOADS_QUEUE_PATH'), {
+    downloads: []
+});
 
 // watch tvshowtime feed
 require('./modules/tvShowTime').watch(data => {
-    // add episode to the queue
-    sources.addtoQueue(data, data.from).then(() => {
-        // get last element's index
-        const lastIndex = global.queuedb.db().get('queue').value().length - 1;
-        global.log(`Found ${data.keyword} From tvShowTime`);
-        global.infosdb.db().get('tvshowtimefeed').find({
-                name: data.keyword
-            })
-            .assign({
-                lastSeason: data.season,
-                lastEpisode: data.number
-            })
-            .write();
-        if (config('START_SERVER_WHENE_FOUND')) sources.start(lastIndex - 1);
-    }).catch(() => {});
+    // // add episode to the queue
+    // sources.addtoQueue(data, data.from).then(() => {
+    //     // get last element's index
+    //     const lastIndex = global.queuedb.db().get('queue').value().length - 1;
+    //     global.log(`Found ${data.keyword} From tvShowTime`);
+    //     global.infosdb.db().get('tvshowtimefeed').find({
+    //             name: data.keyword
+    //         })
+    //         .assign({
+    //             lastSeason: data.season,
+    //             lastEpisode: data.number
+    //         })
+    //         .write();
+    //     if (config('START_SERVER_WHENE_FOUND')) sources.start(lastIndex - 1);
+    // }).catch(() => {});
 });
 
 // attach function to the server error event to catch errors
@@ -80,7 +87,8 @@ server.listen(config('PORT'), () =>
 );
 // kill curl in exit
 nodeCleanup(() => {
-    if (global.Dl) global.Dl.getCurl().kill();
+    if (global.Dl && global.Dl.getCurl()) global.Dl.getCurl().kill();
 });
 
 // TODO: add providers automaticaly
+// TODO: add exluding for sources

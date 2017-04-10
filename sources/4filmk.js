@@ -22,20 +22,22 @@ module.exports = extend(true, {
             'Content-Type': 'application/x-www-form-urlencoded'
         }).then($ => {
             let toReturn;
-            $('iframe').each(function () {
+            $('iframe').each(function() {
                 const url = $(this).attr('src');
                 if (url.indexOf(provDetails.name) > -1) toReturn = url;
             });
+            if (!toReturn) return Promise.reject();
+            
             return provider(toReturn);
-        }).catch(() =>
+        }).catch(() => {
             Promise.reject({
                 next: true
-            })
-        );
+            });
+        });
     },
     BuildUrlsSource($, infos) {
         const Urls = {};
-        $('.blocksFilms').eq(0).find('.moviefilm').each(function () {
+        $('.blocksFilms').eq(0).find('.moviefilm').each(function() {
             const url = decodeURI($(this).find('a').eq(0).attr('href'));
             const season = url.match(/s(\d+)/);
             const episode = url.match(/e(\d+)/);
@@ -50,8 +52,6 @@ module.exports = extend(true, {
         const urlDetails = $('.movieTitle span').text().toLowerCase();
         const episodeMatch = urlDetails.match(/e(\d+)/);
 
-        global.log(episodeMatch);
-
         if (episodeMatch) {
             const urlEpisode = parseInt(episodeMatch[1], 10);
             if (!Urls[urlEpisode]) { // the given episode doesnt exist add it manualy
@@ -59,7 +59,6 @@ module.exports = extend(true, {
             }
         }
 
-        global.log(Urls);
         return Urls;
     },
     Parse(SourceUrl) {
@@ -83,7 +82,7 @@ module.exports = extend(true, {
             utils.getHtml(`${SEARCHURL}${query}`).then($ => {
                 q = q.replace(/\s+/g, '-');
 
-                $('.moviefilm').each(function () {
+                $('.moviefilm').each(function() {
                     const url = decodeURI($(this).find('a').eq(0).attr('href'));
 
                     const matcheResults = [

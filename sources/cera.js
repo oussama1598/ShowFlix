@@ -1,39 +1,77 @@
 const utils = require('../utils/utils');
 const providers = require('../providers/providers');
 const sourceBase = require('./sourceBase');
-const urlParser = require('url');
 const extend = require('extend');
 const _ = require('underscore');
 
 module.exports = extend(true, {
     name: 'cera',
     providerCodes: [{
-        code: 3,
-        name: 'openload'
+        name: 'keeload',
+        url: 'keeload'
     }, {
-        code: 4,
+        name: 'estream',
+        url: 'estream'
+    }, {
         name: 'UptoBox'
     }, {
-        code: 2,
-        name: 'keeload'
+        name: 'openload'
     }, {
-        code: 1,
         name: 'googleDrive'
     }],
     canSearch: true,
     Url: 'cera.online',
-    decodeForProvider(Ecode, prov) {
+    kawatchParser(URL, prov) {
+        return utils.getHtml(URL, false, 'GET', {
+            Referer: URL
+        }).then($ => {
+            const url = $('iframe').attr('src');
+            if (url.indexOf(prov.url) > -1) return url;
+
+            return null;
+        }).catch(() => {
+
+        });
+    },
+    checkUrls(urls, prov) {
+        return new Promise(resolve => {
+            urls.forEach(url => {
+                if (url.indexOf(prov.url) > -1) {
+                    resolve(url);
+                    return false;
+                }
+
+                if (url.indexOf('kawatch') > -1) {
+                    this.kawatchParser(url, prov)
+                        .then(streamUrl => {
+                            if (streamUrl) resolve(streamUrl);
+                        });
+                }
+            });
+
+            resolve(null);
+        });
+    },
+    decodeForProvider(URL, prov) {
         const provDetails = this.providerCodes[prov];
         const provider = providers.get(provDetails.name);
-        const code = provDetails.code;
-        const serverUrl = `http://cera.online/wp-content/themes/Theme/servers/server.php?q=${Ecode}&i=${code}`;
 
-        return utils.getHtml(serverUrl).then($ => provider($('iframe').attr('src')));
+        return utils.getHtml(URL).then($ => {
+            const urls = [];
+            $('script').each(function() {
+                const content = $(this).html().toLowerCase();
+                const match = content.match(/src=".*?"/);
+
+                if (match) urls.push(utils.replaceAll(match[0], ['"', 'src='], ''));
+            });
+
+            return this.checkUrls(urls, provDetails).then(url => provider(url));
+        });
     },
     BuildUrlsSource($) {
         const Urls = {};
 
-        $('.episodesList a').each(function () {
+        $('.serverDownload a').each(function() {
             const Enumber = $(this).attr('class').replace('serie', '');
             const url = $(this).attr('href');
 
@@ -42,13 +80,7 @@ module.exports = extend(true, {
         return Urls;
     },
     Parse(SourceUrl) {
-        return utils.getHtml(SourceUrl).then($ => {
-            let url = $('link[rel=\'shortlink\']').attr('href');
-            url = url ? urlParser.parse(url, true).query.p :
-                $('div[id^=\'post-ratings-\']').attr('id').replace('post-ratings-', '');
-
-            return url;
-        });
+        return Promise.resolve(SourceUrl);
     },
     search(details, ParticularEpisode) {
         const $this = this;

@@ -48,7 +48,11 @@ module.exports = io => {
         }
     };
 
-    new arrayWatcher(1000, () => downloadsCtrl.getAll()).on('changed', changes => {
+    new arrayWatcher(1000, () => global.downloadsdb
+        .db()
+        .get('downloads')
+        .value()
+    ).on('changed', changes => {
         _.each(io.sockets.sockets, sk => {
             sk._emit('downloadsChanged', changes);
         });

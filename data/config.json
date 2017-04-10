@@ -19,5 +19,8 @@
    "ENABLE_CLIENT_LOGGING": true,
    "ENABLE_SERVER_LOGGING": true,
    "ENABLE_PHONE_LOGGIN": true,
-   "SIMPLE_PUSH_ID": "8BQi8a"
+   "SIMPLE_PUSH_ID": "8BQi8a",
+   "TV_SHOW_API": {
+     "ENDPOINT": "https://api.apidomain.info/"
+   }
 }
