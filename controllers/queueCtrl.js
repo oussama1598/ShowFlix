@@ -1,4 +1,5 @@
 const utils = require('../utils/utils');
+const parser = require('../modules/parser');
 
 module.exports.getRecords = (req, res) => {
     res.send(
@@ -63,7 +64,12 @@ module.exports.addRecord = (req, res) => {
                 return Promise.reject(result.array());
             }
 
-            return Promise.resolve();
+            return parser.addtoQueue(
+                req.body.keyword,
+                req.body.season,
+                req.body.from,
+                req.body.to
+            ).catch(err => Promise.reject(err.toString()));
         })
         .then(() => {
             res.send({
@@ -76,21 +82,4 @@ module.exports.addRecord = (req, res) => {
                 error
             });
         });
-
-    // sources.addtoQueue({
-    //     keyword,
-    //     season,
-    //     from,
-    //     to
-    // }, null, Url).then(() => {
-    //     res.send({
-    //         status: true
-    //     });
-    // }).catch(error => {
-    //     global.log(error);
-    //     res.send({
-    //         status: false,
-    //         error
-    //     });
-    // });
 };

@@ -1,3 +1,5 @@
+const parser = require('../modules/parser');
+
 module.exports.state = (req, res) => {
     res.send({
         running: global.RUNNING,
@@ -22,9 +24,8 @@ module.exports.start = (req, res) => {
                 return Promise.reject('The parsing is already started');
             }
 
-            const index = req.query.index ? parseInt(req.query.index, 10) - 1 : null;
-            return Promise.resolve(index);
-            //return sources.start(index);
+            const index = req.query.index ? parseInt(req.query.index, 10) - 1 : undefined;
+            return parser.start(index);
         })
         .then(() => {
             res.send({

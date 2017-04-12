@@ -1,18 +1,18 @@
 const http = require('http');
 const express = require('express');
 const config = require('./modules/config');
-const sources = require('./sources/sources');
 const bodyParser = require('body-parser');
 const nodeCleanup = require('node-cleanup');
 const dbHandler = require('./modules/db-handler');
 const IP = require('ip');
 
 // project modules
-const routes = require('./routes/routes');
+const routes = require('./routes');
 const socketIO = require('./modules/socketio');
 const logger = require('./modules/logging');
 const thumbs = require('./modules/thumbs');
-const fileWatcher = require('./modules/fileWatcher');
+const torrentEngine = require('./modules/torrentEngine');
+const mediasHandler = require('./modules/mediasHandler');
 
 // middlewares
 const expressValidator = require('./middlewares/expressValidator');
@@ -34,18 +34,6 @@ app.use(express.static('app', {
     maxAge: 3600000
 }));
 
-// the main app routes
-routes(app);
-// creating new instance of socketio
-global.io = socketIO(server);
-// enable the logger
-logger(global.io);
-// initialize the thumbs delete or create them
-thumbs.init().then(() => {
-    // enable files Watcher
-    fileWatcher();
-});
-
 // init dbs as global instances
 global.infosdb = new dbHandler(config('INFOS_PATH'), {
     queue: '0',
@@ -58,6 +46,21 @@ global.queuedb = new dbHandler(config('QUEUEPATH'), {
 global.downloadsdb = new dbHandler(config('DOWNLOADS_QUEUE_PATH'), {
     downloads: []
 });
+global.filesdb = new dbHandler(config('FILES_PATH'), {
+    files: []
+});
+// the main app routes
+routes(app);
+// creating new instance of socketio
+global.io = socketIO(server);
+// enable the logger
+logger(global.io);
+// initialize the thumbs delete or create them
+mediasHandler.init().then(() => {
+    thumbs.init();
+});
+// webtorrent engine
+torrentEngine.init();
 
 // watch tvshowtime feed
 require('./modules/tvShowTime').watch(data => {
@@ -90,5 +93,4 @@ nodeCleanup(() => {
     if (global.Dl && global.Dl.getCurl()) global.Dl.getCurl().kill();
 });
 
-// TODO: add providers automaticaly
-// TODO: add exluding for sources
+// TODO: change tvshows api

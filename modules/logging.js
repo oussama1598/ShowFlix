@@ -4,7 +4,6 @@ const config = require('./config');
 const arrayWatcher = require('./arrayWatcher');
 const request = require('request');
 const mediasHandler = require('./mediasHandler');
-const downloadsCtrl = require('../controllers/downloadsCtrl');
 
 module.exports = io => {
     const log = global.log = console.log.bind({});
@@ -58,13 +57,21 @@ module.exports = io => {
         });
     });
 
-    new arrayWatcher(1000, () => global.queuedb.db().value()).on('changed', changes => {
+    new arrayWatcher(1000, () => global.queuedb
+        .db()
+        .get('queue')
+        .value()
+    ).on('changed', changes => {
         _.each(io.sockets.sockets, sk => {
             sk._emit('queueChanged', changes);
         });
     });
 
-    new arrayWatcher(2000, () => global.Files).on('changed', () => {
+    new arrayWatcher(2000, () => global.filesdb
+        .db()
+        .get('files')
+        .value()
+    ).on('changed', () => {
         _.each(io.sockets.sockets, sk => {
             mediasHandler.getMedias().then(Files => {
                 sk._emit('mediasChanged', Files);

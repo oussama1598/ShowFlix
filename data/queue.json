@@ -1,13 +1,11 @@
 {
   "queue": [
     {
-      "provider": "4helal",
-      "url": "http://www.4helal.tv/video/15570/watch.html",
-      "name": "preacher",
-      "episode": 1,
-      "season": 1,
-      "done": false,
-      "tried": true
+      "name": "marvel's agents of shield",
+      "season": "4",
+      "episode": 17,
+      "magnet": "magnet:?xt=urn:btih:4fb8f04bb46c583b2ca91a00678a4ea9f09fdc0c&dn=Marvels.Agents.of.S.H.I.E.L.D.S04E17.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
+      "quality": "480p"
     }
   ]
 }

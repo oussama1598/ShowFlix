@@ -4,11 +4,14 @@ const express = require('express');
 const apiRoutes = express.Router();
 
 // controllers
-const downloadsCtrl = require('../controllers/downloadsCtrl');
-const searchCtrl = require('../controllers/searchCtrl');
-const queueCtrl = require('../controllers/queueCtrl');
-const mediasCtrl = require('../controllers/mediasCtrl');
-const controlsCtrl = require('../controllers/controlsCtrl');
+const downloadsCtrl = require('./controllers/downloadsCtrl');
+const searchCtrl = require('./controllers/searchCtrl');
+const queueCtrl = require('./controllers/queueCtrl');
+const mediasCtrl = require('./controllers/mediasCtrl');
+const controlsCtrl = require('./controllers/controlsCtrl');
+
+// custom middelwares
+const medias = require('./middlewares/medias');
 
 module.exports = app => {
     apiRoutes.get('/downloads', downloadsCtrl.getAll);
@@ -21,9 +24,9 @@ module.exports = app => {
     apiRoutes.get('/search', searchCtrl.search);
 
     apiRoutes.get('/files', mediasCtrl.getFiles);
-    apiRoutes.get('/files/:filename', mediasCtrl.stream);
-    apiRoutes.get('/files/:filename/thumb', mediasCtrl.thumb);
-    apiRoutes.delete('/files/:filename', mediasCtrl.deleteFile);
+    apiRoutes.get('/files/:infoHash', medias.check, mediasCtrl.stream);
+    apiRoutes.get('/files/:infoHash/thumb', medias.check, mediasCtrl.thumb);
+    apiRoutes.delete('/files/:infoHash', medias.check, mediasCtrl.deleteFile);
 
     apiRoutes.get('/server', controlsCtrl.state);
     apiRoutes.get('/server/start', controlsCtrl.start);
@@ -51,8 +54,5 @@ module.exports = app => {
     //     });
     // });
     //
-    // app.get('/start', (req, res) => {
-
-    // use apiRoutes in the /api route
     app.use('/api', apiRoutes);
 };

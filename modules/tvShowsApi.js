@@ -1,42 +1,59 @@
 const utils = require('../utils/utils');
 const tvShowsData = require('./tvshowsData');
 const config = require('./config');
+const _ = require('underscore');
 
-const parseEpisodeMagnets = data => data.map(torrent => ({
-    magnet: torrent.torrent_magnet,
-    quality: torrent.quality,
-    seeds: torrent.torrent_seeds
-}));
+const parseSeason = data => _.chain(data)
+    .map(_episode => {
+        const episode = _episode;
+        delete episode.torrents['0'];
+        return {
+            episode: episode.episode,
+            season: episode.season,
+            torrents: episode.torrents
+        };
+    })
+    .filter(item => Object.keys(item.torrents).length > 0)
+    .sortBy(item => item.episode)
+    .value();
 
-const parseSeasonMagnets = data => data.map(episode =>
-        parseEpisodeMagnets(episode.items))
-    .filter(item => item.length > 0);
-
-const search = (name, season, episode) => {
+const search = (name, _season, _episode) => {
+    const season = parseInt(_season, 10);
+    const episode = parseInt(_episode, 10);
     if (!season) return Promise.reject(new Error('Season is required'));
 
     return tvShowsData.getIMDBByName(name)
-        .then(imdb => utils.getHtml(`${config('TV_SHOW_API.ENDPOINT')}show?imdb=${imdb}`, true))
+        .then(imdb => utils.getHtml(`${config('TV_SHOW_API.ENDPOINT')}${imdb}`, true))
         .then(data => {
-            if (!data[season]) return Promise.reject(new Error('Season cannot be found'));
-            if (!episode) return parseSeasonMagnets(data[season]);
+            if (episode) {
+                const episodeRecord = _.filter(data.episodes, ep =>
+                    ep.season === season && ep.episode === episode
+                )[0];
+                if (!episodeRecord) {
+                    return Promise.reject(
+                        new Error('This episode doesnt exist')
+                    );
+                }
 
-            const episodeDetails = data[season]
-                .filter(item => item.episode === episode.toString())[0];
+                if (Object.keys(episodeRecord.torrents).length <= 0) {
+                    return Promise.reject(
+                        new Error('This episode doesnt have any stream urls')
+                    );
+                }
 
-            if (!episodeDetails) {
-                return Promise.reject(
-                    new Error('This episode doesnt exist')
-                );
+                delete episodeRecord.torrents['0'];
+                return episodeRecord.torrents;
             }
 
-            if (episodeDetails.items.length <= 0) {
+            const seasonRecord = _.filter(data.episodes, ep =>
+                ep.season === season
+            );
+            if (seasonRecord.length <= 0) {
                 return Promise.reject(
-                    new Error('This episode doesnt have any stream urls')
-                );
+                    new Error('Season cannot be found'));
             }
 
-            return parseEpisodeMagnets(episodeDetails.items);
+            return parseSeason(seasonRecord);
         });
 };
 

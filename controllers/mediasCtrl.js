@@ -20,8 +20,7 @@ module.exports.getFiles = (req, res) => {
 };
 
 module.exports.stream = (req, res) => {
-    const uri = path.join(config('SAVETOFOLDER'), req.params.filename);
-
+    const uri = path.join(config('SAVETOFOLDER'), req.record.path);
     fs.exists(uri, exists => {
         if (!exists) return res.sendStatus(404);
 
@@ -30,8 +29,7 @@ module.exports.stream = (req, res) => {
 };
 
 module.exports.thumb = (req, res) => {
-    const basename = path.basename(req.params.filename, path.extname(req.params.filename));
-    const thumbPath = path.join(global.thumbsDir, `${basename}.png`);
+    const thumbPath = path.join(global.thumbsDir, `${req.record.filename}.png`);
 
     fs.exists(thumbPath, exists => {
         if (!exists) return res.sendStatus(404);
@@ -42,7 +40,8 @@ module.exports.thumb = (req, res) => {
 };
 
 module.exports.deleteFile = (req, res) => {
-    const uri = path.join(config('SAVETOFOLDER'), req.params.filename);
+    const uri = path.join(config('SAVETOFOLDER'), path.dirname(req.record.path));
+    global.log(uri);
 
     utils.deleteFile(uri).then(() => {
         res.send({
