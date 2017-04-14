@@ -1,4 +1,4 @@
-const tvShowsApi = require('../modules/tvShowsApi');
+const tvShowsApi = require('../lib/tvShowsApi');
 
 module.exports.search = (req, res) => {
     req.checkQuery('keyword', 'Keyword is required').notEmpty();

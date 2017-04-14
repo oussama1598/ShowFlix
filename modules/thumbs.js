@@ -14,6 +14,8 @@ const deleteThumb = uri => utils.deleteFile(getThumbPath(uri)); // delete thumb
 const thumbExists = uri => fs.existsSync(getThumbPath(uri)); // returns if thumb exists
 
 function init() {
+    if (!fs.existsSync(thumbsDir)) fs.mkdirSync(thumbsDir);
+
     global.filesdb.db().get('files').value().forEach(file => {
         if (!thumbExists(file.path)) generate(file.path);
     });
@@ -24,7 +26,8 @@ function init() {
                 .find({
                     filename: thumbpath
                 });
-            if (!record.value()) deleteThumb(file);
+
+            if (!record.value() || !record.value().show) deleteThumb(file);
         });
     });
 }

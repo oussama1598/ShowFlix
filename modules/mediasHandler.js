@@ -1,5 +1,5 @@
 const async = require('async');
-const tvShowsData = require('./tvshowsData');
+const tvShowsData = require('../lib/tvshowsData');
 const path = require('path');
 const filesize = require('filesize');
 const config = require('./config');
@@ -110,6 +110,7 @@ function getMedias() {
                     season: parseInt(file.season, 10),
                     streamUrl: encodeURI(`/files/${file.infoHash}${ffmpeg}`),
                     thumbUrl: encodeURI(`/files/${file.infoHash}/thumb`),
+                    subs: encodeURI(`/files/${file.infoHash}/subs`),
                     fileDetails: {
                         fullpath,
                         size: filesize(stats.size)

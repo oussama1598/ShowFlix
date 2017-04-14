@@ -1,19 +1,37 @@
 {
   "downloads": [
     {
+      "name": "the catch",
+      "episode": 5,
+      "season": 2,
+      "magnet": "magnet:?xt=urn:btih:5051dcb4b7311749e23e6b8b1c7f32a61551ac96&dn=The.Catch.S02E05.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "path": "",
+      "infoHash": "5051dcb4b7311749e23e6b8b1c7f32a61551ac96",
+      "progress": {
+        "progress": 3.395725016803799,
+        "written": 8590303,
+        "size": 252974047,
+        "speed": 52428.8,
+        "timeRemaining": 4661250,
+        "peers": 22
+      },
+      "started": true,
+      "error": false,
+      "finished": false
+    },
+    {
       "name": "marvel's agents of shield",
       "episode": 17,
       "season": "4",
       "magnet": "magnet:?xt=urn:btih:4fb8f04bb46c583b2ca91a00678a4ea9f09fdc0c&dn=Marvels.Agents.of.S.H.I.E.L.D.S04E17.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
-      "path": "Marvels.Agents.of.S.H.I.E.L.D.S04E17.HDTV.x264-KILLERS[ettv]/Marvels.Agents.of.S.H.I.E.L.D.S04E17.HDTV.x264-KILLERS[ettv].mkv",
       "infoHash": "4fb8f04bb46c583b2ca91a00678a4ea9f09fdc0c",
       "progress": {
-        "progress": 29.283309672950768,
-        "written": 83924328,
+        "progress": 6.6486265845075385,
+        "written": 19054592,
         "size": 286594239,
-        "speed": 265420.8,
-        "timeRemaining": 763580.2469135802,
-        "peers": 40
+        "speed": 406323.2,
+        "timeRemaining": 658440.9061554939,
+        "peers": 21
       },
       "started": true,
       "error": false,

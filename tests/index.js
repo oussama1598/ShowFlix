@@ -1,14 +1,8 @@
-// requeting file stream
-// first check if the infoHash exists in the engine
-// second check if the file is fully downloaded
-// if the engine has the file request a stream instance if not stream normaly
+const http = require('http');
+const unzipResponse = require('unzip-response');
 
-const tvShowsApi = require('../modules/tvShowsApi');
+http.get('http://subscene.com/subtitle/download?mac=NS28FTYok6RE6hRUIPNcTP7e55bDsDiEEvd8F19SvRluQIUpl7FxcXnJZqE69V2oA7cu10Qom4vf7K5fJuHjpDAC3L1SzJiFyhJnZorpAufmAr6Sgh_7nNo0WfVcmMuI0', res => {
+    res = unzipResponse(res);
 
-tvShowsApi.search('lucfier', 1, 1)
-    .then(result => {
-        console.log(result);
-    })
-    .catch(err => {
-        console.log(err.toString());
-    });
+    console.log(res);
+});

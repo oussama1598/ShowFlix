@@ -1,25 +1,5 @@
 {
   "queue": "0",
-  "sources": [
-    {
-      "name": "cimaclub"
-    },
-    {
-      "name": "4filmk"
-    },
-    {
-      "name": "cera"
-    },
-    {
-      "name": "seri-ar"
-    },
-    {
-      "name": "4helal"
-    },
-    {
-      "name": "mosalsl"
-    }
-  ],
   "tvshowtimefeed": [
     {
       "name": "the blacklist",
@@ -54,7 +34,7 @@
     {
       "name": "the catch",
       "lastSeason": 2,
-      "lastEpisode": 5
+      "lastEpisode": 6
     },
     {
       "name": "iron fist"

@@ -12,6 +12,7 @@ const socketIO = require('./modules/socketio');
 const logger = require('./modules/logging');
 const thumbs = require('./modules/thumbs');
 const torrentEngine = require('./modules/torrentEngine');
+const parser = require('./modules/parser');
 const mediasHandler = require('./modules/mediasHandler');
 
 // middlewares
@@ -37,7 +38,6 @@ app.use(express.static('app', {
 // init dbs as global instances
 global.infosdb = new dbHandler(config('INFOS_PATH'), {
     queue: '0',
-    sources: [],
     tvshowtimefeed: []
 });
 global.queuedb = new dbHandler(config('QUEUEPATH'), {
@@ -63,22 +63,23 @@ mediasHandler.init().then(() => {
 torrentEngine.init();
 
 // watch tvshowtime feed
-require('./modules/tvShowTime').watch(data => {
-    // // add episode to the queue
-    // sources.addtoQueue(data, data.from).then(() => {
-    //     // get last element's index
-    //     const lastIndex = global.queuedb.db().get('queue').value().length - 1;
-    //     global.log(`Found ${data.keyword} From tvShowTime`);
-    //     global.infosdb.db().get('tvshowtimefeed').find({
-    //             name: data.keyword
-    //         })
-    //         .assign({
-    //             lastSeason: data.season,
-    //             lastEpisode: data.number
-    //         })
-    //         .write();
-    //     if (config('START_SERVER_WHENE_FOUND')) sources.start(lastIndex - 1);
-    // }).catch(() => {});
+require('./lib/tvShowTime').watch(data => {
+    global.log(data);
+    // add episode to the queue
+    parser.addtoQueue(data.keyword, data.season, data.from).then(() => {
+        // get last element's index
+        const lastIndex = global.queuedb.db().get('queue').value().length - 1;
+        global.log(`Found ${data.keyword} From tvShowTime`);
+        global.infosdb.db().get('tvshowtimefeed').find({
+                name: data.keyword
+            })
+            .assign({
+                lastSeason: data.season,
+                lastEpisode: data.number
+            })
+            .write();
+        if (config('START_SERVER_WHENE_FOUND')) parser.start(lastIndex - 1);
+    }).catch(() => {});
 });
 
 // attach function to the server error event to catch errors

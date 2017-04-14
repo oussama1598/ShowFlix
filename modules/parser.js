@@ -1,4 +1,4 @@
-const tvShowsApi = require('./tvShowsApi');
+const tvShowsApi = require('../lib/tvShowsApi');
 const config = require('./config');
 const parseTorrent = require('parse-torrent');
 const _ = require('underscore');
@@ -58,7 +58,6 @@ const startDownloading = ({
             episode,
             season,
             magnet,
-            path: '',
             infoHash,
             progress: {},
             started: false,
