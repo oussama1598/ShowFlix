@@ -1,40 +1,40 @@
 <div class="navbar-fixed">
-    <nav>
-        <div class="nav-wrapper pink">
-            <a class="brand-logo">Showflix</a>
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="fa fa-bars"></i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="#/app/home">Home</a></li>
-                <li><a href="#/app/downloads">Downloadings</a></li>
-                <li>
-                    <a href="#/app/queue">
-                        Queue 
+  <nav>
+    <div class="nav-wrapper pink">
+      <a class="brand-logo">Showflix</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="fa fa-bars"></i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a ui-sref="app.home">Home</a></li>
+        <li><a ui-sref="app.downloads">Downloadings</a></li>
+        <li>
+          <a ui-sref="app.queue">
+                        Queue
                         <span ng-show="newItems" class="new badge">{{newItems}}</span>
                     </a>
-                </li>
-                <li><a href="#/app/settings">Settings</a></li>
-            </ul>
-            <ul class="side-nav" id="mobile-demo">
-                <li><a href="#/app/home">Home</a></li>
-                <li><a href="#/app/downloads">Downloadings</a></li>
-                <li>
-                    <a href="#/app/queue">
-                        Queue 
+        </li>
+        <li><a ui-sref="app.settings">Settings</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a ui-sref="app.home">Home</a></li>
+        <li><a ui-sref="app.downloads">Downloadings</a></li>
+        <li>
+          <a ui-sref="app.queue">
+                        Queue
                         <span ng-show="newItems" class="new badge">{{newItems}}</span>
                     </a>
-                </li>
-                <li><a href="#/app/settings">Settings</a></li>
-            </ul>
-        </div>
-    </nav>
+        </li>
+        <li><a ui-sref="app.settings">Settings</a></li>
+      </ul>
+    </div>
+  </nav>
 </div>
-<div ui-view="mainView"></div>
+<div ui-view></div>
 <div class="fixed-action-btn click-to-toggle center">
-    <a class="btn-floating btn-large pink">
-        <i class="large material-icons">menu</i>
-    </a>
-    <ul>
-        <li><a class="btn-floating blue darken-1" ng-click="showAddtoQueue($event)"><i class="material-icons">add</i></a></li>
-        <li><a class="btn-floating orange" ng-click="startServer()"><i class="large material-icons">{{serverOn == true ? "stop" : "play_arrow"}}</i></a></li>
-    </ul>
+  <a class="btn-floating btn-large pink">
+    <i class="large material-icons">menu</i>
+  </a>
+  <ul>
+    <li><a class="btn-floating blue darken-1" ng-click="main.showAddtoQueue($event)"><i class="material-icons">add</i></a></li>
+    <li><a class="btn-floating orange" ng-click="main.toggleServer()"><i class="large material-icons">{{main.serverOn ? "stop" : "play_arrow"}}</i></a></li>
+  </ul>
 </div>

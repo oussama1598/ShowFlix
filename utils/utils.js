@@ -55,6 +55,31 @@ const deleteFromQueue = ({
         .write();
 });
 
+const createDownloadEntry = infoHash => {
+    const downloadsdb = global.downloadsdb.db().get('downloads');
+    const dbRecord = downloadsdb.find({
+        infoHash
+    }).value();
+
+    if (!dbRecord) {
+        downloadsdb.push({
+            name: '',
+            episode: 0,
+            season: 0,
+            magnet: null,
+            infoHash,
+            progress: {},
+            started: false,
+            error: false,
+            finished: false
+        }).write();
+    }
+
+    return downloadsdb.find({
+      infoHash
+    });
+};
+
 function arrayDeffrence(_arr, _target) {
     const containsEquals = (obj, target) => {
         if (obj == null) return false;
@@ -92,5 +117,6 @@ module.exports = {
     cache,
     fixInt,
     pad,
-    deleteFromQueue
+    deleteFromQueue,
+    createDownloadEntry
 };

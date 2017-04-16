@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "debug:inspect": "node --inspect --debug-brk index.js",
-    "debug": "DEBUG=express:* node index.js"
+    "debug": "DEBUG=express:* node index.js",
+    "build:bower": "rimraf ./app/index.html && rimraf ./app/dist/js/vendor-*.js && gulp bower && gulp usemin"
   },
   "author": "Oussama",
   "license": "ISC",
@@ -45,15 +46,32 @@
     "x-ray": "^2.3.2"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
     "eslint-config-rallycoding": "^3.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.1",
     "gulp-csso": "^2.0.0",
     "gulp-htmlmin": "^3.0.0",
+    "gulp-inject": "^4.2.0",
     "gulp-livereload": "^3.8.1",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-ng-annotate": "^2.0.0",
     "gulp-obfuscate": "^0.2.9",
+    "gulp-rev": "^7.1.2",
     "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^2.0.1",
-    "pump": "^1.0.2"
+    "gulp-usemin": "^0.3.28",
+    "gulp-wiredep": "^1.2.0",
+    "pump": "^1.0.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

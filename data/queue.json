@@ -1,31 +1,13 @@
 {
   "queue": [
     {
-      "name": "marvel's agents of shield",
-      "season": "4",
-      "episode": 17,
-      "magnet": "magnet:?xt=urn:btih:4fb8f04bb46c583b2ca91a00678a4ea9f09fdc0c&dn=Marvels.Agents.of.S.H.I.E.L.D.S04E17.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
+      "name": "blindspot",
+      "season": "1",
+      "episode": 23,
+      "magnet": "magnet:?xt=urn:btih:a89bcabbfe37ecbc90352d769fc6d26c471894b1&dn=Blindspot.S01E23.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.piratepublic.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
       "quality": "480p",
-      "done": false,
-      "tried": true
-    },
-    {
-      "name": "the catch",
-      "season": 2,
-      "episode": 6,
-      "magnet": "magnet:?xt=urn:btih:9b2bedea7efaa02049b7ca8c6e901354936b93e5&dn=The.Catch.S02E06.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
-      "quality": "480p",
-      "tried": false,
-      "done": false
-    },
-    {
-      "name": "the catch",
-      "season": 2,
-      "episode": 5,
-      "magnet": "magnet:?xt=urn:btih:5051dcb4b7311749e23e6b8b1c7f32a61551ac96&dn=The.Catch.S02E05.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
-      "quality": "480p",
-      "tried": false,
-      "done": false
+      "tried": true,
+      "done": true
     }
   ]
 }

@@ -3,8 +3,7 @@ module.exports.getAll = (req, res) => {
         global.downloadsdb
         .db()
         .get('downloads')
-        .value()
-    );
+        .value());
 };
 
 module.exports.deleteRecord = (req, res) => {

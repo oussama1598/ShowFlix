@@ -1,6 +1,8 @@
-/bower_components/
+app/bower_components/
 /node_modules/
 /data/*
+app/dist
+app/views
 =======
 # Logs
 logs

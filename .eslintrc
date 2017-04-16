@@ -1,3 +1,15 @@
 {
-  "extends": "rallycoding"
+  "extends":   "airbnb",
+  "env":       {
+    "browser": true,
+    "node":    true
+  },
+  "globals":{
+    "window":  true,
+    "$":       true,
+    "angular": true
+  },
+  "rules":{
+    "indent": 0
+  }
 }

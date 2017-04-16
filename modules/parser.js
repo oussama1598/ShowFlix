@@ -3,6 +3,7 @@ const config = require('./config');
 const parseTorrent = require('parse-torrent');
 const _ = require('underscore');
 const mediasHandler = require('./mediasHandler');
+const utils = require('../utils/utils');
 
 const BuildNextElement = (_index = -1) => { // the queue index default to -1
     const db = global.queuedb.db().get('queue');
@@ -46,33 +47,24 @@ const startDownloading = ({
     season,
     magnet
 }) => {
-    const downloadsdb = global.downloadsdb.db().get('downloads');
     const infoHash = parseTorrent(magnet).infoHash;
-    const dbRecord = downloadsdb.find({
-        infoHash
-    }).value();
-
-    if (!dbRecord) {
-        downloadsdb.push({
-            name,
-            episode,
-            season,
-            magnet,
-            infoHash,
-            progress: {},
-            started: false,
-            error: false,
-            finished: false
-        }).write();
-    }
+    const dbRecord = utils.createDownloadEntry(infoHash);
 
     new Promise((resolve, reject) => {
             global.webTorrent.add(magnet, {
                 path: config('SAVETOFOLDER')
             }, torrent => {
                 mediasHandler.createFile(name, season, episode, infoHash);
+                dbRecord.assign({
+                  episode,
+                  magnet,
+                  season,
+                  name
+                }).write();
+                console.log(`Started ${name} S${season}E${episode}`.green);
 
                 torrent.on('done', () => {
+                    console.log(`Finished ${name} S${season}E${episode}`.green);
                     resolve();
                 });
 
@@ -86,7 +78,7 @@ const startDownloading = ({
                 done: true
             });
             console.log('Next in the Queue'.green);
-            MoveToNext(magnet);
+            setTimeout(() => MoveToNext(magnet), 1000);
         })
         .catch(error => {
             mediasHandler.removeFile(infoHash);
