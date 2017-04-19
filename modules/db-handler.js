@@ -1,22 +1,24 @@
 const low = require('lowdb');
 const _ = require('underscore');
 
-const dbHandler = function (_path, _defaults) {
-    this.PATH = _path; //store the path of the json file
+class DbHandler {
+  constructor(_path, _defaults) {
+    this.path = _path;
     this.defaults = _defaults;
-};
+  }
 
-dbHandler.prototype.init = function (db) {
-    db.defaults(this.defaults).write(); // set the defaults
-};
+  init(db) {
+    db.defaults(this.defaults)
+      .write();
+  }
 
-dbHandler.prototype.db = function () {
-    const db = low(this.PATH);
-    // compare the keys of the object if not match set the defaults
+  db() {
+    const db = low(this.path);
     if (!_.isEqual(Object.keys(db.value()), Object.keys(this.defaults))) {
-        this.init(db);
+      this.init(db);
     }
-    return db; // return the db instance
-};
+    return db;
+  }
+}
 
-module.exports = dbHandler;
+module.exports = DbHandler;

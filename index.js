@@ -56,12 +56,12 @@ global.io = socketIO(server);
 // enable the logger
 logger(global.io);
 // initialize the thumbs delete or create them
-mediasHandler.init()
+mediasHandler()
   .then(() => {
-    thumbs.init();
+    thumbs();
   });
 // webtorrent engine
-torrentEngine.init();
+torrentEngine();
 
 // watch tvshowtime feed
 require('./lib/tvShowTime')
@@ -103,5 +103,3 @@ nodeCleanup(() => {
       .kill();
   }
 });
-
-// TODO: change tvshows api

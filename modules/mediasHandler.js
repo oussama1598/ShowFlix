@@ -63,7 +63,39 @@ const removeFile = (infoHash) => {
   utils.filesUpdated();
 };
 
-const checkforShow = (infoHash, downloaded, uri) => {
+module.exports = () => new Promise((resolve) => {
+  if (!fs.existsSync(config('SAVETOFOLDER'))) fs.mkdirSync(config('SAVETOFOLDER'));
+  global.filesdb.db()
+    .get('files')
+    .value()
+    .forEach((file) => {
+      const fullpath = path.join(config('SAVETOFOLDER'), file.path);
+      fs.exists(fullpath, (exists) => {
+        if (!exists) removeFile(file.infoHash);
+      });
+    });
+  recursive(config('SAVETOFOLDER'), (err, files) => {
+    files.forEach((file) => {
+      if (!isVideo(file)) return true;
+
+      const record = getFileBy({
+          filename: path.basename(file, path.extname(file)),
+        })
+        .value();
+      const srtPath = file.replace(path.extname(file), '.srt');
+
+      if (!record) return utils.deleteFile(path.dirname(file));
+
+      return updateFile(record.infoHash, {
+        srt: fs.existsSync(srtPath),
+      });
+    });
+
+    resolve();
+  });
+});
+
+module.exports.checkforShow = (infoHash, downloaded, uri) => {
   const TRESHOLD = config('FILE_TRESHOLD_SIZE');
   const record = getFileBy({
       infoHash,
@@ -78,90 +110,56 @@ const checkforShow = (infoHash, downloaded, uri) => {
   }
 };
 
-function init() {
-  return new Promise((resolve) => {
-    if (!fs.existsSync(config('SAVETOFOLDER'))) fs.mkdirSync(config('SAVETOFOLDER'));
-    global.filesdb.db()
-      .get('files')
-      .value()
-      .forEach((file) => {
-        const fullpath = path.join(config('SAVETOFOLDER'), file.path);
-        fs.exists(fullpath, (exists) => {
-          if (!exists) removeFile(file.infoHash);
+module.exports.getMedias = () => new Promise((resolve) => {
+  const episodes = new Map();
+  const files = global.filesdb.db()
+    .get('files')
+    .value();
+
+  async.forEach(files, (file, cb) => {
+    if (!file.show) return cb();
+    const filename = path.basename(file.path);
+    const fullpath = path.join(config('SAVETOFOLDER'), file.path);
+    const ffmpeg = path.extname(filename) !== '.mp4' ? '?ffmpeg=true' : '';
+
+    if (!episodes.has(file.name)) episodes.set(file.name, []);
+
+    fs.stat(fullpath, (err, stats) => {
+      if (err) return cb();
+
+      episodes.get(file.name)
+        .push({
+          filename,
+          name: file.name,
+          episode: parseInt(file.episode, 10),
+          season: parseInt(file.season, 10),
+          streamUrl: encodeURI(`/files/${file.infoHash}${ffmpeg}`),
+          thumbUrl: encodeURI(`/files/${file.infoHash}/thumb`),
+          subs: encodeURI(`/files/${file.infoHash}/subs`),
+          srt: file.srt ? encodeURI(`/files/${file.infoHash}/srt`) : false,
+          fileDetails: {
+            fullpath,
+            size: filesize(stats.size),
+          },
         });
-      });
-    recursive(config('SAVETOFOLDER'), (err, files) => {
-      files.forEach((file) => {
-        if (!isVideo(file)) return true;
 
-        const record = getFileBy({
-          filename: path.basename(file, path.extname(file)),
-        }).value();
-        const srtPath = file.replace(path.extname(file), '.srt');
-
-        if (!record) return utils.deleteFile(path.dirname(file));
-
-        return updateFile(record.infoHash, {
-          srt: fs.existsSync(srtPath),
-        });
-      });
-
-      resolve();
+      return cb();
     });
-  });
-}
 
-function getMedias() {
-  return new Promise((resolve) => {
-    const episodes = {};
-    async.forEach(global.filesdb.db()
-      .get('files')
-      .value(), (file, cb) => {
-        if (!file.show) return cb();
-        const filename = path.basename(file.path);
-        const fullpath = path.join(config('SAVETOFOLDER'), file.path);
-        const ffmpeg = path.extname(filename) !== '.mp4' ? '?ffmpeg=true' : '';
-
-        if (!episodes[file.name]) episodes[file.name] = [];
-
-        fs.stat(fullpath, (err, stats) => {
-          if (err) return;
-
-          episodes[file.name].push({
-            filename,
-            name: file.name,
-            episode: parseInt(file.episode, 10),
-            season: parseInt(file.season, 10),
-            streamUrl: encodeURI(`/files/${file.infoHash}${ffmpeg}`),
-            thumbUrl: encodeURI(`/files/${file.infoHash}/thumb`),
-            subs: encodeURI(`/files/${file.infoHash}/subs`),
-            srt: file.srt ? encodeURI(`/files/${file.infoHash}/srt`) : false,
-            fileDetails: {
-              fullpath,
-              size: filesize(stats.size),
-            },
-          });
-        });
-
-        return cb();
-      }, () => {
-        tvShowsData.getEpisodeDataByQuery(episodes)
-          .then((Files) => {
-            resolve(Files);
-          })
-          .catch((Files) => {
-            resolve(Files);
-          });
+    return true;
+  }, () => {
+    tvShowsData.getEpisodeDataByQuery(episodes)
+      .then((Files) => {
+        resolve(Files);
+      })
+      .catch((Files) => {
+        resolve(Files);
       });
   });
-}
+});
 
-module.exports = {
-  init,
-  getMedias,
-  createFile,
-  updateFile,
-  removeFile,
-  checkforShow,
-  getFileBy,
-};
+
+module.exports.createFile = createFile;
+module.exports.updateFile = updateFile;
+module.exports.removeFile = removeFile;
+module.exports.getFileBy = getFileBy;

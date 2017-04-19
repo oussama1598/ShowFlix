@@ -5,6 +5,7 @@ const mediasHandler = require('../modules/mediasHandler');
 const config = require('../modules/config');
 const stream = require('../modules/stream');
 const pump = require('pump');
+const thumbs = require('../modules/thumbs');
 
 module.exports.getFiles = (req, res) => {
   const cache = utils.cache()
@@ -30,7 +31,7 @@ module.exports.stream = (req, res) => {
 };
 
 module.exports.thumb = (req, res) => {
-  const thumbPath = path.join(global.thumbsDir, `${req.record.filename}.png`);
+  const thumbPath = path.join(thumbs.thumbsDir, `${req.record.filename}.png`);
 
   fs.exists(thumbPath, (exists) => {
     if (!exists) return res.sendStatus(404);

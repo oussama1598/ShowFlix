@@ -5,7 +5,7 @@ const path = require('path');
 const utils = require('../utils/utils');
 
 
-const init = () => {
+module.exports = () => {
   global.webTorrent = new WebTorrent(); // new instance of web torrent
 
   global.webTorrent.on('torrent', (torrent) => {
@@ -80,13 +80,8 @@ const init = () => {
   });
 };
 
-const destroyClients = () => {
+module.exports.destroyClients = () => {
   global.webTorrent.torrents.forEach((torrent) => {
     torrent.destroy();
   });
-};
-
-module.exports = {
-  init,
-  destroyClients,
 };

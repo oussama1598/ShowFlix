@@ -11,7 +11,7 @@
   "author": "Oussama",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.1.4",
+    "async": "^2.3.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.16.0",
     "bufferutil": "^3.0.0",

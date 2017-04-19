@@ -1,6 +1,6 @@
-app/bower_components/
+/bower_components/
 /node_modules/
-/data/*
+#/data/*
 app/dist
 app/views
 =======
