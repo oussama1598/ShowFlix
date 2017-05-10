@@ -1,8 +1,9 @@
 export default class MainController {
   /* @ngInject; */
-  constructor(ApiService, SocketService, $interval) {
+  constructor(ApiService, SocketService, $interval, $mdDialog) {
     this.$ApiService = ApiService;
     this.$socket = SocketService;
+    this.$mdDialog = $mdDialog;
     this.serverOn = false;
 
     $('.button-collapse')
@@ -22,9 +23,17 @@ export default class MainController {
 
   toggleServer() {
     this.$ApiService.toggleServer(this.serverOn ? 'stop' : 'start')
-      .then((res) => {
-        if (!res.data.status) return this.$ApiService.showError(res.data.error);
-        return this.$socket.emit('serverStat');
-      });
+      .then(() => this.$socket.emit('serverStat'));
+  }
+
+  showAddtoQueue(ev) {
+    this.$mdDialog.show({
+      controller: 'addtoQueueCtrl',
+      controllerAs: 'addtoQueue',
+      templateUrl: 'views/addtoQueue.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: false,
+    });
   }
 }

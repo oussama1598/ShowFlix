@@ -56,6 +56,5 @@
   },
   "_source": "https://github.com/EvanHahn/HumanizeDuration.js.git",
   "_target": "^3.10.0",
-  "_originalSource": "humanize-duration",
-  "_direct": true
+  "_originalSource": "humanize-duration"
 }

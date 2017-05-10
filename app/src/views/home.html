@@ -9,14 +9,23 @@
       <img ng-src="api{{file.thumbUrl}}" alt="" class="circle">
       <span class="title">{{file.name}} S{{file.season}}E{{file.episode}} - <b>{{file.title}}</b></span>
       <p>{{file.fileDetails.size}}</p>
-      <p ng-show="file.srt"><b>Srt</b></p>
-      <a href="api{{file.streamUrl}}" class="secondary-content">
-        <i class="fa fa-download download-icon" aria-hidden="true"> </i>
-      </a>
-      <br>
-      <a ng-click="home.confirmDelete(file, $event)" class="secondary-content delete-btn">
-        <i class="fa fa-trash download-icon" aria-hidden="true"></i>
-      </a>
+      <p><b ng-show="file.srt">Srt</b></p>
+      <md-menu md-position-mode="target-right target">
+        <a ng-click="$mdMenu.open($event)" class="secondary-content" ng-hide="file.done" style="padding:0 5px; cursor: pointer">
+          <i class="fa fa-ellipsis-v"></i>
+        </a>
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button href="api{{file.streamUrl}}"><i class="fa fa-download"></i> Stream</md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="home.confirmDelete(file, $event)"><i class="fa fa-trash"></i> Delete</md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="home.openSubtitlesDialog(file, $event)"><i class="fa fa-cc"></i> Add subtitles</md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
     </li>
   </ul>
 </div>

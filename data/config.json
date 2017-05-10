@@ -1,26 +1,25 @@
 {
-   "PORT": 8888,
-   "SAVETOFOLDER": "/home/oussama/Desktop/TV Shows",
-   "QUEUEPATH": "/home/oussama/Desktop/ShowFlix-online/data/queue.json",
-   "INFOS_PATH": "/home/oussama/Desktop/ShowFlix-online/data/infos.json",
-   "DOWNLOADS_QUEUE_PATH": "/home/oussama/Desktop/ShowFlix-online/data/downloads.json",
-   "FILES_PATH": "/home/oussama/Desktop/ShowFlix-online/data/files.json",
-   "TVST_CLIENT_ID": "UOWED7wBGRQv17skSZJO",
-   "TVST_CLIENT_SECRET": "ZHYcO8n8h6WbYuMDWVgXr7T571ZF_s1r1Rzu1-3B",
-   "TVST_ACCESS_TOKEN_URI": "https://api.tvshowtime.com/v1/oauth/access_token",
-   "TVST_LIBRARY_URI": "https://api.tvshowtime.com/v1/library",
-   "TVST_CHECKIN_URI": "https://api.tvshowtime.com/v1/checkin",
-   "SIMPLE_PUSH_URL": "https://api.simplepush.io/send/",
-   "FEED_FREQUENCY": 10000,
-   "ACCESS_TOKEN": "9b490ec26ff5c3decfc44e5ffb2dae4f",
-   "START_SERVER_WHENE_FOUND": true,
-   "FILE_TRESHOLD_SIZE": 10485760,
-   "ENABLE_CLIENT_LOGGING": true,
-   "ENABLE_SERVER_LOGGING": true,
-   "ENABLE_PHONE_LOGGIN": true,
-   "SIMPLE_PUSH_ID": "8BQi8a",
-   "TV_SHOW_API": {
-     "ENDPOINT": "https://api-fetch.website/tv/show/"
-   },
-   "PREFERED_QUALITY": "480p"
+  "PORT": 8888,
+  "SAVETOFOLDER": "/home/oussama/Desktop/TV Shows",
+  "QUEUEPATH": "/home/oussama/Desktop/ShowFlix-online/data/queue.json",
+  "INFOS_PATH": "/home/oussama/Desktop/ShowFlix-online/data/infos.json",
+  "DOWNLOADS_QUEUE_PATH": "/home/oussama/Desktop/ShowFlix-online/data/downloads.json",
+  "FILES_PATH": "/home/oussama/Desktop/ShowFlix-online/data/files.json",
+  "START_SERVER_WHENE_FOUND": true,
+  "FILE_TRESHOLD_SIZE": 10485760,
+  "ENABLE_CLIENT_LOGGING": true,
+  "ENABLE_SERVER_LOGGING": true,
+  "ENABLE_PHONE_LOGGIN": true,
+  "TV_SHOW_API": {
+    "ENDPOINT": "https://api-fetch.website/tv/show/"
+  },
+  "TV_SHOWS_TIME_API": {
+    "TVST_CLIENT_ID": "UOWED7wBGRQv17skSZJO",
+    "TVST_CLIENT_SECRET": "ZHYcO8n8h6WbYuMDWVgXr7T571ZF_s1r1Rzu1-3B",
+    "TVST_ACCESS_TOKEN_URI": "https://api.tvshowtime.com/v1/oauth/access_token",
+    "TVST_CHECKIN_URI": "https://api.tvshowtime.com/v1/checkin",
+    "FEED_FREQUENCY": 20000,
+    "ACCESS_TOKEN": "9b490ec26ff5c3decfc44e5ffb2dae4f"
+  },
+  "PREFERED_QUALITY": "480p"
 }

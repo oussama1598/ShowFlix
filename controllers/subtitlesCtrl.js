@@ -1,5 +1,4 @@
 const subsApi = require('../lib/subtitles');
-const mediasHandler = require('../modules/mediasHandler');
 const _ = require('underscore');
 const stringSimilarity = require('string-similarity');
 const request = require('request');
@@ -10,7 +9,7 @@ const config = require('../modules/config');
 const utils = require('../utils/utils');
 
 module.exports.getSubs = (req, res) => {
-  const filename = req.query.filename || mediasHandler.getFileBy({
+  const filename = req.query.filename || utils.filesdbHelpers.getFileBy({
       infoHash: req.record.infoHash,
     })
     .value()
@@ -41,7 +40,7 @@ module.exports.getSubs = (req, res) => {
     });
 };
 
-module.exports.downloadSub = (req, res) => {
+module.exports.downloadSub = (req, res, next) => {
   req.checkBody('link', 'subscene link is required')
     .notEmpty();
 
@@ -52,7 +51,7 @@ module.exports.downloadSub = (req, res) => {
       }
 
       return subsApi.getDownloadUrl(req.body.link)
-        .catch(err => Promise.reject(err.toString()));
+        .catch(err => Promise.reject(err.message));
     })
     .then((url) => {
       const fullpath = path.join(config('SAVETOFOLDER'), req.record.path);
@@ -78,8 +77,8 @@ module.exports.downloadSub = (req, res) => {
       });
     })
     .then((zipPath) => {
-      utils.deleteFile(zipPath);
-      mediasHandler.updateFile(req.record.infoHash, {
+      utils.deleteFile(zipPath, true);
+      utils.filesdbHelpers.updateFile(req.record.infoHash, {
         srt: true,
       });
     })
@@ -89,9 +88,10 @@ module.exports.downloadSub = (req, res) => {
       });
     })
     .catch((error) => {
-      res.send({
+      if (error instanceof Error) return next(error);
+      return res.send({
         status: false,
-        error: error.toString(),
+        error,
       });
     });
 };

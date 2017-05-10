@@ -8,16 +8,16 @@ const pump = require('pump');
 const thumbs = require('../modules/thumbs');
 
 module.exports.getFiles = (req, res) => {
-  const cache = utils.cache()
-    .get('medias');
-
+  const cache = utils.cache.get('medias');
   if (cache) return res.send(cache);
-  mediasHandler.getMedias()
+
+  mediasHandler.getFiles()
     .then((Files) => {
       res.send(Files);
-      utils.cache()
-        .set('medias', Files);
+      utils.cache.set('medias', Files);
     });
+
+  // TODO: add complex object check for future files update
   return null;
 };
 
@@ -41,18 +41,17 @@ module.exports.thumb = (req, res) => {
   });
 };
 
-module.exports.deleteFile = (req, res) => {
-  const uri = path.join(config('SAVETOFOLDER'), path.dirname(req.record.path));
-
-  mediasHandler.removeFile(req.record.infoHash);
-  utils.deleteFile(uri)
+module.exports.deleteFile = (req, res, next) => {
+  utils.filesdbHelpers.removeFile(req.record.infoHash);
+  utils.deleteMedia(req.record.path)
     .then(() => {
       res.send({
         status: true,
       });
     })
     .catch((error) => {
-      res.send({
+      if (error instanceof Error) return next(error);
+      return res.send({
         status: false,
         error,
       });

@@ -37,6 +37,5 @@
   },
   "_source": "https://github.com/avoidwork/filesize.js.git",
   "_target": "^3.5.6",
-  "_originalSource": "filesize",
-  "_direct": true
+  "_originalSource": "filesize"
 }

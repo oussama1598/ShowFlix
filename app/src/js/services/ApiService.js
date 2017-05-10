@@ -1,92 +1,86 @@
 export default class ApiService {
   /* @ngInject; */
-  constructor($http) {
+  constructor($http, ErrorHandler) {
     this.$http = $http;
+    this.$ErrorHandler = ErrorHandler;
+  }
+
+  wrapforError(promise) {
+    return promise
+      .then(res => res.data)
+      .then(res => (
+        Object.prototype.hasOwnProperty.call(res, 'status') &&
+        !res.status ? Promise.reject(res.error) : res))
+      .catch((err) => {
+        this.$ErrorHandler.parse(err);
+        return Promise.reject(err);
+      });
   }
 
   toggleServer(command) {
-    return this.$http
-      .get(`api/server/${command}`)
-      .catch((err) => {
-        this.showError(err);
-      });
+    return this.wrapforError(this.$http
+      .get(`api/server/${command}`));
   }
 
   getFiles() {
-    return this.$http
-      .get('api/files')
-      .then(res => res.data)
-      .catch((err) => {
-        this.showError(err);
-      });
+    return this.wrapforError(this.$http
+      .get('api/files'));
   }
 
   deleteFile(url) {
-    return this.$http.delete(`api${url}`)
-      .then((res) => {
-        if (!res.status) {
-          return Promise.reject(res.error);
-        }
-        return true;
-      })
-      .catch((err) => {
-        this.showError(err);
-      });
+    return this.wrapforError(this.$http.delete(`api${url}`));
   }
 
   getDownloads() {
-    return this.$http.get('api/downloads')
-      .then(res => res.data)
-      .catch((err) => {
-        this.showError(err);
-      });
+    return this.wrapforError(this.$http.get('api/downloads'));
   }
 
   getQueue() {
-    return this.$http.get('api/queue')
-      .then(res => res.data)
-      .catch((err) => {
-        this.showError(err);
-      });
+    return this.wrapforError(this.$http.get('api/queue'));
   }
 
   deleteQueue(name, season, episode) {
-    return this.$http.delete('api/queue', {
-        name,
-        season,
-        episode,
-      })
-      .then((res) => {
-        if (!res.status) {
-          return Promise.reject(res.error);
-        }
-        return true;
-      })
-      .catch((err) => {
-        this.showError(err);
-      });
+    return this.wrapforError(
+      this.$http({
+        url: 'api/queue',
+        method: 'DELETE',
+        data: {
+          name,
+          season,
+          episode,
+        },
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+      }));
   }
 
   startFrom(index) {
-    return this.$http({
+    return this.wrapforError(this.$http({
       method: 'GET',
       url: 'api/server/start',
       params: {
         index,
       },
-    })
-      .then((res) => {
-        if (!res.status) {
-          return Promise.reject(res.error);
-        }
-        return true;
-      })
-      .catch((err) => {
-        this.showError(err);
-      });
+    }));
   }
 
-  static showError(msg) {
-    window.Materialize.toast(msg, 4000, 'red');
+  addtoQueue(keyword, season, from, to) {
+    return this.wrapforError(this.$http.post('/api/queue', {
+      keyword,
+      season,
+      from,
+      to,
+    }));
+  }
+
+  getSubs(subsUrl) {
+    return this.wrapforError(this.$http.get(`api${subsUrl}`));
+  }
+
+  downloadSub(subsUrl, link) {
+    return this.wrapforError(this.$http.post(`api${subsUrl}`, {
+      link,
+    }));
   }
 }

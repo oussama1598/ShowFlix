@@ -37,4 +37,18 @@ export default class HomeContoller {
       })
       .catch(() => {});
   }
+
+  openSubtitlesDialog(file, ev) {
+    this.$mdDialog.show({
+      controller: 'subtitlesCtrl',
+      controllerAs: 'subs',
+      templateUrl: 'views/subtitlesDialog.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: false,
+      locals: {
+        file,
+      },
+    });
+  }
 }

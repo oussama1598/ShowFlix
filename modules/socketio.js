@@ -15,11 +15,9 @@ module.exports = (app) => {
     socket.on('serverStat', () => {
       socket.$emit('serverStat', {
         running: global.RUNNING,
-        queueIndex: global.infosdb.db()
-          .get('queue')
+        queueIndex: global.infosdb.get('queue')
           .value(), // get the queue index
-        queueCount: global.queuedb.db()
-          .get('queue')
+        queueCount: global.queuedb.get()
           .value()
           .length,
       });

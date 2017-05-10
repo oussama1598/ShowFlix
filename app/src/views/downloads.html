@@ -7,7 +7,7 @@
                 <i class="fa fa-times download-icon" aria-hidden="true"> </i>
             </a>
             <div class="card-content blue-text text-darken-2">
-                <span class="card-title">{{file.serieName}} s{{file.season}}e{{file.episode}} ({{file.progress.progress}}%)</span>
+                <span class="card-title">{{file.name}} s{{file.season}}e{{file.episode}} ({{file.progress.progress}}%)</span>
                 <div class="progress">
                     <div ng-class="{'indeterminate': !file.started, 'determinate': file.started, 'red': file.error, 'green': file.finished && file.started, 'orange': file.started && !file.finished && !file.error}" style="width: {{file.progress.progress}}%"></div>
                 </div>

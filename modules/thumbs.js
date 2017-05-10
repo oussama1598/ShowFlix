@@ -2,14 +2,16 @@ const bluebird = require('bluebird');
 const path = require('path');
 const os = require('os');
 const ffmpeg = require('fluent-ffmpeg');
-const utils = require('../utils/utils');
+const rimraf = require('rimraf');
 const config = require('./config');
 const fs = bluebird.promisifyAll(require('fs'));
 
 const thumbsDir = path.join(os.tmpdir(), 'Thumbs');
 // returns the full path of a thumb from a file name
 const getThumbPath = uri => path.join(thumbsDir, `${path.basename(uri, path.extname(uri))}.png`);
-const deleteThumb = uri => utils.deleteFile(getThumbPath(uri)); // delete thumb
+const deleteThumb = uri => new Promise((resolve) => {
+  rimraf(getThumbPath(uri), () => resolve());
+});
 const thumbExists = uri => fs.existsSync(getThumbPath(uri)); // returns if thumb exists
 
 const generate = (_uri) => {

@@ -1,6 +1,6 @@
 const tvShowsApi = require('../lib/tvShowsApi');
 
-module.exports.search = (req, res) => {
+module.exports.search = (req, res, next) => {
   req.checkQuery('keyword', 'Keyword is required')
     .notEmpty();
   req.checkQuery('season', 'Season is required')
@@ -10,16 +10,10 @@ module.exports.search = (req, res) => {
 
   req.getValidationResult()
     .then((result) => {
-      if (!result.isEmpty()) {
-        return Promise.reject({
-          message: result.array(),
-        });
-      }
+      if (!result.isEmpty()) return Promise.reject(result.array());
 
       return tvShowsApi.search(req.query.keyword, req.query.season, req.query.episode)
-        .catch(err => Promise.reject({
-          message: err.toString(),
-        }));
+        .catch(err => Promise.reject(err.message));
     })
     .then((data) => {
       res.send({
@@ -27,10 +21,11 @@ module.exports.search = (req, res) => {
         data,
       });
     })
-    .catch((err) => {
-      res.send({
+    .catch((error) => {
+      if (error instanceof Error) return next(error);
+      return res.send({
         status: false,
-        error: err.message,
+        error,
       });
     });
 };

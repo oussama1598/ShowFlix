@@ -1,0 +1,42 @@
+<md-dialog aria-label="subs">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Subtitles</h2><span flex></span>
+      <md-button class="md-icon-button" ng-click="subs.cancel()"><i class="fa fa-times" aria-hidden="true"></i></md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content style="max-height: 70vh;">
+    <md-content layout-padding>
+      <div class="loading dialog-loading" ng-show="subs.loading">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular><span>Loading ...</span></div>
+      <div ng-hide="subs.loading" layout="column">
+        <div flex>
+          <form name="searchsub" novalidate ng-submit="subs.search()">
+            <input ng-model="subs.filename" placeholder="Search here">
+          </form>
+        </div>
+        <div flex style="overflow-y: scroll;max-height: 47vh;">
+          <md-radio-group ng-model="subs.selected">
+            <div ng-repeat='subtitle in subs.subtitles' class="row">
+              <div flex layout='row' layout-padding layout-align="start center">
+
+                <md-radio-button flex ng-value="subtitle" class="md-primary">
+                  {{subtitle.name}}
+                  <br/>
+                  <span class="ipsum">Language: {{subtitle.language}}, Match of: {{subtitle.match}}</span>
+                </md-radio-button>
+
+              </div>
+            </div>
+          </md-radio-group>
+        </div>
+        <div flex style="margin-top: 10px;">
+          <button class="waves-effect pink btn" ng-click="subs.downloadSub()" ng-disabled="!subs.selected">
+            <span ng-show="!subs.progress">Download</span>
+            <md-progress-circular ng-show="subs.progress" class="md-hue-3" md-diameter="20px"></md-progress-circular>
+          </button>
+        </div>
+      </div>
+    </md-content>
+  </md-dialog-content>
+</md-dialog>

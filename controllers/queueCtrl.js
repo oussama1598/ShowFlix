@@ -2,14 +2,19 @@ const utils = require('../utils/utils');
 const parser = require('../modules/parser');
 
 module.exports.getRecords = (req, res) => {
-  res.send(
-    global.queuedb
-    .db()
-    .get('queue')
-    .value());
+  if (!utils.cache.get('queue')) {
+    const data = global.queuedb
+      .get()
+      .value();
+
+    utils.cache.set('queue', data);
+    return res.send(data);
+  }
+
+  return res.send(utils.cache.get('queue'));
 };
 
-module.exports.deleteRecord = (req, res) => {
+module.exports.deleteRecord = (req, res, next) => {
   req.checkBody('name', 'The name is required.')
     .notEmpty();
   req.checkBody('season', 'Season number is required.')
@@ -23,11 +28,7 @@ module.exports.deleteRecord = (req, res) => {
 
   req.getValidationResult()
     .then((result) => {
-      if (!result.isEmpty()) {
-        return Promise.reject({
-          message: result.array(),
-        });
-      }
+      if (!result.isEmpty()) return Promise.reject(result.array());
 
       return utils.deleteFromQueue(req.body);
     })
@@ -36,15 +37,16 @@ module.exports.deleteRecord = (req, res) => {
         status: true,
       });
     })
-    .catch((err) => {
-      res.send({
+    .catch((error) => {
+      if (error instanceof Error) return next(error);
+      return res.send({
         status: false,
-        error: err.message,
+        error,
       });
     });
 };
 
-module.exports.addRecord = (req, res) => {
+module.exports.addRecord = (req, res, next) => {
   req.checkBody('keyword', 'Keyword is required')
     .notEmpty();
   req.checkBody('season', 'Season is required')
@@ -63,7 +65,7 @@ module.exports.addRecord = (req, res) => {
     .withMessage('from can\'t be less that to');
 
   req.getValidationResult()
-    .then(result => {
+    .then((result) => {
       if (!result.isEmpty()) {
         return Promise.reject(result.array());
       }
@@ -72,19 +74,71 @@ module.exports.addRecord = (req, res) => {
           req.body.keyword,
           req.body.season,
           req.body.from,
-          req.body.to
-        )
-        .catch(err => Promise.reject(err.toString()));
+          req.body.to)
+        .catch(err => Promise.reject(err.message));
     })
     .then(() => {
       res.send({
-        status: true
+        status: true,
       });
     })
-    .catch(error => {
-      res.send({
+    .catch((error) => {
+      if (error instanceof Error) return next(error);
+      return res.send({
         status: false,
-        error
+        error,
+      });
+    });
+};
+
+module.exports.getFilesFromMagnet = (req, res, next) => {
+  req.checkQuery('magnet', 'Magnet uri is required').notEmpty();
+
+  req.getValidationResult()
+    .then((result) => {
+      if (!result.isEmpty()) return Promise.reject(result.array());
+
+      return parser.getFilesFromMagnet(req.query.magnet);
+    })
+    .then((files) => {
+      res.json({
+        status: true,
+        files,
+      });
+    })
+    .catch((error) => {
+      if (error instanceof Error) return next(error);
+
+      return res.json({
+        status: false,
+        error,
+      });
+    });
+};
+
+module.exports.addMagnet = (req, res, next) => {
+  req.checkBody('magnet', 'Magnet uri is required').notEmpty();
+  req.checkBody('filename', 'filename is required').notEmpty();
+
+  req.getValidationResult()
+    .then((result) => {
+      if (!result.isEmpty()) return Promise.reject(result.array());
+
+      return parser.addMagnetUri(
+        req.body.magnet,
+        req.body.filename);
+    })
+    .then(() => {
+      res.json({
+        status: true,
+      });
+    })
+    .catch((error) => {
+      if (error instanceof Error) return next(error);
+
+      return res.json({
+        status: false,
+        error,
       });
     });
 };

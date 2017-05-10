@@ -1,274 +1,157 @@
 {
+  "lastId": 0,
   "downloads": [
     {
-      "name": "blindspot",
-      "episode": 10,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:d7ac1a87a378e3a23a3b2241f1ca4d20f491e3a1&dn=Blindspot.S01E10.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969&tr=udp%3A%2F%2Ftracker.glotorrents.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "d7ac1a87a378e3a23a3b2241f1ca4d20f491e3a1",
-      "progress": {
-        "progress": 100,
-        "written": 301103349,
-        "size": 301103181,
-        "speed": 261783.4,
-        "timeRemaining": 0,
-        "peers": 9
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "name": "blindspot",
-      "episode": 11,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:fca06b81986da109530660cee6eb916a32b323f8&dn=Blindspot.S01E11.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.glotorrents.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "fca06b81986da109530660cee6eb916a32b323f8",
-      "progress": {
-        "progress": 100,
-        "written": 279878958,
-        "size": 279878790,
-        "speed": 104857.6,
-        "timeRemaining": 0,
-        "peers": 17
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "name": "blindspot",
-      "episode": 12,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:5cc450f94df735c65a49ba474e932a216b4a753c&dn=Blindspot.S01E12.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.glotorrents.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "5cc450f94df735c65a49ba474e932a216b4a753c",
-      "progress": {
-        "progress": 100,
-        "written": 339845439,
-        "size": 339845271,
-        "speed": 616038.4,
-        "timeRemaining": 0,
-        "peers": 11
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "name": "blindspot",
-      "episode": 13,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:622b651c4b94e287f59172edb31582f13b53e8af&dn=Blindspot.S01E13.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
-      "infoHash": "622b651c4b94e287f59172edb31582f13b53e8af",
-      "progress": {
-        "progress": 100,
-        "written": 260460529,
-        "size": 260460361,
-        "speed": 203161.6,
-        "timeRemaining": 0,
-        "peers": 19
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "name": "blindspot",
+      "id": 1,
+      "name": "lucifer",
       "episode": 14,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:086c171e5f38a8552012c8eecba6073a678e3109&dn=Blindspot.S01E14.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
-      "infoHash": "086c171e5f38a8552012c8eecba6073a678e3109",
+      "season": 2,
+      "magnet": "magnet:?xt=urn:btih:29ca232896b78c93e39a41c08971be8c928559c4&dn=Lucifer.S02E14.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
+      "infoHash": "29ca232896b78c93e39a41c08971be8c928559c4",
       "progress": {
         "progress": 100,
-        "written": 283370723,
-        "size": 283370555,
-        "speed": 183500.8,
+        "written": 335325691,
+        "size": 335325522,
+        "speed": 6553.6,
         "timeRemaining": 0,
-        "peers": 16
+        "peers": 28
       },
       "started": true,
       "error": false,
       "finished": true
     },
     {
-      "name": "blindspot",
-      "episode": 15,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:6d28f8e9a69eb54ff2b139cd2ca135a46e39f3e5&dn=Blindspot.S01E15.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.glotorrents.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "6d28f8e9a69eb54ff2b139cd2ca135a46e39f3e5",
-      "progress": {
-        "progress": 100,
-        "written": 270026957,
-        "size": 270026789,
-        "speed": 239657,
-        "timeRemaining": 0,
-        "peers": 17
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "name": "blindspot",
-      "episode": 16,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:c14b6bc5213ce87c948305851caa8766fbb06584&dn=Blindspot.S01E16.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.glotorrents.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "c14b6bc5213ce87c948305851caa8766fbb06584",
-      "progress": {
-        "progress": 100,
-        "written": 277303746,
-        "size": 277303578,
-        "speed": 262144,
-        "timeRemaining": 0,
-        "peers": 17
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "name": "blindspot",
-      "episode": 17,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:e412068b28af6bd12f0b82fbef79f71974de35f5&dn=Blindspot.S01E17.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.glotorrents.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "e412068b28af6bd12f0b82fbef79f71974de35f5",
-      "progress": {
-        "progress": 100,
-        "written": 268830571,
-        "size": 268830403,
-        "speed": 304742.4,
-        "timeRemaining": 0,
-        "peers": 6
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "name": "blindspot",
-      "episode": 18,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:85e8689ab1cb9086d9653f3370ab61200230b662&dn=Blindspot.S01E18.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
-      "infoHash": "85e8689ab1cb9086d9653f3370ab61200230b662",
-      "progress": {
-        "progress": 100,
-        "written": 294840791,
-        "size": 294840623,
-        "speed": 313438.2,
-        "timeRemaining": 0,
-        "peers": 7
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "name": "blindspot",
-      "episode": 19,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:5ea393c1b160a8d7d505ef6de2f0217f68a5f01b&dn=Blindspot.S01E19.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.piratepublic.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "5ea393c1b160a8d7d505ef6de2f0217f68a5f01b",
-      "progress": {
-        "progress": 100,
-        "written": 259469618,
-        "size": 259469450,
-        "speed": 155770.4,
-        "timeRemaining": 0,
-        "peers": 9
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "name": "blindspot",
+      "id": 1,
+      "name": "the flash",
       "episode": 20,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:525a50d560b5d4862e509c74a55abadfdc93e30c&dn=Blindspot.S01E20.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.piratepublic.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "525a50d560b5d4862e509c74a55abadfdc93e30c",
+      "season": 3,
+      "magnet": "magnet:?xt=urn:btih:6b2f1ae427dc7a2c1a1f91fb954c6f8d97954ebe&dn=The.Flash.2014.S03E20.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "infoHash": "6b2f1ae427dc7a2c1a1f91fb954c6f8d97954ebe",
       "progress": {
         "progress": 100,
-        "written": 295202884,
-        "size": 295202716,
-        "speed": 196608,
+        "written": 284131928,
+        "size": 284131928,
+        "speed": 3276.8,
         "timeRemaining": 0,
-        "peers": 19
+        "peers": 15
       },
       "started": true,
       "error": false,
       "finished": true
     },
     {
-      "name": "blindspot",
-      "episode": 21,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:f8cb1299b7e3dea07a117b631c4e5b68d1cfd81d&dn=Blindspot.S01E21.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.piratepublic.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "f8cb1299b7e3dea07a117b631c4e5b68d1cfd81d",
+      "id": 1,
+      "name": "the 100",
+      "episode": 10,
+      "season": 4,
+      "magnet": "magnet:?xt=urn:btih:36d06e14be95818ba897b93a2a10c01a251a588b&dn=The.100.S04E10.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "infoHash": "36d06e14be95818ba897b93a2a10c01a251a588b",
       "progress": {
         "progress": 100,
-        "written": 242114910,
-        "size": 242114742,
-        "speed": 437522.8,
+        "written": 404806117,
+        "size": 404806117,
+        "speed": 6553.6,
         "timeRemaining": 0,
-        "peers": 16
+        "peers": 42
       },
       "started": true,
       "error": false,
       "finished": true
     },
     {
-      "name": "blindspot",
-      "episode": 22,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:d26fd77c4422cf08b1f8760e2b8eec89209d2dc7&dn=Blindspot.S01E22.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.piratepublic.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "d26fd77c4422cf08b1f8760e2b8eec89209d2dc7",
+      "id": 1,
+      "name": "the catch",
+      "episode": 9,
+      "season": 2,
+      "magnet": "magnet:?xt=urn:btih:f1c15388442a90bba94c4249957e3a6f7c374cbf&dn=The.Catch.US.S02E09.HDTV.x264-FLEET%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "infoHash": "f1c15388442a90bba94c4249957e3a6f7c374cbf",
       "progress": {
         "progress": 100,
-        "written": 249628762,
-        "size": 249628594,
-        "speed": 360448,
+        "written": 275509295,
+        "size": 275508569,
+        "speed": 3276.8,
         "timeRemaining": 0,
-        "peers": 10
+        "peers": 49
       },
       "started": true,
       "error": false,
       "finished": true
     },
     {
-      "name": "blindspot",
-      "episode": 23,
-      "season": "1",
-      "magnet": "magnet:?xt=urn:btih:a89bcabbfe37ecbc90352d769fc6d26c471894b1&dn=Blindspot.S01E23.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.piratepublic.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.sktorrent.net%3A6969%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fzer0day.ch%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
-      "infoHash": "a89bcabbfe37ecbc90352d769fc6d26c471894b1",
+      "id": 1,
+      "name": "the blacklist",
+      "episode": 19,
+      "season": 4,
+      "magnet": "magnet:?xt=urn:btih:1e0cb9073f478ff0e1420fd36e8a7a5cfd230238&dn=The.Blacklist.S04E19.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
+      "infoHash": "1e0cb9073f478ff0e1420fd36e8a7a5cfd230238",
       "progress": {
         "progress": 100,
-        "written": 261451057,
-        "size": 261450889,
-        "speed": 22937.6,
+        "written": 251815504,
+        "size": 251815335,
+        "speed": 75366.4,
         "timeRemaining": 0,
-        "peers": 14
+        "peers": 42
       },
       "started": true,
       "error": false,
       "finished": true
     },
     {
+      "id": 1,
       "name": "marvel's agents of shield",
-      "episode": 18,
-      "season": "4",
-      "magnet": "magnet:?xt=urn:btih:6a0ece50a50038c8ecbe18291011088ea8fc88de&dn=Marvels.Agents.of.S.H.I.E.L.D.S04E18.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
-      "infoHash": "6a0ece50a50038c8ecbe18291011088ea8fc88de",
+      "episode": 20,
+      "season": 4,
+      "magnet": "magnet:?xt=urn:btih:2410b095b67b5246d8120b0cdba77cfa9a652a1c&dn=Marvels.Agents.of.S.H.I.E.L.D.S04E20.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
+      "infoHash": "2410b095b67b5246d8120b0cdba77cfa9a652a1c",
       "progress": {
         "progress": 100,
-        "written": 261405799,
-        "size": 261405630,
+        "written": 217277634,
+        "size": 217277465,
+        "speed": 3276.8,
+        "timeRemaining": 0,
+        "peers": 56
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "id": 1,
+      "name": "lucifer",
+      "episode": 15,
+      "season": 2,
+      "magnet": "magnet:?xt=urn:btih:4ac56a0a07ac833b6adbe8c2ef8f410f7a5cae0d&dn=Lucifer.S02E15.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
+      "infoHash": "4ac56a0a07ac833b6adbe8c2ef8f410f7a5cae0d",
+      "progress": {
+        "progress": 100,
+        "written": 292186390,
+        "size": 292186221,
         "speed": 16384,
         "timeRemaining": 0,
-        "peers": 17
+        "peers": 41
       },
       "started": true,
       "error": false,
       "finished": true
+    },
+    {
+      "id": 1,
+      "name": "the flash",
+      "episode": 21,
+      "season": 3,
+      "magnet": "magnet:?xt=urn:btih:b90c37f50c5b814d45239ba0741fce8553a06199&dn=The.Flash.2014.S03E21.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "infoHash": "b90c37f50c5b814d45239ba0741fce8553a06199",
+      "progress": {
+        "progress": 20.101477565616502,
+        "written": 60449295,
+        "size": 300720567,
+        "speed": 52428.8,
+        "timeRemaining": 4582812.5,
+        "peers": 40
+      },
+      "started": true,
+      "error": false,
+      "finished": false
     }
   ]
 }

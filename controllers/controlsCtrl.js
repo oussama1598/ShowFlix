@@ -20,16 +20,14 @@ module.exports.stop = (req, res) => {
   });
 };
 
-module.exports.start = (req, res) => {
+module.exports.start = (req, res, next) => {
   req.checkQuery('index', 'Index must be a number')
     .isIntAccNull();
 
   req.getValidationResult()
     .then((result) => {
       if (!result.isEmpty()) return Promise.reject(result.array());
-      if (global.RUNNING) {
-        return Promise.reject('The parsing is already started');
-      }
+      if (global.RUNNING) return Promise.reject('The parsing is already started ');
 
       const index = req.query.index ? parseInt(req.query.index, 10) - 1 : undefined;
       return parser.start(index);
@@ -40,7 +38,8 @@ module.exports.start = (req, res) => {
       });
     })
     .catch((error) => {
-      res.send({
+      if (error instanceof Error) return next(error);
+      return res.send({
         status: false,
         error,
       });

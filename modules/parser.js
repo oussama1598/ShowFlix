@@ -2,12 +2,15 @@ const tvShowsApi = require('../lib/tvShowsApi');
 const config = require('./config');
 const parseTorrent = require('parse-torrent');
 const _ = require('underscore');
-const mediasHandler = require('./mediasHandler');
 const utils = require('../utils/utils');
+const filenameParser = require('video-name-parser');
+const request = require('request');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
 
 const BuildNextElement = (_index = -1) => { // the queue index default to -1
-  const db = global.queuedb.db()
-    .get('queue');
+  const db = global.queuedb.get();
   const data = db.value();
   // if the index is the last one do not repeat those who are already tried
   const results = db.filter(item =>
@@ -33,19 +36,15 @@ const BuildNextElement = (_index = -1) => { // the queue index default to -1
 const MoveToNext = (magnetURI, notDone) => { // details are episode name, number season
   if (!global.RUNNING) return; // this will return without doing nothing if the parsing is Stopped
 
-  global.queuedb.db()
-    .get('queue')
-    .find({
+  global.queuedb
+    .update({
       magnet: magnetURI,
-    })
-    .assign({
+    }, {
       done: !notDone,
       tried: true,
-    })
-    .write(); // update the queue element with done and tried
+    });
 
-  BuildNextElement(global.infosdb.db()
-      .get('queue')
+  BuildNextElement(global.infosdb.get('queue')
       .value())
     .then(() => {
       parseQueue();
@@ -60,20 +59,22 @@ const startDownloading = ({
 }) => {
   const infoHash = parseTorrent(magnet)
     .infoHash;
-  const dbRecord = utils.createDownloadEntry(infoHash);
+  utils.createDownloadEntry(infoHash);
 
   new Promise((resolve, reject) => {
       global.webTorrent.add(magnet, {
         path: config('SAVETOFOLDER'),
       }, (torrent) => {
-        mediasHandler.createFile(name, season, episode, infoHash);
-        dbRecord.assign({
-            episode,
-            magnet,
-            season,
-            name,
-          })
-          .write();
+        utils.filesdbHelpers.createFile(name, season, episode, infoHash);
+        global.downloadsdb.update({
+          infoHash,
+        }, {
+          episode,
+          magnet,
+          season,
+          name,
+        });
+
         console.log(`Started ${name} S${season}E${episode}`.green);
 
         torrent.on('done', () => {
@@ -87,14 +88,14 @@ const startDownloading = ({
       });
     })
     .then(() => {
-      mediasHandler.updateFile(infoHash, {
+      utils.filesdbHelpers.updateFile(infoHash, {
         done: true,
       });
       console.log('Next in the Queue'.green);
       setTimeout(() => MoveToNext(magnet), 1000);
     })
     .catch((error) => {
-      mediasHandler.removeFile(infoHash);
+      utils.filesdbHelpers.removeFile(infoHash);
       console.log(error.toString()
         .red);
       console.log('Passing this episode'.red);
@@ -103,10 +104,8 @@ const startDownloading = ({
 };
 
 const parseQueue = () => {
-  const queueData = global.queuedb.db()
-    .get('queue'); // get the db instance
-  const index = global.infosdb.db()
-    .get('queue')
+  const queueData = global.queuedb.get();
+  const index = global.infosdb.get('queue')
     .value(); // get the queue index
   const episodeEl = queueData.value()[index]; // get the queue index
 
@@ -132,11 +131,10 @@ const parseEpisodeMagnet = (episode) => {
   } : null;
 };
 
-const addEpisodeToQueue = (name, season, episode, magnet) => {
+const addEpisodeToQueue = (name, season, episode, magnet, file = null) => {
   if (!magnet) return;
 
-  const db = global.queuedb.db()
-    .get('queue');
+  const db = global.queuedb;
   const exists = db.find({
       name,
       season,
@@ -145,23 +143,23 @@ const addEpisodeToQueue = (name, season, episode, magnet) => {
     .value();
 
   if (!exists) {
-    db.push({
-        name,
-        season,
-        episode,
-        magnet: magnet.magnet,
-        quality: magnet.quality,
-        tried: false,
-        done: false,
-      })
-      .write();
+    db.add({
+      infoHash: parseTorrent(magnet.magnet).infoHash,
+      name,
+      season,
+      episode,
+      magnet: magnet.magnet,
+      quality: magnet.quality,
+      tried: false,
+      done: false,
+      file,
+    });
   }
 };
 
 const clearQueue = () => Promise.resolve()
   .then(() => {
-    const data = global.queuedb.db()
-      .get('queue'); // retreive queue data
+    const data = global.queuedb.get(); // retreive queue data
     data.remove(item => item.done)
       .write(); // remove finished items
 
@@ -227,3 +225,39 @@ module.exports.addtoQueue = (name, season, from = 1, _to = 'f', episode) =>
       .filter(ep => ep.episode >= from && ep.episode <= to)
       .forEach(ep => addEpisodeToQueue(name, season, ep.episode, parseEpisodeMagnet(ep)));
   });
+
+module.exports.getFilesFromMagnet = magnetUri => new Promise((resolve, reject) => {
+  const parsedMagnet = parseTorrent(magnetUri);
+  const torrentUrl = `http://itorrents.org/torrent/${parsedMagnet.infoHash}.torrent`;
+
+  const file = request(torrentUrl).on('response', (res) => {
+    if (res.statusCode !== 200) return reject('Cold not find torrent');
+
+    const filename = path.join(os.tmpdir(), `${parsedMagnet.infoHash}.torrent`);
+    const stream = fs.createWriteStream(filename);
+    stream.on('finish', () => {
+      const files = parseTorrent(fs.readFileSync(filename)).files;
+      resolve(files.map(fileEntry => fileEntry.name));
+
+      utils.deleteFile(filename);
+    });
+
+    return file.pipe(stream);
+  });
+});
+
+module.exports.addMagnetUri = (magnetURI, file) => {
+  const filenameData = filenameParser(file);
+  if (!filenameData) return Promise.reject('Could not parse the data from filename');
+
+  const {
+    name,
+    episode,
+    season,
+  } = filenameData;
+
+  addEpisodeToQueue(name, season, episode[0], {
+    magnet: magnetURI,
+  }, file);
+  return Promise.resolve();
+};

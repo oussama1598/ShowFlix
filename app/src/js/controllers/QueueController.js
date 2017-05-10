@@ -21,10 +21,11 @@ export default class QueueController {
 
   deleteFromQueue(ev, file, index) {
     this.queue.splice(index, 1);
-    this.$ApiService.deletQueue(file.name, file.season, file.episode)
+    this.$ApiService.deleteQueue(file.name, file.season, file.episode)
       .then(() => {
         window.Materialize.toast('Item has been deleted successfly', 4000, 'green');
-      });
+      })
+      .catch(() => {});
   }
 
   startFrom(_index) {
