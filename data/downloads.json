@@ -1,153 +1,77 @@
 {
-  "lastId": 0,
+  "lastId": 4,
   "downloads": [
     {
       "id": 1,
-      "name": "lucifer",
-      "episode": 14,
-      "season": 2,
-      "magnet": "magnet:?xt=urn:btih:29ca232896b78c93e39a41c08971be8c928559c4&dn=Lucifer.S02E14.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
-      "infoHash": "29ca232896b78c93e39a41c08971be8c928559c4",
+      "name": "mr robot",
+      "episode": 2,
+      "season": 1,
+      "magnet": "magnet:?xt=urn:btih:e5ffc2bfd35c007849296a3fa19687cab17c4985&dn=Mr+Robot+S01E02+HDTV+x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
+      "infoHash": "e5ffc2bfd35c007849296a3fa19687cab17c4985",
       "progress": {
         "progress": 100,
-        "written": 335325691,
-        "size": 335325522,
+        "written": 222447468,
+        "size": 222436434,
         "speed": 6553.6,
         "timeRemaining": 0,
-        "peers": 28
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "id": 1,
-      "name": "the flash",
-      "episode": 20,
-      "season": 3,
-      "magnet": "magnet:?xt=urn:btih:6b2f1ae427dc7a2c1a1f91fb954c6f8d97954ebe&dn=The.Flash.2014.S03E20.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
-      "infoHash": "6b2f1ae427dc7a2c1a1f91fb954c6f8d97954ebe",
-      "progress": {
-        "progress": 100,
-        "written": 284131928,
-        "size": 284131928,
-        "speed": 3276.8,
-        "timeRemaining": 0,
-        "peers": 15
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "id": 1,
-      "name": "the 100",
-      "episode": 10,
-      "season": 4,
-      "magnet": "magnet:?xt=urn:btih:36d06e14be95818ba897b93a2a10c01a251a588b&dn=The.100.S04E10.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
-      "infoHash": "36d06e14be95818ba897b93a2a10c01a251a588b",
-      "progress": {
-        "progress": 100,
-        "written": 404806117,
-        "size": 404806117,
-        "speed": 6553.6,
-        "timeRemaining": 0,
-        "peers": 42
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "id": 1,
-      "name": "the catch",
-      "episode": 9,
-      "season": 2,
-      "magnet": "magnet:?xt=urn:btih:f1c15388442a90bba94c4249957e3a6f7c374cbf&dn=The.Catch.US.S02E09.HDTV.x264-FLEET%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-      "infoHash": "f1c15388442a90bba94c4249957e3a6f7c374cbf",
-      "progress": {
-        "progress": 100,
-        "written": 275509295,
-        "size": 275508569,
-        "speed": 3276.8,
-        "timeRemaining": 0,
-        "peers": 49
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "id": 1,
-      "name": "the blacklist",
-      "episode": 19,
-      "season": 4,
-      "magnet": "magnet:?xt=urn:btih:1e0cb9073f478ff0e1420fd36e8a7a5cfd230238&dn=The.Blacklist.S04E19.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
-      "infoHash": "1e0cb9073f478ff0e1420fd36e8a7a5cfd230238",
-      "progress": {
-        "progress": 100,
-        "written": 251815504,
-        "size": 251815335,
-        "speed": 75366.4,
-        "timeRemaining": 0,
-        "peers": 42
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "id": 1,
-      "name": "marvel's agents of shield",
-      "episode": 20,
-      "season": 4,
-      "magnet": "magnet:?xt=urn:btih:2410b095b67b5246d8120b0cdba77cfa9a652a1c&dn=Marvels.Agents.of.S.H.I.E.L.D.S04E20.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
-      "infoHash": "2410b095b67b5246d8120b0cdba77cfa9a652a1c",
-      "progress": {
-        "progress": 100,
-        "written": 217277634,
-        "size": 217277465,
-        "speed": 3276.8,
-        "timeRemaining": 0,
-        "peers": 56
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "id": 1,
-      "name": "lucifer",
-      "episode": 15,
-      "season": 2,
-      "magnet": "magnet:?xt=urn:btih:4ac56a0a07ac833b6adbe8c2ef8f410f7a5cae0d&dn=Lucifer.S02E15.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
-      "infoHash": "4ac56a0a07ac833b6adbe8c2ef8f410f7a5cae0d",
-      "progress": {
-        "progress": 100,
-        "written": 292186390,
-        "size": 292186221,
-        "speed": 16384,
-        "timeRemaining": 0,
-        "peers": 41
-      },
-      "started": true,
-      "error": false,
-      "finished": true
-    },
-    {
-      "id": 1,
-      "name": "the flash",
-      "episode": 21,
-      "season": 3,
-      "magnet": "magnet:?xt=urn:btih:b90c37f50c5b814d45239ba0741fce8553a06199&dn=The.Flash.2014.S03E21.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-      "infoHash": "b90c37f50c5b814d45239ba0741fce8553a06199",
-      "progress": {
-        "progress": 20.101477565616502,
-        "written": 60449295,
-        "size": 300720567,
-        "speed": 52428.8,
-        "timeRemaining": 4582812.5,
         "peers": 40
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "id": 2,
+      "name": "mr robot",
+      "episode": 3,
+      "season": 1,
+      "magnet": "magnet:?xt=urn:btih:fe93dec4505772ce9cfce353a1f07027a165032f&dn=Mr.Robot.S01E03.HDTV.x264-ASAP%5Bettv%5D&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker4.piratux.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce&tr=http%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.pomf.se%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=http%3A%2F%2Ftorrent.gresille.org%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
+      "infoHash": "fe93dec4505772ce9cfce353a1f07027a165032f",
+      "progress": {
+        "progress": 100,
+        "written": 192499198,
+        "size": 192494228,
+        "speed": 6553.6,
+        "timeRemaining": 0,
+        "peers": 26
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "id": 3,
+      "name": "mr robot",
+      "episode": 4,
+      "season": 1,
+      "magnet": "magnet:?xt=urn:btih:097aa60280ae3e4ba8741192cb015ee06bd9f992&dn=Mr.Robot.S01E04.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker4.piratux.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce&tr=http%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.pomf.se%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=http%3A%2F%2Ftorrent.gresille.org%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
+      "infoHash": "097aa60280ae3e4ba8741192cb015ee06bd9f992",
+      "progress": {
+        "progress": 100,
+        "written": 221928759,
+        "size": 221917769,
+        "speed": 6553.6,
+        "timeRemaining": 0,
+        "peers": 14
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "id": 4,
+      "name": "mr robot",
+      "episode": 5,
+      "season": 1,
+      "magnet": "magnet:?xt=urn:btih:898810e6585d1c76117bad60603e7300bfe1187f&dn=Mr.Robot.S01E05.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker4.piratux.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce&tr=http%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=http%3A%2F%2Ftorrent.gresille.org%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
+      "infoHash": "898810e6585d1c76117bad60603e7300bfe1187f",
+      "progress": {
+        "progress": 2.541821336045006,
+        "written": 4810696,
+        "size": 189250778,
+        "speed": 124518.4,
+        "timeRemaining": 1481315.7894736845,
+        "peers": 21
       },
       "started": true,
       "error": false,

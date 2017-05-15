@@ -1,66 +1,67 @@
-const bluebird = require('bluebird');
-const path = require('path');
-const os = require('os');
-const ffmpeg = require('fluent-ffmpeg');
-const rimraf = require('rimraf');
-const config = require('./config');
-const fs = bluebird.promisifyAll(require('fs'));
+const bluebird = require('bluebird')
+const path = require('path')
+const os = require('os')
+const rimraf = require('rimraf')
+const fs = bluebird.promisifyAll(require('fs'))
+const filesHelper = require('../helpers/filesHelper')
+const request = require('request')
 
-const thumbsDir = path.join(os.tmpdir(), 'Thumbs');
+const thumbsDir = path.join(os.tmpdir(), 'Thumbs')
 // returns the full path of a thumb from a file name
-const getThumbPath = uri => path.join(thumbsDir, `${path.basename(uri, path.extname(uri))}.png`);
-const deleteThumb = uri => new Promise((resolve) => {
-  rimraf(getThumbPath(uri), () => resolve());
-});
-const thumbExists = uri => fs.existsSync(getThumbPath(uri)); // returns if thumb exists
+const getThumbPath = (_uri, infoHash) => {
+  const findBy = infoHash
+    ? { infoHash }
+    : { filename: path.basename(_uri, path.extname(_uri)) }
+  const thumb = filesHelper.getFileBy(findBy).value()
+  return path.join(
+    thumbsDir,
+    `${thumb.name}_S${thumb.season}_E${thumb.episode}.jpg`
+  )
+}
 
-const generate = (_uri) => {
-  const uri = path.join(config('SAVETOFOLDER'), _uri);
-  const basename = path.basename(uri, path.extname(uri));
-  const filename = `${basename}.png`;
-  const oldPath = path.join(thumbsDir, `${basename}.png`);
+const deleteThumb = uri =>
+  new Promise(resolve => {
+    rimraf(path.join(thumbsDir, uri), () => resolve())
+  })
+const thumbExists = (uri, infoHash) =>
+  fs.existsSync(getThumbPath(uri, infoHash))
 
-  if (!fs.existsSync(uri) || fs.existsSync(oldPath)) return;
-
-  ffmpeg(uri)
-    .screenshots({
-      timestamps: ['1%'],
-      filename,
-      folder: thumbsDir,
-      size: '400x225',
-    })
-    .on('error', () => {
-      global.log('Error when generating thumbnail'.red);
-    });
-};
-
+const download = (_uri, _url, infoHash) =>
+  new Promise(resolve => {
+    const uri = getThumbPath(_uri, infoHash)
+    if (fs.existsSync(uri) || !_url) return resolve()
+    request
+      .get(_url)
+      .pipe(fs.createWriteStream(uri))
+      .on('finish', () => resolve())
+  })
 
 module.exports = () => {
-  if (!fs.existsSync(thumbsDir)) fs.mkdirSync(thumbsDir);
+  if (!fs.existsSync(thumbsDir)) fs.mkdirSync(thumbsDir)
 
-  global.filesdb.db()
-    .get('files')
-    .value()
-    .forEach((file) => {
-      if (!thumbExists(file.path)) generate(file.path);
-    });
-  fs.readdirAsync(thumbsDir)
-    .then((files) => {
-      files.forEach((file) => {
-        const thumbpath = path.basename(file, '.png');
-        const record = global.filesdb.db()
-          .get('files')
-          .find({
-            filename: thumbpath,
-          });
+  filesHelper.getFiles().forEach(file => {
+    if (!thumbExists(false, file.infoHash)) {
+      download(file.path, file.onlineThumb)
+    }
+  })
+  fs.readdirAsync(thumbsDir).then(files => {
+    files.forEach(file => {
+      const thumbpath = path.basename(file, '.jpg').split('_')
+      const record = filesHelper.getFileBy({
+        name: thumbpath[0],
+        season: parseInt(thumbpath[1].replace('S', ''), 10),
+        episode: parseInt(thumbpath[2].replace('E', ''), 10)
+      })
 
-        if (!record.value() || !record.value()
-          .show) deleteThumb(file);
-      });
-    });
-};
+      if (!record.value()) {
+        deleteThumb(file)
+      }
+    })
+  })
+}
 
-module.exports.generate = generate;
-module.exports.thumbExists = thumbExists;
-module.exports.deleteThumb = deleteThumb;
-module.exports.thumbsDir = thumbsDir;
+module.exports.download = download
+module.exports.thumbExists = thumbExists
+module.exports.deleteThumb = deleteThumb
+module.exports.thumbsDir = thumbsDir
+module.exports.getThumbPath = getThumbPath

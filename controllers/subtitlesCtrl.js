@@ -1,27 +1,31 @@
-const subsApi = require('../lib/subtitles');
-const _ = require('underscore');
-const stringSimilarity = require('string-similarity');
-const request = require('request');
-const unzip = require('unzip');
-const path = require('path');
-const fs = require('fs');
-const config = require('../modules/config');
-const utils = require('../utils/utils');
+const subsApi = require('../lib/subtitles')
+const _ = require('underscore')
+const stringSimilarity = require('string-similarity')
+const request = require('request')
+const unzip = require('unzip')
+const path = require('path')
+const fs = require('fs')
+const config = require('../modules/config')
+const utils = require('../utils/utils')
+const filesHelper = require('../helpers/filesHelper')
 
 module.exports.getSubs = (req, res) => {
-  const filename = req.query.filename || utils.filesdbHelpers.getFileBy({
-      infoHash: req.record.infoHash,
-    })
-    .value()
-    .filename;
+  const filename =
+    req.query.filename ||
+    filesHelper
+      .getFileBy({
+        infoHash: req.record.infoHash
+      })
+      .value().filename
 
-  subsApi.search(filename)
-    .then((data) => {
-      data.forEach((_item) => {
-        const item = _item;
-        item.match = (stringSimilarity.compareTwoStrings(filename, item.name) * 100)
-          .toFixed(2);
-      });
+  subsApi
+    .search(filename)
+    .then(data => {
+      data.forEach(_item => {
+        const item = _item
+        item.match = (stringSimilarity.compareTwoStrings(filename, item.name) *
+          100).toFixed(2)
+      })
 
       res.send({
         status: true,
@@ -29,69 +33,70 @@ module.exports.getSubs = (req, res) => {
         subs: _.chain(data)
           .filter(item => item.match > (req.query.filename ? 20 : 85))
           .sortBy('language')
-          .value(),
-      });
+          .value()
+      })
     })
-    .catch((error) => {
+    .catch(error => {
       res.send({
         status: false,
-        error: error.toString(),
-      });
-    });
-};
+        error: error.toString()
+      })
+    })
+}
 
 module.exports.downloadSub = (req, res, next) => {
-  req.checkBody('link', 'subscene link is required')
-    .notEmpty();
+  req.checkBody('link', 'subscene link is required').notEmpty()
 
-  req.getValidationResult()
-    .then((result) => {
+  req
+    .getValidationResult()
+    .then(result => {
       if (!result.isEmpty()) {
-        return Promise.reject(result.array());
+        return Promise.reject(result.array())
       }
 
-      return subsApi.getDownloadUrl(req.body.link)
-        .catch(err => Promise.reject(err.message));
+      return subsApi
+        .getDownloadUrl(req.body.link)
+        .catch(err => Promise.reject(err.message))
     })
-    .then((url) => {
-      const fullpath = path.join(config('SAVETOFOLDER'), req.record.path);
-      const zipPath = fullpath.replace(path.extname(fullpath), '.zip');
-      const saveas = fullpath.replace(path.extname(fullpath), '.srt');
-      let downloaded = false;
+    .then(url => {
+      const fullpath = path.join(config('SAVETOFOLDER'), req.record.path)
+      const zipPath = fullpath.replace(path.extname(fullpath), '.zip')
+      const saveas = fullpath.replace(path.extname(fullpath), '.srt')
+      let downloaded = false
 
-      return new Promise((resolve) => {
-        const stream = request.get(url)
-          .pipe(fs.createWriteStream(zipPath));
+      return new Promise(resolve => {
+        const stream = request.get(url).pipe(fs.createWriteStream(zipPath))
         stream.on('finish', () => {
-          fs.createReadStream(zipPath)
+          fs
+            .createReadStream(zipPath)
             .pipe(unzip.Parse())
-            .on('entry', (entry) => {
+            .on('entry', entry => {
               if (path.extname(entry.path) === '.srt' && !downloaded) {
-                entry.pipe(fs.createWriteStream(saveas));
-                downloaded = true;
-                resolve(zipPath);
+                entry.pipe(fs.createWriteStream(saveas))
+                downloaded = true
+                resolve(zipPath)
               }
-              entry.autodrain();
-            });
-        });
-      });
+              entry.autodrain()
+            })
+        })
+      })
     })
-    .then((zipPath) => {
-      utils.deleteFile(zipPath, true);
-      utils.filesdbHelpers.updateFile(req.record.infoHash, {
-        srt: true,
-      });
+    .then(zipPath => {
+      utils.deleteFile(zipPath, true)
+      filesHelper.updateFile(req.record.infoHash, {
+        srt: true
+      })
     })
     .then(() => {
       res.send({
-        status: true,
-      });
+        status: true
+      })
     })
-    .catch((error) => {
-      if (error instanceof Error) return next(error);
+    .catch(error => {
+      if (error instanceof Error) return next(error)
       return res.send({
         status: false,
-        error,
-      });
-    });
-};
+        error
+      })
+    })
+}

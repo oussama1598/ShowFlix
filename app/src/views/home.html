@@ -7,11 +7,11 @@
     <li class="collection-item avatar" ng-repeat="file in home.Files">
       <img ng-src="{{file.poster}}" class="poster-img">
       <img ng-src="api{{file.thumbUrl}}" alt="" class="circle">
-      <span class="title">{{file.name}} S{{file.season}}E{{file.episode}} - <b>{{file.title}}</b></span>
-      <p>{{file.fileDetails.size}}</p>
-      <p><b ng-show="file.srt">Srt</b></p>
+      <span class="title">{{file.name}} S{{file.season}}E{{file.episode}}</span>
+      <p><b>{{file.title}}</b></p>
+      <p><b ng-show="file.srt">Srt</b><b ng-hide="file.srt">no Srt</b></p>
       <md-menu md-position-mode="target-right target">
-        <a ng-click="$mdMenu.open($event)" class="secondary-content" ng-hide="file.done" style="padding:0 5px; cursor: pointer">
+        <a ng-click="$mdMenu.open($event)" class="secondary-content" style="padding:0 5px; cursor: pointer">
           <i class="fa fa-ellipsis-v"></i>
         </a>
         <md-menu-content width="4">

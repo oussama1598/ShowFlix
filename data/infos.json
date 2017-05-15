@@ -1,10 +1,10 @@
 {
-  "queue": "0",
+  "queue": "2",
   "tvshowtimefeed": [
     {
       "name": "the blacklist",
       "lastSeason": 4,
-      "lastEpisode": 19
+      "lastEpisode": 20
     },
     {
       "name": "the flash",
@@ -24,7 +24,7 @@
     {
       "name": "the 100",
       "lastSeason": 4,
-      "lastEpisode": 10
+      "lastEpisode": 11
     },
     {
       "name": "legion",
@@ -34,7 +34,7 @@
     {
       "name": "the catch",
       "lastSeason": 2,
-      "lastEpisode": 9
+      "lastEpisode": 10
     },
     {
       "name": "iron fist"
