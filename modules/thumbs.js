@@ -29,11 +29,11 @@ const thumbExists = (uri, infoHash) =>
 const download = (_uri, _url, infoHash) =>
   new Promise(resolve => {
     const uri = getThumbPath(_uri, infoHash)
-    if (fs.existsSync(uri) || !_url) return resolve()
-    request
-      .get(_url)
-      .pipe(fs.createWriteStream(uri))
-      .on('finish', () => resolve())
+    if (fs.existsSync(uri) || !_url) return resolve(true)
+    const stream = request.get(_url).on('response', res => {
+      if (res.statusCode !== 200) return resolve(false)
+      stream.pipe(fs.createWriteStream(uri)).on('finish', () => resolve(true))
+    })
   })
 
 module.exports = () => {

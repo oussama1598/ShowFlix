@@ -25,6 +25,7 @@ module.exports.getSubs = (req, res) => {
         const item = _item
         item.match = (stringSimilarity.compareTwoStrings(filename, item.name) *
           100).toFixed(2)
+        // TODO try and parse episode details from the sub's filename
       })
 
       res.send({

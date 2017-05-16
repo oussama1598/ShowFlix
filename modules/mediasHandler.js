@@ -10,7 +10,7 @@ const tvShowData = require('../lib/tvshowsData')
 
 const addDetails = (name, season, episode, infoHash) => {
   tvShowData.getDataForEpisode({ name, episode, season }).then(data => {
-    thumbs.download(false, data.thumb, infoHash).then(() => {
+    thumbs.download(false, data.thumb, infoHash).then(show => {
       filesHelper.updateFile(infoHash, {
         title: data.title,
         onlineThumb: data.thumb,
@@ -18,7 +18,7 @@ const addDetails = (name, season, episode, infoHash) => {
         theTvDBId: data.showId,
         poster: data.poster,
         originalPoster: data.fullPoster,
-        show: true
+        show
       })
     })
   })

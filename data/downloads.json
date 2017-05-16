@@ -1,5 +1,5 @@
 {
-  "lastId": 4,
+  "lastId": 8,
   "downloads": [
     {
       "id": 1,
@@ -66,12 +66,88 @@
       "magnet": "magnet:?xt=urn:btih:898810e6585d1c76117bad60603e7300bfe1187f&dn=Mr.Robot.S01E05.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker4.piratux.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce&tr=http%3A%2F%2Ftracker.aletorrenty.pl%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=http%3A%2F%2Ftorrent.gresille.org%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce",
       "infoHash": "898810e6585d1c76117bad60603e7300bfe1187f",
       "progress": {
-        "progress": 2.541821336045006,
-        "written": 4810696,
+        "progress": 19.6216744630643,
+        "written": 37136328,
         "size": 189250778,
+        "speed": 117964.8,
+        "timeRemaining": 1289583.3333333333,
+        "peers": 26
+      },
+      "started": true,
+      "error": false,
+      "finished": false
+    },
+    {
+      "id": 5,
+      "name": "13 reasons why",
+      "episode": 1,
+      "season": 1,
+      "magnet": "magnet:?xt=urn:btih:6cccc8ddfdafdd66ae8c79c964eff0a9724331e1&dn=13.Reasons.Why.S01E01.WEB.X264-DEFLATE%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "infoHash": "6cccc8ddfdafdd66ae8c79c964eff0a9724331e1",
+      "progress": {
+        "progress": 100,
+        "written": 514613980,
+        "size": 514613980,
+        "speed": 19660.8,
+        "timeRemaining": 0,
+        "peers": 19
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "id": 6,
+      "name": "lucifer",
+      "episode": 16,
+      "season": 2,
+      "magnet": "magnet:?xt=urn:btih:eb6a39c01189de56c91152f914fe6384a4939a6d&dn=Lucifer.S02E16.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fzer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce",
+      "infoHash": "eb6a39c01189de56c91152f914fe6384a4939a6d",
+      "progress": {
+        "progress": 31.18439782598104,
+        "written": 90883969,
+        "size": 291440344,
         "speed": 124518.4,
-        "timeRemaining": 1481315.7894736845,
-        "peers": 21
+        "timeRemaining": 1610657.894736842,
+        "peers": 48
+      },
+      "started": true,
+      "error": false,
+      "finished": false
+    },
+    {
+      "id": 7,
+      "name": "12 reasons why",
+      "episode": 2,
+      "season": 1,
+      "magnet": "magnet:?xt=urn:btih:3babc002ea53915ee9d2f8e96dcaac07dc7ae501&dn=13.Reasons.Why.S01E02.WEB.X264-DEFLATE%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "infoHash": "3babc002ea53915ee9d2f8e96dcaac07dc7ae501",
+      "progress": {
+        "progress": 100,
+        "written": 507471032,
+        "size": 507471032,
+        "speed": 32768,
+        "timeRemaining": 0,
+        "peers": 14
+      },
+      "started": true,
+      "error": false,
+      "finished": true
+    },
+    {
+      "id": 8,
+      "name": "12 reasons why",
+      "episode": 3,
+      "season": 1,
+      "magnet": "magnet:?xt=urn:btih:4ac4bc83d0e6f7036efff805140f2614b3699bce&dn=13.Reasons.Why.S01E03.WEB.X264-DEFLATE%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "infoHash": "4ac4bc83d0e6f7036efff805140f2614b3699bce",
+      "progress": {
+        "progress": 86.79682071151414,
+        "written": 504501106,
+        "size": 581243762,
+        "speed": 36044.8,
+        "timeRemaining": 2129090.909090909,
+        "peers": 25
       },
       "started": true,
       "error": false,

@@ -1,5 +1,5 @@
 {
-  "queue": "2",
+  "queue": "8",
   "tvshowtimefeed": [
     {
       "name": "the blacklist",
@@ -14,7 +14,7 @@
     {
       "name": "lucifer",
       "lastSeason": 2,
-      "lastEpisode": 15
+      "lastEpisode": 16
     },
     {
       "name": "suits",

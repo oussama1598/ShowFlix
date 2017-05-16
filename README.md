@@ -4,5 +4,5 @@ what else you want ! download it, install, and enjoy
 
 ![Showflix app](http://i.imgur.com/diEMCshg.png)
 
-##Setup
+# Setup
 Comming soon
