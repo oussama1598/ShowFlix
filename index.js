@@ -27,6 +27,7 @@ const errorHandler = require('./middlewares/errorHandler')
 // init express and assign it to http server
 const app = express()
 const server = http.createServer(app)
+const DATA_FOLDER = config('DATA_FOLDER')
 
 global.RUNNING = false // this variable is telling weather the server is running or not
 
@@ -51,21 +52,21 @@ app.use((req, res) => {
 app.use(errorHandler())
 
 // init dbs as global instances
-global.infosdb = new DbHandler(config('INFOS_PATH'), {
+global.infosdb = new DbHandler(path.join(DATA_FOLDER, 'infos.json'), {
   queue: '0',
   tvshowtimefeed: []
 })
-global.queuedb = new DbHandler(config('QUEUEPATH'), {
+global.queuedb = new DbHandler(path.join(DATA_FOLDER, 'queue.json'), {
   lastId: 0,
   queue: []
 })
 
-global.downloadsdb = new DbHandler(config('DOWNLOADS_QUEUE_PATH'), {
+global.downloadsdb = new DbHandler(path.join(DATA_FOLDER, 'downloads.json'), {
   lastId: 0,
   downloads: []
 })
 
-global.filesdb = new DbHandler(config('FILES_PATH'), {
+global.filesdb = new DbHandler(path.join(DATA_FOLDER, 'files.json'), {
   lastId: 0,
   files: []
 })

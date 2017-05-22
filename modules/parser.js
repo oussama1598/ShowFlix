@@ -9,6 +9,7 @@ const fs = require('fs')
 const os = require('os')
 const path = require('path')
 const filesHelper = require('../helpers/filesHelper')
+const torrentEngine = require('./torrentEngine')
 
 const BuildNextElement = (_index = -1) => {
   // the queue index default to -1
@@ -200,7 +201,7 @@ module.exports.start = _index => {
 module.exports.stop = () => {
   global.RUNNING = false
   global.log('Parsing Stopped'.yellow)
-  //  if (global.Dl) global.Dl.pause(); // pause the download
+  torrentEngine.destroyClients()
 }
 
 module.exports.addtoQueue = (name, season, from = 1, _to = 'f', episode) =>

@@ -32,8 +32,8 @@ module.exports = () =>
 
     filesHelper.getFiles().forEach(file => {
       const fullpath = path.join(config('SAVETOFOLDER'), file.path)
-      fs.exists(fullpath, exists => {
-        if (!exists) filesHelper.removeFile(file.infoHash)
+      fs.stat(fullpath, err => {
+        if (err) filesHelper.removeFile(file.infoHash)
       })
 
       if (!file.show) {

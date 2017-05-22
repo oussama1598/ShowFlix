@@ -1,4 +1,4 @@
-# ShowFlix-online
+# ShowFlix-beta
 > This app makes watching tvshows fun & easy ! helps you track your favorite tvshows, download them for you
 what else you want ! download it, install, and enjoy
 

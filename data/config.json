@@ -1,10 +1,7 @@
 {
   "PORT": 8888,
   "SAVETOFOLDER": "/home/oussama/Desktop/TV Shows",
-  "QUEUEPATH": "/home/oussama/Desktop/ShowFlix-online/data/queue.json",
-  "INFOS_PATH": "/home/oussama/Desktop/ShowFlix-online/data/infos.json",
-  "DOWNLOADS_QUEUE_PATH": "/home/oussama/Desktop/ShowFlix-online/data/downloads.json",
-  "FILES_PATH": "/home/oussama/Desktop/ShowFlix-online/data/files.json",
+  "DATA_FOLDER": "/home/oussama/Desktop/ShowFlix-online/data",
   "START_SERVER_WHENE_FOUND": true,
   "ENABLE_CLIENT_LOGGING": true,
   "ENABLE_SERVER_LOGGING": true,

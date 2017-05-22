@@ -4,6 +4,7 @@ const config = require('./config')
 const utils = require('../utils/utils')
 const ArrayWatcher = require('./ArrayWatcher')
 
+// TODO turn this into a class
 module.exports = io => {
   global.log = console.log.bind({})
 

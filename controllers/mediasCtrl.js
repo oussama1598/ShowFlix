@@ -6,13 +6,21 @@ const stream = require('../modules/stream')
 const pump = require('pump')
 const thumbs = require('../modules/thumbs')
 const filesHelper = require('../helpers/filesHelper')
+const _ = require('underscore')
 
-module.exports.getFiles = (req, res) => res.send(global.filesdb.get().value())
+module.exports.getFiles = (req, res) =>
+  res.send(
+    _.chain(global.filesdb.get().value())
+      .sortBy('season')
+      .sortBy('episode')
+      .sortBy('name')
+      .value()
+  )
 
 module.exports.stream = (req, res) => {
   const uri = path.join(config('SAVETOFOLDER'), req.record.path)
-  fs.exists(uri, exists => {
-    if (!exists) return res.sendStatus(404)
+  fs.stat(uri, err => {
+    if (err) return res.sendStatus(404)
 
     return stream(uri, req, res)
   })
@@ -21,8 +29,8 @@ module.exports.stream = (req, res) => {
 module.exports.thumb = (req, res) => {
   const thumbPath = thumbs.getThumbPath(false, req.record.infoHash)
 
-  fs.exists(thumbPath, exists => {
-    if (!exists) return res.sendStatus(404)
+  fs.stat(thumbPath, err => {
+    if (err) return res.sendStatus(404)
 
     res.type('.jpg')
     return pump(fs.createReadStream(thumbPath), res)

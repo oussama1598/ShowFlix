@@ -1,15 +1,15 @@
 {
-  "queue": "8",
+  "queue": "2",
   "tvshowtimefeed": [
     {
       "name": "the blacklist",
       "lastSeason": 4,
-      "lastEpisode": 20
+      "lastEpisode": 22
     },
     {
       "name": "the flash",
       "lastSeason": 3,
-      "lastEpisode": 21
+      "lastEpisode": 22
     },
     {
       "name": "lucifer",
@@ -24,7 +24,7 @@
     {
       "name": "the 100",
       "lastSeason": 4,
-      "lastEpisode": 11
+      "lastEpisode": 12
     },
     {
       "name": "legion",
@@ -38,6 +38,11 @@
     },
     {
       "name": "iron fist"
+    },
+    {
+      "name": "12 monkeys",
+      "lastSeason": 3,
+      "lastEpisode": 10
     }
   ]
 }

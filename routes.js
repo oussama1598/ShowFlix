@@ -1,49 +1,57 @@
-const express = require('express');
+const express = require('express')
 
 // initialize routes
-const apiRoutes = express.Router();
+const apiRoutes = express.Router()
 
 // controllers
-const downloadsCtrl = require('./controllers/downloadsCtrl');
-const searchCtrl = require('./controllers/searchCtrl');
-const queueCtrl = require('./controllers/queueCtrl');
-const mediasCtrl = require('./controllers/mediasCtrl');
-const controlsCtrl = require('./controllers/controlsCtrl');
-const subtitlesCtrl = require('./controllers/subtitlesCtrl');
+const downloadsCtrl = require('./controllers/downloadsCtrl')
+const searchCtrl = require('./controllers/searchCtrl')
+const queueCtrl = require('./controllers/queueCtrl')
+const mediasCtrl = require('./controllers/mediasCtrl')
+const controlsCtrl = require('./controllers/controlsCtrl')
+const subtitlesCtrl = require('./controllers/subtitlesCtrl')
+const settingsCtrl = require('./controllers/settingsCtrl')
 
 // custom middelwares
-const medias = require('./middlewares/medias');
+const medias = require('./middlewares/medias')
 
-module.exports = (app) => {
-  apiRoutes.route('/downloads')
+module.exports = app => {
+  apiRoutes
+    .route('/downloads')
     .get(downloadsCtrl.getAll)
-    .delete(downloadsCtrl.deleteRecord);
+    .delete(downloadsCtrl.deleteRecord)
 
-  apiRoutes.route('/queue')
+  apiRoutes
+    .route('/queue')
     .get(queueCtrl.getRecords)
     .delete(queueCtrl.deleteRecord)
-    .post(queueCtrl.addRecord);
+    .post(queueCtrl.addRecord)
 
-  apiRoutes.route('/queue/magnet')
+  apiRoutes
+    .route('/queue/magnet')
     .get(queueCtrl.getFilesFromMagnet)
-    .post(queueCtrl.addMagnet);
+    .post(queueCtrl.addMagnet)
 
-  apiRoutes.get('/search', searchCtrl.search);
-  apiRoutes.get('/files', mediasCtrl.getFiles);
+  apiRoutes.get('/search', searchCtrl.search)
+  apiRoutes.get('/files', mediasCtrl.getFiles)
 
-  apiRoutes.route('/files/:infoHash')
+  apiRoutes
+    .route('/files/:infoHash')
     .get(medias.check(), mediasCtrl.stream)
-    .delete(medias.check(), mediasCtrl.deleteFile);
+    .delete(medias.check(), mediasCtrl.deleteFile)
 
-  apiRoutes.get('/files/:infoHash/thumb', medias.check(), mediasCtrl.thumb);
+  apiRoutes.get('/files/:infoHash/thumb', medias.check(), mediasCtrl.thumb)
 
-  apiRoutes.route('/files/:infoHash/subs')
+  apiRoutes
+    .route('/files/:infoHash/subs')
     .get(medias.check(), subtitlesCtrl.getSubs)
-    .post(medias.check(), subtitlesCtrl.downloadSub);
+    .post(medias.check(), subtitlesCtrl.downloadSub)
 
-  apiRoutes.get('/server', controlsCtrl.state);
-  apiRoutes.get('/server/start', controlsCtrl.start);
-  apiRoutes.get('/server/stop', controlsCtrl.stop);
+  apiRoutes.get('/server', controlsCtrl.state)
+  apiRoutes.get('/server/start', controlsCtrl.start)
+  apiRoutes.get('/server/stop', controlsCtrl.stop)
+
+  apiRoutes.get('/settings', settingsCtrl.getSettings)
 
   // app.get('/tvshowfeed', (req, res) => {
   //     if (!req.query.code) {
@@ -67,5 +75,5 @@ module.exports = (app) => {
   //     });
   // });
   //
-  app.use('/api', apiRoutes);
-};
+  app.use('/api', apiRoutes)
+}
