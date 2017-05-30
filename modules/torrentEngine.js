@@ -1,66 +1,61 @@
-const WebTorrent = require('webtorrent')
-const path = require('path')
-const utils = require('../utils/utils')
-const debug = require('debug')('ShowFlix:TorrentEngine')
-const filesHelper = require('../helpers/filesHelper')
+const WebTorrent = require("webtorrent");
+const path = require("path");
+const utils = require("../utils/utils");
+const debug = require("debug")("ShowFlix:TorrentEngine");
+const filesHelper = require("../helpers/filesHelper");
+const EventEmitter = require("evenets");
 
-module.exports = () => {
-  global.webTorrent = new WebTorrent() // new instance of web torrent
-  debug('Torrent Engine initialized')
+class TorrentEngine extends EventEmitter {
+  constructor() {
+    super();
+    this.WebTorrent = new WebTorrent();
 
-  global.webTorrent.on('torrent', torrent => {
-    debug('new torrent added')
+    this.WebTorrent.on("torrent", torrent => {
+      this.emit("start", torrent.infoHash);
 
-    const infoHash = torrent.infoHash
-    const queueSelectedFile = global.queuedb
-      .find({
+
+      const infoHash = torrent.infoHash;
+      const downloadsdb = global.downloadsdb;
+
+      const queueSelectedFile = downloadsdb
+        .find({
+          infoHash
+        })
+        .value().file;
+
+      const mainFile = torrent.files.filter(file => file.name === queueSelectedFile)[0]
+      const filepath = mainFile.path;
+
+      torrent.files.forEach(file => file.deselect());
+      mainFile.select();
+      downloadsdb.update({
         infoHash
-      })
-      .value().file
-    const mainFile = queueSelectedFile
-      ? torrent.files.filter(file => file.name === queueSelectedFile)[0]
-      : torrent.files.reduce((a, b) => {
-        const aLength = a.length
-        const bLength = b.length
-        return aLength > bLength ? a : b
-      })
-    const filepath = mainFile.path
-
-    torrent.files.forEach(file => file.deselect())
-    utils.createDownloadEntry(infoHash)
-    mainFile.select()
-    global.downloadsdb.update(
-      {
-        infoHash
-      },
-      {
+      }, {
         started: true,
         error: false,
         finished: false
-      }
-    )
+      });
 
-    filesHelper.updateFile(torrent.infoHash, {
-      filename: path.basename(filepath, path.extname(filepath)),
-      path: filepath,
-      done: false
-    })
+      filesHelper.updateFile(torrent.infoHash, {
+        filename: path.basename(filepath, path.extname(filepath)),
+        dirname: path.dirname(filepath),
+        path: filepath,
+        done: false
+      });
 
-    torrent.on('download', () => {
-      process.stdout.clearLine() // clear current text
-      process.stdout.cursorTo(0)
-      process.stdout.write(
-        `${(torrent.progress * 100).toFixed(2)}%`.blue + ' Downloaded'.green
-      )
-      if (torrent.progress === 100) {
-        console.log('', true)
-      }
+      torrent.on("download", () => {
+        process.stdout.clearLine(); // clear current text
+        process.stdout.cursorTo(0);
+        process.stdout.write(
+          `${(torrent.progress * 100).toFixed(2)}%`.blue + " Downloaded".green
+        );
+        if (torrent.progress === 100) {
+          console.log("", true);
+        }
 
-      global.downloadsdb.update(
-        {
+        downloadsdb.update({
           infoHash
-        },
-        {
+        }, {
           progress: {
             progress: torrent.progress * 100,
             written: torrent.downloaded,
@@ -69,38 +64,42 @@ module.exports = () => {
             timeRemaining: torrent.timeRemaining,
             peers: torrent.numPeers
           }
-        }
-      )
-    })
+        });
+      });
 
-    torrent.on('done', () => {
-      global.downloadsdb.update(
-        {
+      torrent.on("done", () => {
+        this.emit("done", infoHash);
+        downloadsdb.update({
           infoHash
-        },
-        {
+        }, {
           finished: true
-        }
-      )
-    })
+        });
+      });
 
-    torrent.on('error', err => {
-      console.log(err.red)
+      torrent.on("error", () => {
+        this.emit("error", infoHash);
+        console.log(err.red);
 
-      global.downloadsdb.update(
-        {
+        downloadsdb.update({
           infoHash
-        },
-        {
+        }, {
           error: true
-        }
-      )
-    })
-  })
+        });
+      });
+    });
+  }
+
+  add(magnet, path) {
+    this.WebTorrent.add(magnet, {
+      path
+    });
+  }
+
+  destroy() {
+    this.WebTorrent.torrents.forEach(torrent => {
+      torrent.destroy();
+    });
+  }
 }
 
-module.exports.destroyClients = () => {
-  global.webTorrent.torrents.forEach(torrent => {
-    torrent.destroy()
-  })
-}
+module.exports = new TorrentEngine()
