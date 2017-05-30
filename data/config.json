@@ -1,12 +1,12 @@
 {
   "PORT": 8888,
   "SAVETOFOLDER": "/home/oussama/Desktop/TV Shows",
-  "DATA_FOLDER": "/home/oussama/Desktop/ShowFlix-online/data",
+  "DATA_FOLDER": "/home/oussama/Desktop/ShowFlix/data",
   "START_SERVER_WHENE_FOUND": true,
   "ENABLE_CLIENT_LOGGING": true,
   "ENABLE_SERVER_LOGGING": true,
   "TV_SHOW_API": {
-    "ENDPOINT": "https://api-fetch.website/tv/show/"
+    "ENDPOINT": "https://api.apidomain.info/show"
   },
   "TV_SHOWS_TIME_API": {
     "TVST_CLIENT_ID": "UOWED7wBGRQv17skSZJO",

@@ -11,7 +11,6 @@ const routes = require('./routes')
 const socketIO = require('./modules/socketio')
 const logger = require('./modules/logger')
 const thumbs = require('./modules/thumbs')
-const torrentEngine = require('./modules/torrentEngine')
 const parser = require('./modules/parser')
 const mediasHandler = require('./modules/mediasHandler')
 const tvShowTime = require('./lib/tvShowTime').setParams(
@@ -76,8 +75,6 @@ global.io = socketIO(server)
 logger(global.io)
 // initialize the thumbs delete or create them
 mediasHandler().then(() => thumbs())
-// webtorrent engine
-torrentEngine()
 
 // watch tvshowtime feed
 tvShowTime.watch().on('found', data => {
