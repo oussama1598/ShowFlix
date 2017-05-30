@@ -3,7 +3,7 @@ const path = require("path");
 const utils = require("../utils/utils");
 const debug = require("debug")("ShowFlix:TorrentEngine");
 const filesHelper = require("../helpers/filesHelper");
-const EventEmitter = require("evenets");
+const EventEmitter = require("events");
 
 class TorrentEngine extends EventEmitter {
   constructor() {
