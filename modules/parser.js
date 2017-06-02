@@ -55,7 +55,7 @@ const BuildNextElement = (_index = -1) => {
 
 const MoveToNext = (infoHash, notDone) => {
   // details are episode name, number season
-  if (!global.RUNNING) return // this will return without doing nothing if the parsing is Stopped
+  if (!global.RUNNING) return
 
   global.queuedb.update(
     {
@@ -72,8 +72,8 @@ const MoveToNext = (infoHash, notDone) => {
   }) // build the next element means add one to queue index
 }
 
-const startDownloading = (name, episodeData) => {
-  utils.createDownloadEntry(name, episodeData)
+const startDownloading = episodeData => {
+  utils.createDownloadEntry(episodeData)
   torrentEngine.add(episodeData.magnet, config('SAVETOFOLDER'))
 }
 
@@ -83,10 +83,9 @@ const parseQueue = () => {
   const episodeEl = queueData.value()[index] // get the queue index
 
   if (queueData.value().length === 0 || !episodeEl) {
-    // check if theres more episodes
     console.log('All Done'.green)
     global.RUNNING = false // stop the parsing
-    return // exit this function with nothing
+    return
   }
   if (!episodeEl.done) {
     // if the episode is done or does not exist
@@ -99,7 +98,8 @@ const parseQueue = () => {
 const parseEpisodeMagnet = torrents =>
   _.chain(torrents)
     .filter(torrent => torrent.quality === config('PREFERED_QUALITY'))
-    .sortBy(torrent => -torrent.seeds)[0]
+    .sortBy(torrent => -torrent.seeds)
+    .value()[0]
 
 const addEpisodeToQueue = (name, episode) => {
   const torrent = parseEpisodeMagnet(episode.torrents)
@@ -116,7 +116,7 @@ const addEpisodeToQueue = (name, episode) => {
       infoHash: torrent.hash,
       name,
       season: parseInt(episode.season, 10),
-      episode: parseInt(episode.season, 10),
+      episode: parseInt(episode.episode, 10),
       magnet: torrent.magnet,
       quality: torrent.quality,
       file: torrent.file,
@@ -174,6 +174,8 @@ module.exports.addtoQueue = (name, season, from = 1, _to = 'f') =>
       : _to
 
     return _.chain(data)
-      .filter(ep => ep.episode >= from && ep.episode <= to)
+      .filter(
+        ep => parseInt(ep.episode, 10) >= from && parseInt(ep.episode, 10) <= to
+      )
       .forEach(episode => addEpisodeToQueue(name, episode))
   })

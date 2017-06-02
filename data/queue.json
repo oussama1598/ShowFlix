@@ -1,4 +1,17 @@
 {
-  "lastId": 32,
-  "queue": []
+  "lastId": 2,
+  "queue": [
+    {
+      "id": 2,
+      "infoHash": "504080ce18dff47f2f28fe70d7032e6d6949d664",
+      "name": "12 monkeys",
+      "season": 3,
+      "episode": 6,
+      "magnet": "magnet:?xt=urn:btih:504080ce18dff47f2f28fe70d7032e6d6949d664&dn=12.Monkeys.S03E06.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "quality": "HDTV",
+      "file": "12.Monkeys.S03E06.HDTV.x264-SVA[eztv].mkv",
+      "tried": false,
+      "done": false
+    }
+  ]
 }

@@ -34,7 +34,7 @@ const deleteFromQueue = ({ episode, season, name }) =>
     })
   })
 
-const createDownloadEntry = (name, episodeData) => {
+const createDownloadEntry = episodeData => {
   const infoHash = episodeData.infoHash
   const db = global.downloadsdb
   const dbRecord = db
@@ -45,7 +45,7 @@ const createDownloadEntry = (name, episodeData) => {
 
   if (!dbRecord) {
     db.add({
-      name: name,
+      name: episodeData.name,
       episode: episodeData.episode,
       season: episodeData.season,
       magnet: episodeData.magnet,

@@ -1,4 +1,45 @@
 {
-  "lastId": 0,
-  "downloads": []
+  "lastId": 2,
+  "downloads": [
+    {
+      "id": 1,
+      "name": "12 monkeys",
+      "episode": 3,
+      "season": 3,
+      "magnet": "magnet:?xt=urn:btih:70d74c24f7e10d3673e0adad03b22a978407929b&dn=12.Monkeys.S03E10.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "file": "12.Monkeys.S03E10.HDTV.x264-SVA[eztv].mkv",
+      "infoHash": "70d74c24f7e10d3673e0adad03b22a978407929b",
+      "progress": {
+        "progress": 0.3841152647955495,
+        "written": 886045,
+        "size": 230671645,
+        "speed": 65536,
+        "timeRemaining": 3506250,
+        "peers": 29
+      },
+      "started": true,
+      "error": false,
+      "finished": false
+    },
+    {
+      "id": 2,
+      "name": "12 monkeys",
+      "episode": 6,
+      "season": 3,
+      "magnet": "magnet:?xt=urn:btih:504080ce18dff47f2f28fe70d7032e6d6949d664&dn=12.Monkeys.S03E06.HDTV.x264-SVA%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "file": "12.Monkeys.S03E06.HDTV.x264-SVA[eztv].mkv",
+      "infoHash": "504080ce18dff47f2f28fe70d7032e6d6949d664",
+      "progress": {
+        "progress": 6.207963766946512,
+        "written": 12539311,
+        "size": 201987503,
+        "speed": 399769.6,
+        "timeRemaining": 473893.4426229508,
+        "peers": 35
+      },
+      "started": true,
+      "error": false,
+      "finished": false
+    }
+  ]
 }

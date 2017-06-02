@@ -54,10 +54,10 @@ module.exports = () =>
           .value()
         const srtPath = file.replace(path.extname(file), '.srt')
 
-        //if (!record) return utils.deleteMedia(file)
-        return filesHelper.updateFile(record.infoHash, {
+        // if (!record) return utils.deleteMedia(file)
+        /* return filesHelper.updateFile(record.infoHash, {
           srt: fs.existsSync(srtPath)
-        })
+        }) */
       })
       resolve()
     })

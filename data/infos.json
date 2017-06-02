@@ -1,5 +1,5 @@
 {
-  "queue": "2",
+  "queue": "0",
   "tvshowtimefeed": [
     {
       "name": "the blacklist",
@@ -9,12 +9,12 @@
     {
       "name": "the flash",
       "lastSeason": 3,
-      "lastEpisode": 22
+      "lastEpisode": 23
     },
     {
       "name": "lucifer",
       "lastSeason": 2,
-      "lastEpisode": 16
+      "lastEpisode": 18
     },
     {
       "name": "suits",
@@ -24,7 +24,7 @@
     {
       "name": "the 100",
       "lastSeason": 4,
-      "lastEpisode": 12
+      "lastEpisode": 13
     },
     {
       "name": "legion",
