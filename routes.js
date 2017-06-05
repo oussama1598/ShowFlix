@@ -11,11 +11,12 @@ const mediasCtrl = require('./controllers/mediasCtrl')
 const controlsCtrl = require('./controllers/controlsCtrl')
 const subtitlesCtrl = require('./controllers/subtitlesCtrl')
 const settingsCtrl = require('./controllers/settingsCtrl')
+const showCtrl = require('./controllers/showCtrl')
 
 // custom middelwares
 const medias = require('./middlewares/medias')
 
-module.exports = app => {
+module.exports = () => {
   apiRoutes
     .route('/downloads')
     .get(downloadsCtrl.getAll)
@@ -26,11 +27,6 @@ module.exports = app => {
     .get(queueCtrl.getRecords)
     .delete(queueCtrl.deleteRecord)
     .post(queueCtrl.addRecord)
-
-  apiRoutes
-    .route('/queue/magnet')
-    .get(queueCtrl.getFilesFromMagnet)
-    .post(queueCtrl.addMagnet)
 
   apiRoutes.get('/search', searchCtrl.search)
   apiRoutes.get('/files', mediasCtrl.getFiles)
@@ -52,6 +48,8 @@ module.exports = app => {
   apiRoutes.get('/server/stop', controlsCtrl.stop)
 
   apiRoutes.get('/settings', settingsCtrl.getSettings)
+
+  apiRoutes.get('/show/:imdb', showCtrl.getShow)
 
   // app.get('/tvshowfeed', (req, res) => {
   //     if (!req.query.code) {
@@ -75,5 +73,5 @@ module.exports = app => {
   //     });
   // });
   //
-  app.use('/api', apiRoutes)
+  return apiRoutes
 }

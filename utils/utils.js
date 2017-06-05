@@ -1,4 +1,3 @@
-const cheerio = require('cheerio')
 const rimraf = require('rimraf')
 const _ = require('underscore')
 const NodeCache = require('node-cache')
@@ -108,8 +107,6 @@ const getHtml = (
 
       if (onlyRes) return res
       if (json) return res.json()
-
-      return cheerio.load(res.text())
     })
     .catch(err => {
       console.log(err.toString().red)

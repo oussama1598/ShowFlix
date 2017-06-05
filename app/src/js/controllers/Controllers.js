@@ -1,14 +1,17 @@
-import HomeController from './HomeController';
-import MainController from './MainController';
-import DownloadsController from './DownloadsController';
-import QueueController from './QueueController';
-import AddToQueueController from './AddToQueueController';
-import SubtitlesController from './SubtitlesController';
+import HomeController from './HomeController'
+import MainController from './MainController'
+import DownloadsController from './DownloadsController'
+import QueueController from './QueueController'
+import AddToQueueController from './AddToQueueController'
+import SubtitlesController from './SubtitlesController'
+import ShowController from './ShowController'
 
-export default angular.module('showFlix.controllers', [])
+export default angular
+  .module('showFlix.controllers', [])
   .controller('mainCtrl', MainController)
   .controller('homeCtrl', HomeController)
   .controller('downloadsCtrl', DownloadsController)
   .controller('queueCtrl', QueueController)
   .controller('addtoQueueCtrl', AddToQueueController)
-  .controller('subtitlesCtrl', SubtitlesController);
+  .controller('subtitlesCtrl', SubtitlesController)
+  .controller('showCtrl', ShowController)

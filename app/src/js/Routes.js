@@ -1,32 +1,38 @@
-export default ($stateProvider, $urlRouterProvider) => {
-  'ngInject';
-
+export default ($stateProvider, $urlRouterProvider, $locationProvider) => {
+  'ngInject'
   $stateProvider
     .state('app', {
       url: '/app',
-      templateUrl: 'views/main.html',
+      templateUrl: 'dist/views/main.html',
       controller: 'mainCtrl',
       controllerAs: 'main',
-      abstract: true,
+      abstract: true
     })
     .state('app.home', {
       url: '/home',
-      templateUrl: 'views/home.html',
+      templateUrl: 'dist/views/home.html',
       controller: 'homeCtrl',
-      controllerAs: 'home',
+      controllerAs: 'home'
+    })
+    .state('app.show', {
+      url: '/show/:imdbId',
+      templateUrl: 'dist/views/show.html',
+      controller: 'showCtrl',
+      controllerAs: 'show'
     })
     .state('app.downloads', {
       url: '/downloads',
-      templateUrl: 'views/downloads.html',
+      templateUrl: 'dist/views/downloads.html',
       controller: 'downloadsCtrl',
-      controllerAs: 'downloads',
+      controllerAs: 'downloads'
     })
     .state('app.queue', {
       url: '/queue',
-      templateUrl: 'views/queue.html',
+      templateUrl: 'dist/views/queue.html',
       controller: 'queueCtrl',
-      controllerAs: 'queue',
-    });
+      controllerAs: 'queue'
+    })
 
-  $urlRouterProvider.otherwise('app/home');
-};
+  $urlRouterProvider.otherwise('app/home')
+  $locationProvider.html5Mode(true)
+}

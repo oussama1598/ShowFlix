@@ -1,27 +1,4 @@
 {
   "lastId": 2,
-  "files": [
-    {
-      "id": 2,
-      "title": "Nature",
-      "name": "12 monkeys",
-      "season": 3,
-      "episode": 6,
-      "infoHash": "504080ce18dff47f2f28fe70d7032e6d6949d664",
-      "path": "12.Monkeys.S03E06.HDTV.x264-SVA[eztv].mkv",
-      "filename": "12.Monkeys.S03E06.HDTV.x264-SVA[eztv]",
-      "streamUrl": "/files/504080ce18dff47f2f28fe70d7032e6d6949d664",
-      "thumbUrl": "/files/504080ce18dff47f2f28fe70d7032e6d6949d664/thumb",
-      "subs": "/files/504080ce18dff47f2f28fe70d7032e6d6949d664/subs",
-      "onlineThumb": "http://thetvdb.com/banners/episodes/272644/6006726.jpg",
-      "episodeId": 6006726,
-      "theTvDBId": 272644,
-      "poster": "http://thetvdb.com/banners/_cache/posters/272644-1.jpg",
-      "srt": false,
-      "done": false,
-      "show": true,
-      "dirname": ".",
-      "originalPoster": "http://thetvdb.com/banners/posters/272644-1.jpg"
-    }
-  ]
+  "files": []
 }

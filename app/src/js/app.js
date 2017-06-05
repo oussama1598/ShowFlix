@@ -1,9 +1,16 @@
-import Routes from './Routes';
-import Bootstrap from './Bootstrap';
+import Routes from './Routes'
+import Bootstrap from './Bootstrap'
 
-import Controlers from './controllers/Controllers';
-import Services from './services/Services';
+import Controlers from './controllers/Controllers'
+import Services from './services/Services'
 
-angular.module('showFlix', ['ui.router', 'btford.socket-io', 'ngMaterial', Controlers.name, Services.name])
+angular
+  .module('showFlix', [
+    'ui.router',
+    'btford.socket-io',
+    'ngMaterial',
+    Controlers.name,
+    Services.name
+  ])
   .config(Routes)
-  .run(Bootstrap);
+  .run(Bootstrap)

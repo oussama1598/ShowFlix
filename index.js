@@ -7,7 +7,7 @@ const IP = require('ip')
 const path = require('path')
 
 // project modules
-const routes = require('./routes')
+const apiRoutes = require('./routes')
 const socketIO = require('./modules/socketio')
 const logger = require('./modules/logger')
 const thumbs = require('./modules/thumbs')
@@ -43,8 +43,10 @@ app.use(
 )
 app.use(bodyParser.json())
 app.use(expressValidator())
-// the main app routes
-routes(app)
+app.use('/api', apiRoutes())
+app.all('/*', (req, res) =>
+  res.sendFile('app/index.html', { root: __dirname })
+)
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, './app/404.html'))
 })
@@ -112,4 +114,5 @@ server.listen(config('PORT'), () =>
   )
 )
 
-// TODO: add id for specific entries in the db for performance
+// TODO: add page for search for an episode or the entire show and then select what to add to the queue
+// in order to fix the problem with quality selection and torrents not working
