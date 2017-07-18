@@ -1,0 +1,7 @@
+{
+    "presets": ["es2015"],
+    "plugins": [
+      "transform-flow-comments",
+      "transform-class-properties"
+    ]
+}

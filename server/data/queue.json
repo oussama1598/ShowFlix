@@ -1,0 +1,18 @@
+{
+  "lastId": 1,
+  "queue": [
+    {
+      "id": 1,
+      "infoHash": "2fd1877762eb88afa15e975ea1d5ee2f671d9184",
+      "title": "daredevil",
+      "season": "1",
+      "episode": "12",
+      "thumb": "http://static.tvmaze.com/uploads/images/medium_landscape/10/25335.jpg",
+      "magnet": "magnet:?xt=urn:btih:2FD1877762EB88AFA15E975EA1D5EE2F671D9184&dn=marvels daredevil s01e12 webrip x264 qcf eztv&tr=udp://tracker.publicbt.com/announce&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.openbittorrent.com:80/announce&tr=udp://zer0day.to:1337/announce&tr=udp://tracker.coppersurfer.tk:6969/announce",
+      "quality": "720p",
+      "file": "Marvels.Daredevil.S01E12.WEBRiP.x264-QCF.mp4",
+      "tried": false,
+      "done": false
+    }
+  ]
+}

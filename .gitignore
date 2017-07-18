@@ -1,9 +1,11 @@
-app/bower_components
-/node_modules/
-/data/*
-app/dist
-app/views
-=======
-# Logs
-logs
-*.log
+node_modules
+public
+.tmp
+.sass-cache
+.idea
+client/bower_components
+client/index.html
+dist
+/server/config/local.env.js
+npm-debug.log
+coverage

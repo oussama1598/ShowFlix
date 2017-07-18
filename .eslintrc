@@ -1,12 +1,9 @@
 {
-  "extends":   "standard",
-  "env":       {
-    "browser": true,
-    "node":    true
-  },
-  "globals":{
-    "window":  true,
-    "$":       true,
-    "angular": true
-  }
+    "parser": "babel-eslint",
+    "extends":   "standard",
+    "env": {
+        "es6": true
+    },
+    "globals": {},
+    "plugins": []
 }

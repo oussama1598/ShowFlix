@@ -1,0 +1,21 @@
+{
+  "port": 8888,
+  "savetofolder": "/home/oussama/Desktop/TV Shows",
+  "data_folder": "/home/oussama/Desktop/ShowFlix/data",
+  "START_SERVER_WHENE_FOUND": true,
+  "ENABLE_CLIENT_LOGGING": true,
+  "ENABLE_SERVER_LOGGING": true,
+  "TV_SHOW_API": {
+    "ENDPOINT": "https://api.apidomain.info/show"
+  },
+  "TV_SHOWS_TIME_API": {
+    "TVST_CLIENT_ID": "UOWED7wBGRQv17skSZJO",
+    "TVST_CLIENT_SECRET": "ZHYcO8n8h6WbYuMDWVgXr7T571ZF_s1r1Rzu1-3B",
+    "TVST_ACCESS_TOKEN_URI": "https://api.tvshowtime.com/v1/oauth/access_token",
+    "TVST_CHECKIN_URI": "https://api.tvshowtime.com/v1/checkin",
+    "FEED_FREQUENCY": 20000,
+    "ACCESS_TOKEN": "9b490ec26ff5c3decfc44e5ffb2dae4f"
+  },
+  "tvdb_api_key": "C4E207D934C6B805",
+  "PREFERED_QUALITY": "720p"
+}
