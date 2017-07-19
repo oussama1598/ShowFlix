@@ -34,7 +34,7 @@ export default app => {
   app.use(cookieParser())
   app.use(expressValidator())
 
-  if (env === 'development' && false) {
+  if (env === 'development') {
     const webpackDevMiddleware = require('webpack-dev-middleware')
     const stripAnsi = require('strip-ansi')
     const webpack = require('webpack')

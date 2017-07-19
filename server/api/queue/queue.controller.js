@@ -1,5 +1,5 @@
-import { cache } from '../../utils/utils'
-import databases from '../../config/databases'
+import { cache } from '../../services/utils'
+import databases from '../../services/databases'
 import parseTorrent from 'parse-torrent'
 // import parser from '../modules/parser'
 

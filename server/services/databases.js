@@ -1,7 +1,7 @@
 import DbHandler from '../modules/dbHandler'
 import EventEmitter from 'events'
 import path from 'path'
-import config from './config'
+import config from '../config/config'
 
 class LocalDbs extends EventEmitter {
   databases = new Map()

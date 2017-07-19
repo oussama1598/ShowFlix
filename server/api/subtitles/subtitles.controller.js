@@ -5,7 +5,7 @@ import unzip from 'unzip'
 import path from 'path'
 import fs from 'fs'
 // import config from '../modules/config'
-import { deleteFile, cache } from '../../utils/utils'
+import { deleteFile, cache } from '../../services/utils'
 // import filesHelper from '../helpers/filesHelper'
 import { search, getDownloadUrl } from '../../lib/subtitlesApi'
 

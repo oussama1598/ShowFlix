@@ -1,5 +1,5 @@
-import { cache } from '../../utils/utils'
-import databases from '../../config/databases'
+import { cache } from '../../services/utils'
+import databases from '../../services/databases'
 
 export function getAll (req, res) {
   if (!cache().get('downloads')) {

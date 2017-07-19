@@ -1,5 +1,5 @@
 import { getShowData } from '../../lib/tvshowsData'
-import { cache } from '../../utils/utils'
+import { cache } from '../../services/utils'
 import tvShowsApi from '../../lib/tvShowsApi'
 
 export function getAllShows (req, res) {

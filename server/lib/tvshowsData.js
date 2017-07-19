@@ -1,4 +1,4 @@
-import { _request } from '../utils/utils'
+import { _request } from '../services/utils'
 import TVDB from 'node-tvdb'
 import config from '../config/config'
 import striptags from 'striptags'

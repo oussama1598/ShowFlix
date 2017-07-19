@@ -4,48 +4,40 @@ import NodeCache from 'node-cache'
 import fetch from 'node-fetch'
 // import config from '../modules/config'
 import path from 'path'
-import databases from '../config/databases'
+import databases from './databases'
 
 const myCache = new NodeCache({
   stdTTL: 60 * 60 * 24,
   checkperiod: 120
 })
 
-export function deleteFile (_uri, file) {
-  return new Promise(resolve => {
-    const uri = !file ? `${_uri.substr(0, _uri.lastIndexOf('['))}*` : _uri
-    rimraf(uri, () => resolve())
+export const deleteFile = (_uri, file) => new Promise(resolve => {
+  const uri = !file ? `${_uri.substr(0, _uri.lastIndexOf('['))}*` : _uri
+  rimraf(uri, () => resolve())
+})
+
+export const cache = () => ({
+  get (key) { myCache.get(key) },
+  set (key, data) {
+    myCache.set(key, data)
+    return data
+  },
+  delete (key) { myCache.del(key) }
+})
+
+export const fixInt = num => (isNaN(parseInt(num, 10)) ? null : parseInt(num, 10))
+
+export const filesUpdated = () => cache.delete('medias')
+
+export const deleteFromQueue = ({ episode, season, name }) => Promise.resolve().then(() => {
+  global.queuedb.remove({
+    episode,
+    season,
+    name
   })
-}
+})
 
-export function cache () {
-  return {
-    get (key) { myCache.get(key) },
-    set (key, data) {
-      myCache.set(key, data)
-      return data
-    },
-    delete (key) { myCache.del(key) }
-  }
-}
-
-export function fixInt (num) {
-  return (isNaN(parseInt(num, 10)) ? null : parseInt(num, 10))
-}
-export function filesUpdated () {
-  return cache.delete('medias')
-}
-export function deleteFromQueue ({ episode, season, name }) {
-  return Promise.resolve().then(() => {
-    global.queuedb.remove({
-      episode,
-      season,
-      name
-    })
-  })
-}
-
-export function createDownloadEntry (episodeData) {
+export const createDownloadEntry = episodeData => {
   databases.getDb('downloads').add({
     title: episodeData.title,
     episode: episodeData.episode,
@@ -62,7 +54,7 @@ export function createDownloadEntry (episodeData) {
   })
 }
 
-export function arrayDeffrence (_arr, _target) {
+export const arrayDeffrence = (_arr, _target) => {
   const containsEquals = (obj, target) => {
     if (obj == null) return false
     return _.any(obj, value => _.isEqual(value, target))
@@ -71,7 +63,7 @@ export function arrayDeffrence (_arr, _target) {
   return _.filter(_arr, value => !containsEquals(_target, value))
 }
 
-export function pad (num, size) {
+export const pad = (num, size) => {
   let s = num.toString()
   while (s.length < size) {
     s = `0${s}`
@@ -79,7 +71,7 @@ export function pad (num, size) {
   return s
 }
 
-export function generateFormData (obj) {
+export const generateFormData = obj => {
   let str = ''
 
   _.each(obj, (item, key) => {
@@ -89,7 +81,7 @@ export function generateFormData (obj) {
   return str
 }
 
-export function _request (
+export const _request = (
   _url,
   json,
   method = 'GET',
@@ -97,8 +89,8 @@ export function _request (
   headers = {},
   timeout = 20000,
   onlyRes = false
-) {
-  return fetch(encodeURI(_url), {
+) =>
+  fetch(encodeURI(_url), {
     timeout,
     method,
     body: generateFormData(form),
@@ -116,9 +108,8 @@ export function _request (
       console.log(err.toString().red)
       return Promise.reject(err)
     })
-}
 
-export function deleteMedia (file) {
+export const deleteMedia = file => {
   const saveTo = ''// config('SAVETOFOLDER')
   const parentPath = path.dirname(file.replace(`${saveTo}/`, ''))
   const uri = parentPath === '.'

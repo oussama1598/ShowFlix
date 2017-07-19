@@ -1,4 +1,4 @@
-import { _request } from '../utils/utils'
+import { _request } from '../services/utils'
 import config from '../config/config'
 import _ from 'underscore'
 import url from 'url'

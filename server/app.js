@@ -3,7 +3,7 @@ import config from './config/config'
 import http from 'http'
 import expressConfig from './config/express'
 import Routes from './routes'
-import databases from './config/databases'
+import databases from './services/databases'
 
 const app = express()
 const server = http.createServer(app)

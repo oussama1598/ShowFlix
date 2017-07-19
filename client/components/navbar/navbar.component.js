@@ -7,8 +7,8 @@ export class NavbarComponent {
   menu = [{
     title: 'Home',
     state: 'main'
-  }];
-  isCollapsed = true;
+  }]
+  isCollapsed = true
 }
 
 export default angular.module('directives.navbar', [])
