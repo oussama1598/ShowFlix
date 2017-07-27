@@ -332,7 +332,7 @@ gulp.task('serve', cb => {
   runSequence(
     [
       'clean:tmp',
-      'lint:scripts',
+      // 'lint:scripts',
       'inject',
       'copy:fonts:dev',
       'env:all'
@@ -495,12 +495,12 @@ function flatten () {
   })
 }
 gulp.task('copy:fonts:dev', () => {
-  return gulp.src('node_modules/{bootstrap,font-awesome}/fonts/*')
+  return gulp.src('node_modules/{bootstrap,font-awesome,materialize-css}/**/fonts/**/*')
     .pipe(flatten())
     .pipe(gulp.dest(`${clientPath}/assets/fonts`))
 })
 gulp.task('copy:fonts:dist', () => {
-  return gulp.src('node_modules/{bootstrap,font-awesome}/fonts/*')
+  return gulp.src('node_modules/{bootstrap,font-awesome,materialize-css}/fonts/*')
     .pipe(flatten())
     .pipe(gulp.dest(`${paths.dist}/${clientPath}/assets/fonts`))
 })

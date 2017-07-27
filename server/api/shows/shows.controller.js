@@ -1,11 +1,27 @@
-import { getShowData } from '../../lib/tvshowsData'
+import { getShowData, getShows } from '../../lib/tvshowsData'
 import { cache } from '../../services/utils'
 import tvShowsApi from '../../lib/tvShowsApi'
 
-export function getAllShows (req, res) {
-  res.send({
-    status: true
+export function getShowsByPage (req, res, next) {
+  req.checkParams('page', 'Must be an integer').isInt()
+
+  req.getValidationResult().then(result => {
+    if (!result.isEmpty()) {
+      return res.send({
+        status: false,
+        errors: result.array()
+      })
+    }
+
+    return getShows(Object.assign({page: req.params.page}, req.query))
   })
+    .then(data => {
+      res.send({
+        status: true,
+        shows: data
+      })
+    })
+    .catch(err => next(err))
 }
 
 export function getShow (req, res, next) {

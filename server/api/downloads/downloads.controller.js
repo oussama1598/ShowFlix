@@ -13,5 +13,5 @@ export function getAll (req, res) {
 }
 
 export function deleteRecord (req, res) {
-  res.send('ok')
+  res.send('ok');
 }

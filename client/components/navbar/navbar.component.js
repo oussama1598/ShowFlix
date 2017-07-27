@@ -1,14 +1,29 @@
-'use strict'
-/* eslint no-sync: 0 */
-
 import angular from 'angular'
 
 export class NavbarComponent {
+  $mdSidenav
+  appName
   menu = [{
     title: 'Home',
     state: 'main'
+  }, {
+    title: 'Downloads',
+    state: 'downloads'
+  }, {
+    title: 'Queue',
+    state: 'queue'
   }]
-  isCollapsed = true
+
+  /* @ngInject */
+  constructor ($mdSidenav, appConfig) {
+    this.$mdSidenav = $mdSidenav
+
+    this.appName = appConfig.appName
+  }
+
+  toggleNav () {
+    this.$mdSidenav('left').toggle()
+  }
 }
 
 export default angular.module('directives.navbar', [])

@@ -1,27 +1,40 @@
-.thing-form {
-  margin: 20px 0;
+md-select {
+  margin-left: 8px;
+  width: 150px;
+  .md-text {
+    text-transform: capitalize;
+  }
 }
 
-#banner {
-  border-bottom: none;
-  margin-top: -20px;
+md-option .md-text {
+  text-transform: capitalize;
 }
 
-#banner h1 {
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-}
-
-.hero-unit {
+.show-card md-card-title {
+  padding: 0;
   position: relative;
-  padding: 30px 15px;
-  color: #F5F5F5;
-  text-align: center;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  background: #4393B9;
-}
-
-.navbar-text {
-  margin-left: 15px;
+  .card-media {
+    width: auto;
+    height: auto;
+    img {
+      min-height: 150px;
+    }
+  }
+  .show-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    z-index: 10;
+    background: linear-gradient(rgba(0, 0, 0, 0) 10%, black 90%);
+    color: white;
+    padding: 8px;
+    .title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+  }
 }

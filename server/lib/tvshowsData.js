@@ -1,10 +1,11 @@
 import { _request } from '../services/utils'
 import TVDB from 'node-tvdb'
 import config from '../config/config'
-import striptags from 'striptags'
+import { URL } from 'url'
 
 const ENDPOINT = 'http://api.tvmaze.com/singlesearch/shows?q=%query%'
-const SHOWENDPOINT = 'http://api.tvmaze.com/lookup/shows?imdb=%imdb%'
+const MY_API_ENDPOINT = 'https://showsdb-api.herokuapp.com/api/show'
+const SHOWS_END_POINT = 'https://api.apidomain.info/shows'
 
 const tvdb = new TVDB(config['tvdb_api_key'])
 export function getId (name, id = 'imdb') {
@@ -13,23 +14,14 @@ export function getId (name, id = 'imdb') {
 }
 
 export function getShowData (imdb) {
-  const url = SHOWENDPOINT.replace('%imdb%', imdb)
-  return _request(url, true, 'GET', {}, {}, 10000, true)
-    .then(res => _request(`${res.url}?embed=episodes`, true))
-    .then(data => ({
-      imdb,
-      thetvdb: data.externals.thetvdb,
-      title: data.name,
-      poster: data.image.medium,
-      summary: striptags(data.summary),
-      episodes: data._embedded.episodes.map(episode => ({
-        title: episode.name,
-        season: episode.season,
-        episode: episode.number,
-        summary: striptags(episode.summary),
-        thumb: episode.image.medium
-      }))
-    }))
+  return _request(
+    `${MY_API_ENDPOINT}/${imdb}`,
+    true,
+    'GET',
+    {},
+    {},
+    10000
+  )
 }
 
 export function getDataForEpisode ({ name, season, episode }) {
@@ -54,4 +46,20 @@ export function getDataForEpisode ({ name, season, episode }) {
       fullPoster: `http://thetvdb.com/banners/posters/${tvShowId}-1.jpg`
     }))
     .catch(err => console.log(err))
+}
+
+export function getShows (options = {}) {
+  const uri = new URL(SHOWS_END_POINT)
+  options = Object.assign({
+    page: 1,
+    sort: 'popularity',
+    cb: 1
+  }, options)
+
+  Object.keys(options).forEach(key => {
+    uri.searchParams.append(key, options[key])
+  })
+
+  return _request(uri, true, 'GET', {}, {}, 10000, false)
+    .then(data => data.MovieList)
 }

@@ -1,0 +1,41 @@
+<md-content layout="column" class="show" flex>
+  <div flex layout="column" ng-hide="$ctrl.loading">
+    <div class="top-background" flex="40" layout="row" layout-align="start end" bg-image="[$ctrl.byPassUrl, $ctrl.show.images.background]">
+      <md-card class="poster-card" layout="column" flex="30" flex-gt-sm="15" flex-sm="20">
+        <img flex style="object-fit: cover;" ng-src="{{$ctrl.byPassUrl}}{{$ctrl.show.images.poster}}" class="md-card-image">
+      </md-card>
+      <div flex class="show-info md-padding" layout-align="start end">
+        <b>{{$ctrl.show.title}}</b>
+      </div>
+    </div>
+    <div flex layout="row">
+      <md-tabs md-selected="0" flex class="md-accent" md-border-bottom>
+        <md-tab label="Overview">
+          <md-content layout="column" class="md-padding" layout-padding>
+            <div flex>
+              <span>IMDB: {{$ctrl.show.rating}}/10</span>
+            </div>
+            <p flex>
+              {{$ctrl.show.overview}}
+            </p>
+          </md-content>
+        </md-tab>
+        <md-tab label="Seasons">
+          <md-content layout="row" layout-wrap flex>
+            <div flex="50" flex-gt-sm="20" flex-sm="20" ng-repeat="season in $ctrl.show.seasons">
+              <md-card class="season-card" layout="column">
+                <img flex style="object-fit: cover;" ng-src="{{$ctrl.byPassUrl}}{{season.season_thumb}}" class="md-card-image">
+                <div class="season-info" layout="column" flex>
+                  <span flex>Season {{season.season_number}}</span>
+                </div>
+              </md-card>
+            </div>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </div>
+  </div>
+  <div flex layout="row" ng-show="$ctrl.loading" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+</md-content>
