@@ -8,13 +8,16 @@
   <title>Angular Full-Stack Generator</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 </head>
 
 <body>
   <div layout="column" layout-fill>
     <navbar></navbar>
-    <div ui-view="" flex layout="column"></div>
+    <div layout="column" flex style="position: relative;">
+      <div ui-view="" flex layout="column"></div>
+    </div>
     <footer></footer>
   </div>
 </body>

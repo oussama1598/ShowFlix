@@ -8,7 +8,7 @@
         <b>{{$ctrl.show.title}}</b>
       </div>
     </div>
-    <div flex layout="row">
+    <div flex layout="row" bg-image="[$ctrl.byPassUrl, $ctrl.show.images.poster]">
       <md-tabs md-selected="0" flex class="md-accent" md-border-bottom>
         <md-tab label="Overview">
           <md-content layout="column" class="md-padding" layout-padding>
@@ -23,7 +23,7 @@
         <md-tab label="Seasons">
           <md-content layout="row" layout-wrap flex>
             <div flex="50" flex-gt-sm="20" flex-sm="20" ng-repeat="season in $ctrl.show.seasons">
-              <md-card class="season-card" layout="column">
+              <md-card class="season-card" layout="column" ng-click="$ctrl.goToSeason(season.season_number)">
                 <img flex style="object-fit: cover;" ng-src="{{$ctrl.byPassUrl}}{{season.season_thumb}}" class="md-card-image">
                 <div class="season-info" layout="column" flex>
                   <span flex>Season {{season.season_number}}</span>
@@ -32,6 +32,19 @@
             </div>
           </md-content>
         </md-tab>
+        <md-tab label="Characters">
+            <md-content layout="row" layout-wrap flex>
+              <div flex="50" flex-gt-sm="20" flex-sm="20" ng-repeat="actor in $ctrl.show.actors">
+                <md-card class="season-card" layout="column">
+                  <img flex style="object-fit: cover;min-height: 25vw;" ng-src="{{$ctrl.byPassUrl}}{{actor.image}}" class="md-card-image">
+                  <div class="season-info" layout="column" flex>
+                    <span flex>{{actor.name}}</span>
+                    <span flex>{{actor.character}}</span>
+                  </div>
+                </md-card>
+              </div>
+            </md-content>
+          </md-tab>
       </md-tabs>
     </div>
   </div>

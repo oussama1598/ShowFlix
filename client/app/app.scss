@@ -1,8 +1,8 @@
 $fa-font-path: '/assets/fonts/font-awesome/';
 @import '~font-awesome/scss/font-awesome';
 @import '~angular-material/angular-material.scss';
-
 // @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,900|Roboto:300,500,700,900);
+$transparent_accent: rgba(189, 189, 189, .7);
 
 /**
  * App-wide Styles
@@ -15,15 +15,46 @@ $fa-font-path: '/assets/fonts/font-awesome/';
   padding: 0.2em 0;
 }
 
+[ui-view] {
+  &.ng-enter,
+  &.ng-leave {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translate3d(0, 0, 0);
+    transition: all .5s ease-in-out;
+  }
+  &.ng-enter {
+    opacity: 0;
+  }
+  &.ng-enter-active {
+    opacity: 1;
+  }
+  &.ng-leave {
+    opacity: 1;
+  }
+  &.ng-leave-active {
+    opacity: 0;
+  }
+}
+
+
 /* Responsive: Portrait tablets and up */
+
 @media screen and (min-width: 768px) {
   .container {
     max-width: 730px;
   }
-}
+} // Component styles are injected through gulp
 
-// Component styles are injected through gulp
 /* inject:scss */
+
 @import 'main/main';
+
+@import 'season/season';
+
 @import 'show/show';
+
 /* endinject */

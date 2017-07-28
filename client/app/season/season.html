@@ -1,0 +1,29 @@
+<md-content layout="column" flex bg-image="[$ctrl.byPassUrl, $ctrl.poster]" class="season">
+  <div class="season-background" flex layout="column" ng-hide="$ctrl.loading">
+    <md-tabs layout="column" md-selected="0" flex class="md-accent" md-border-bottom>
+      <md-tab flex layout="column" ng-repeat="episode in $ctrl.season.episodes" md-on-select="$ctrl.selectedEpisode = episode"
+        label="{{$ctrl.seasonNumber}}x{{episode.episode.toString().length === 1 ? '0': ''}}{{episode.episode}}">
+        <md-content layout="column" class="md-padding" layout-padding>
+          <div flex>
+            <span>{{episode.title}}</span> <br />
+            <span class="air-date">{{$ctrl.fixDate(episode.airDate)}}</span>
+          </div>
+          <md-card class="thumb-card" layout="column" flex>
+            <img flex style="object-fit: cover;" ng-src="{{$ctrl.byPassUrl}}{{episode.thumb}}" class="md-card-image">
+          </md-card>
+          <p flex>
+            {{episode.summary}}
+          </p>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+    <div flex class="float-btn" ng-show="$ctrl.selectedEpisode.aired">
+      <md-button class="md-fab md-primary" aria-label="Add to Queue" ng-click="$ctrl.showEpisode($event)">
+        <md-icon><i class="material-icons">playlist_add</i></md-icon>
+      </md-button>
+    </div>
+  </div>
+  <div flex layout="row" ng-show="$ctrl.loading" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+</md-content>

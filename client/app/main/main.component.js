@@ -5,6 +5,7 @@ import routing from './main.routes'
 export class MainController {
   $http
   $state
+  $rootScope
   shows
   sorts = [
     {
@@ -55,13 +56,18 @@ export class MainController {
   loading = true
 
   /* @ngInject */
-  constructor ($http, $state) {
+  constructor ($http, $state, $rootScope) {
     this.$http = $http
     this.$state = $state
+    this.$rootScope = $rootScope
   }
 
   $onInit () {
     this.getShows()
+
+    this.$rootScope.$broadcast('backBtn', {
+      show: false
+    })
   }
 
   getShows () {

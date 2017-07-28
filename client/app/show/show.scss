@@ -16,4 +16,11 @@
       padding: 8px;
     }
   }
+  md-tab-content {
+    background-color: $transparent_accent;
+    md-content {
+      background-color: transparent;
+      color: white;
+    }
+  }
 }
