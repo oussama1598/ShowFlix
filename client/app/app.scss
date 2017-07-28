@@ -51,6 +51,8 @@ $transparent_accent: rgba(189, 189, 189, .7);
 
 /* inject:scss */
 
+@import 'episode/episode';
+
 @import 'main/main';
 
 @import 'season/season';

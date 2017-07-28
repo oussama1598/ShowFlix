@@ -1,5 +1,4 @@
 import { getShowData, getShows } from '../../lib/tvshowsData'
-import { cache } from '../../services/utils'
 import tvShowsApi from '../../lib/tvShowsApi'
 
 export function getShowsByPage (req, res, next) {
@@ -7,7 +6,7 @@ export function getShowsByPage (req, res, next) {
 
   req.getValidationResult().then(result => {
     if (!result.isEmpty()) {
-      return res.send({
+      return res.status(400).send({
         status: false,
         errors: result.array()
       })
@@ -16,7 +15,7 @@ export function getShowsByPage (req, res, next) {
     return getShows(Object.assign({page: req.params.page}, req.query))
   })
     .then(data => {
-      res.send({
+      res.jsonify({
         status: true,
         shows: data
       })
@@ -25,13 +24,7 @@ export function getShowsByPage (req, res, next) {
 }
 
 export function getShow (req, res, next) {
-  const cached = cache().get(req.path)
-  if (cached) return res.send(cache)
-
-  getShowData(req.params.imdb).then(data => {
-    cache().set(req.path, data)
-    res.send(data)
-  })
+  getShowData(req.params.imdb).then(data => res.jsonify(data))
     .catch(err => next(err))
 }
 
@@ -41,7 +34,7 @@ export function getTorrents (req, res, next) {
 
   req.getValidationResult().then(result => {
     if (!result.isEmpty()) {
-      return res.send({
+      return res.status(400).send({
         status: false,
         errors: result.array()
       })
@@ -50,8 +43,8 @@ export function getTorrents (req, res, next) {
     return tvShowsApi(req.params.imdb, req.params.season, req.params.episode)
   })
     .then(data => {
-      res.send(Object.assign({
-        status: true
+      res.jsonify(Object.assign({
+        status: !(!(data))
       }, data))
     })
     .catch(err => next(err))

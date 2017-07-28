@@ -10,7 +10,10 @@ import cookieParser from 'cookie-parser'
 import errorHandler from 'errorhandler'
 import path from 'path'
 import config from './config'
+
+// middlewares
 import expressValidator from '../middlewares/expressValidator'
+import jsonify from '../middlewares/jsonify'
 
 export default app => {
   const env = app.get('env')
@@ -33,6 +36,7 @@ export default app => {
   app.use(methodOverride())
   app.use(cookieParser())
   app.use(expressValidator())
+  app.use(jsonify())
 
   if (env === 'development') {
     const webpackDevMiddleware = require('webpack-dev-middleware')

@@ -6,7 +6,6 @@ export class SeasonController {
   $rootScope
   $stateParams
   $state
-  $mdDialog
   showData
   byPassUrl
   loading = true
@@ -15,14 +14,13 @@ export class SeasonController {
   poster
 
   /* @ngInject */
-  constructor ($rootScope, $stateParams, showData, $state, Util, $mdDialog) {
+  constructor ($rootScope, $stateParams, showData, $state, Util) {
     this.$rootScope = $rootScope
     this.$stateParams = $stateParams
     this.showData = showData
     this.byPassUrl = showData.byPassUrl
     this.seasonNumber = $stateParams.number
     this.$state = $state
-    this.$mdDialog = $mdDialog
 
     this.fixDate = Util.fixDate
   }
@@ -54,14 +52,10 @@ export class SeasonController {
       })
   }
 
-  showEpisode (ev) {
-    this.$mdDialog.show({
-      template: '<episode layout="column" flex></episode>',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose: true,
-      fullscreen: true // Only for -xs, -sm breakpoints.
-    })
+  showEpisode (episode) {
+    this.$state.go('show/:imdb/:number/:episode', Object.assign(this.$stateParams, {
+      episode: this.selectedEpisode.episode
+    }))
   }
 }
 

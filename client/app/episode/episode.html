@@ -1,0 +1,20 @@
+<md-content flex layout="column">
+  <div flex class="md-paddin" ng-hide="$ctrl.loading">
+    <md-select ng-model="$ctrl.sort" placeholder="Sort" class="md-no-underline" flex style="margin-bottom: 0">
+      <md-option value="asc">Ascending</md-option>
+      <md-option value="desc">Descending</md-option>
+    </md-select>
+    <md-list flex>
+      <md-list-item class="md-3-line" ng-repeat="torrent in $ctrl.episode.torrents | orderBy:'seeds':$ctrl.sort === 'asc'" ng-click="null">
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ torrent.file}}</h3>
+          <h4>{{ $ctrl.filesize(torrent.size) }}</h4>
+          <p>{{ torrent.quality }} seeds: {{torrent.seeds}}</p>
+        </div>
+      </md-list-item>
+    </md-list>
+  </div>
+  <div flex layout="row" ng-show="$ctrl.loading" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+</md-content>

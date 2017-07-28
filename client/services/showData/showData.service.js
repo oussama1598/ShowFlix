@@ -11,7 +11,7 @@ export default function ($http) {
   const getData = imdb => {
     if (imdb === showData.imdb && showData.data) return Promise.resolve(showData.data)
 
-    return $http.get(`/api/shows/show/${imdb}`)
+    return $http.get(`/api/show/${imdb}`)
       .then(res => res.data)
       .then(data => {
         showData = {

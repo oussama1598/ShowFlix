@@ -12,7 +12,7 @@ const ApiRouter = express.Router()
 
 export default app => {
   ApiRouter.use('/downloads', downloadsRouter)
-    .use('/shows', showsRouter)
+    .use('/', showsRouter)
     .use('/queue', queueRouter)
     .use('/subtitles', subsRouter)
 
