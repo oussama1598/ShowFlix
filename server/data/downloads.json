@@ -1,5 +1,5 @@
 {
-  "lastId": 1,
+  "lastId": 2,
   "downloads": [
     {
       "id": 1,
@@ -11,6 +11,19 @@
       "infoHash": "994206A5E19EFD3B36F3E63CDDB3E0FCDDCA5787",
       "progress": {},
       "started": false,
+      "error": false,
+      "finished": false
+    },
+    {
+      "id": 2,
+      "title": "The H Word",
+      "episode": "1",
+      "season": "1",
+      "magnet": "magnet:?xt=urn:btih:9a863e9f05470b9f3d2aec7433e109c636da82fa&dn=Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEBRip.DD5.1.x264-NTb%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710",
+      "file": "Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEB-DL.DD5.1.x264-NTb.mkv",
+      "infoHash": "9a863e9f05470b9f3d2aec7433e109c636da82fa",
+      "progress": {},
+      "started": true,
       "error": false,
       "finished": false
     }

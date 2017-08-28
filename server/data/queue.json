@@ -1,5 +1,5 @@
 {
-  "lastId": 1,
+  "lastId": 3,
   "queue": [
     {
       "id": 1,
@@ -11,6 +11,32 @@
       "magnet": "magnet:?xt=urn:btih:2FD1877762EB88AFA15E975EA1D5EE2F671D9184&dn=marvels daredevil s01e12 webrip x264 qcf eztv&tr=udp://tracker.publicbt.com/announce&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.openbittorrent.com:80/announce&tr=udp://zer0day.to:1337/announce&tr=udp://tracker.coppersurfer.tk:6969/announce",
       "quality": "720p",
       "file": "Marvels.Daredevil.S01E12.WEBRiP.x264-QCF.mp4",
+      "tried": false,
+      "done": false
+    },
+    {
+      "id": 2,
+      "infoHash": "9a863e9f05470b9f3d2aec7433e109c636da82fa",
+      "imdb": "tt4230076",
+      "season": "1",
+      "episode": "1",
+      "thumb": null,
+      "magnet": "magnet:?xt=urn:btih:9a863e9f05470b9f3d2aec7433e109c636da82fa&dn=Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEBRip.DD5.1.x264-NTb%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710",
+      "quality": "720p",
+      "file": "Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEB-DL.DD5.1.x264-NTb.mkv",
+      "tried": false,
+      "done": false
+    },
+    {
+      "id": 3,
+      "infoHash": "bcac6672a7860f585d2e478890afbd88225fb2ad",
+      "imdb": "tt4230076",
+      "season": "1",
+      "episode": "1",
+      "thumb": null,
+      "magnet": "magnet:?xt=urn:btih:bcac6672a7860f585d2e478890afbd88225fb2ad&dn=Marvels.The.Defenders.S01.1080p.NF.WEB.DD5.1.x264-NTb%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710",
+      "quality": "1080p",
+      "file": "Marvels.The.Defenders.S01E01.The.H.Word.1080p.NF.WEBRip.DD5.1.x264-NTb.mkv",
       "tried": false,
       "done": false
     }

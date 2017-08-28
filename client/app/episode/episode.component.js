@@ -13,11 +13,13 @@ export class EpisodeController {
   sort = 'asc'
 
   /* @ngInject */
-  constructor ($rootScope, $stateParams, $http, $state) {
+  constructor ($rootScope, $stateParams, $http, $state, $mdToast, $scope) {
     this.$rootScope = $rootScope
     this.$stateParams = $stateParams
     this.$http = $http
     this.$state = $state
+    this.$mdToast = $mdToast
+    this.$scope = $scope
   }
 
   $onInit () {
@@ -38,6 +40,32 @@ export class EpisodeController {
         this.episode = data
         this.loading = false
       })
+  }
+
+  onAddToQueue (torrent) {
+    this.$http
+      .post('/api/queue', {
+        imdb: this.$stateParams.imdb,
+        season: this.episode.season,
+        episode: this.episode.episode,
+        magnet: torrent.magnet,
+        file: torrent.file,
+        size: torrent.size
+      })
+      .then(() => this._showToast('Episode added to the queue'))
+      .catch(err => {
+        this._showToast('Error occured when adding this episode')
+        console.log(err)
+      })
+  }
+
+  _showToast (message) {
+    this.$mdToast.show(
+      this.$mdToast.simple()
+        .textContent(message)
+        .position('bottom right')
+        .hideDelay(3000)
+    )
   }
 }
 

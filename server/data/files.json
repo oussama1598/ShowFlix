@@ -1,4 +1,23 @@
 {
-  "lastId": 2,
-  "files": []
+  "lastId": 3,
+  "files": [
+    {
+      "id": 3,
+      "title": "The H Word",
+      "season": "1",
+      "episode": "1",
+      "infoHash": "9a863e9f05470b9f3d2aec7433e109c636da82fa",
+      "path": "",
+      "filename": "",
+      "streamUrl": "/files/9a863e9f05470b9f3d2aec7433e109c636da82fa",
+      "thumbUrl": "/files/9a863e9f05470b9f3d2aec7433e109c636da82fa/thumb",
+      "onlineThumb": null,
+      "episodeId": null,
+      "theTvDBId": null,
+      "poster": "",
+      "srt": false,
+      "done": false,
+      "show": false
+    }
+  ]
 }

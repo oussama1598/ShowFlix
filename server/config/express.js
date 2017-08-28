@@ -38,7 +38,7 @@ export default app => {
   app.use(expressValidator())
   app.use(jsonify())
 
-  if (env === 'development') {
+  if (env === 'development' && false) {
     const webpackDevMiddleware = require('webpack-dev-middleware')
     const stripAnsi = require('strip-ansi')
     const webpack = require('webpack')

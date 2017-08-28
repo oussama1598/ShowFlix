@@ -1,40 +1,50 @@
-import torrentEngine from './torrentEngine'
+import debug from 'debug'
+import TorrentEngine from './TorrentEngine'
 import config from '../config/config'
-import { createDownloadEntry } from '../utils/utils'
-import databases from '../config/databases'
+import { createDownloadEntry } from '../services/utils'
+import databases from '../services/databases'
 import { createFile, updateFile, removeFile } from '../helpers/filesHelper'
 
 export default class Parser {
   constructor () {
     this.RUNNING = false
     this.queueIndex = 0
+    this.debug = debug('TorrentEngine')
+  }
 
-    torrentEngine
-      .on('start', infoHash => {
-        const data = databases.getDb('queue').find({ infoHash }).value()
-        console.log(`Started ${data.title} S${data.season}E${data.episode}`.green)
+  init () {
+    this._runTorrentEngine()
+    this.start()
+  }
 
-        createFile(data)
+  start (index = 0) {
+    if (this.RUNNING) return
+
+    this.RUNNING = true
+    this._clearQueue()
+      .then(() => this._next(index))
+      .then(() => {
+        this.debug('Parsing Started')
+
+        this._parseQueue()
       })
-      .on('done', infoHash => {
-        updateFile(infoHash, {
-          done: true
-        })
-        console.log('Next in the Queue')
+      .catch(err => {
+        this.debug(err)
 
-        if (!this.RUNNING) return
-        setTimeout(() => this.MoveToNext(infoHash), 1000)
-      })
-      .on('error', infoHash => {
-        removeFile(infoHash)
-        console.log('Passing this episode')
-
-        if (!this.RUNNING) return
-        this.MoveToNext(infoHash, true)
+        this.RUNNING = false
       })
   }
 
-  MoveToNext (infoHash, notDone) {
+  stop () {
+    if (!this.RUNNING) return
+
+    this.RUNNING = false
+    this.torrentEngine.kill()
+
+    this.debug('Parsing stopped')
+  }
+
+  _MoveToNext (infoHash, notDone) {
     if (!this.RUNNING) return
 
     databases.getDb('queue').update(
@@ -47,25 +57,25 @@ export default class Parser {
       }
     )
 
-    this.BuildNextElement(this.queueIndex).then(() => {
-      this.parseQueue()
+    this._BuildNextElement(this.queueIndex).then(() => {
+      this._parseQueue()
     })
   }
 
-  parseQueue () {
+  _parseQueue () {
     const queueData = databases.getDb('queue').get().value()
     const episodeEl = queueData[this.queueIndex]
 
     if (queueData.length === 0 || !episodeEl) {
-      console.log('All Done')
+      this.debug('All Done')
       this.RUNNING = !this.RUNNING
     }
 
     createDownloadEntry(episodeEl)
-    torrentEngine.add(episodeEl.magnet, config['SAVETOFOLDER'])
+    this.torrentEngine.add(episodeEl.magnet)
   }
 
-  clearQueue () {
+  _clearQueue () {
     const data = databases.getDb('queue').get()
     data.remove(item => item.done).write()
 
@@ -76,7 +86,7 @@ export default class Parser {
     return Promise.resolve()
   }
 
-  next (_index = -1) {
+  _next (_index = -1) {
     const db = databases.getDb('queue').get()
     const data = db.value()
     // if the index is the last one do not repeat those who are already tried
@@ -99,29 +109,41 @@ export default class Parser {
     return Promise.resolve() // resolve the promise
   }
 
-  start (index = 0) {
-    if (this.RUNNING) return
+  _runTorrentEngine () {
+    this.torrentEngine = new TorrentEngine(config['SAVETOFOLDER'])
 
-    this.RUNNING = !this.RUNNING
-    this.clearQueue()
-      .then(() => this.next(index))
-      .then(() => {
-        global.log('Parsing Started')
-
-        this.parseQueue()
-      })
-      .catch(err => {
-        console.log(err.toString())
-
-        this.RUNNING = !this.RUNNING
-      })
+    this.torrentEngine
+      .on('start', this._torrentEngineStartEvent.bind(this))
+      .on('done', this._torrentEngineDoneEvent.bind(this))
+      .on('error', this._torrentEngineErrorEvent.bind(this))
   }
 
-  stop () {
-    if (!this.RUNNING) return
+  _torrentEngineStartEvent (infoHash) {
+    const data = databases
+      .getDb('queue')
+      .find({ infoHash })
+      .value()
+    this.debug(`Started ${data.title} S${data.season}E${data.episode}`)
 
-    this.RUNNING = !this.RUNNING
-    // some kind of log here
-    torrentEngine.kill()
+    createFile(data)
+  }
+
+  _torrentEngineDoneEvent (infoHash) {
+    updateFile(infoHash, {
+      done: true
+    })
+    this.debug('Next in the Queue')
+
+    if (!this.RUNNING) return
+    setTimeout(() => this.MoveToNext(infoHash), 1000)
+  }
+
+  _torrentEngineErrorEvent ({infoHash, err}) {
+    removeFile(infoHash)
+    this.debug(err)
+    this.debug('Passing this episode')
+
+    if (!this.RUNNING) return
+    this.MoveToNext(infoHash, true)
   }
 }

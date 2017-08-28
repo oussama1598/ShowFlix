@@ -1,12 +1,14 @@
 import express from 'express'
 import apicache from 'apicache'
 import * as Controller from './shows.controller'
-import config from '../../config/config'
 
 const router = express.Router()
 const cache = apicache.options({
-  debug: config.env === 'development'
-}).middleware('1 day', (req, res) => res.statusCode === 200)
+  debug: true
+}).middleware('5 minutes', (req, res) => {
+  console.log(res.statusCode)
+  return res.statusCode === 200
+})
 
 router
   .get('/shows/:page', cache, Controller.getShowsByPage)

@@ -1,6 +1,6 @@
 // import thumbs from '../modules/thumbs'
 // const mediasHandler = require('../modules/mediasHandler')
-import databases from '../config/databases'
+import databases from '../services/databases'
 
 export function getFileBy (obj) {
   return databases.getDb('files').find(obj)

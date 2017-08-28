@@ -1,18 +1,20 @@
 import WebTorrent from 'webtorrent'
 import path from 'path'
-// const filesHelper = require('../helpers/filesHelper')
+import { updateFile } from '../helpers/filesHelper'
 import EventEmitter from 'events'
+import databases from '../services/databases'
 
-exort default class TorrentEngine extends EventEmitter {
-  constructor () {
+export default class TorrentEngine extends EventEmitter {
+  constructor (showsPath) {
     super()
     this.WebTorrent = new WebTorrent()
+    this.path = showsPath
 
     this.WebTorrent.on('torrent', torrent => {
       this.emit('start', torrent.infoHash)
 
       const infoHash = torrent.infoHash
-      const downloadsdb = global.downloadsdb
+      const downloadsdb = databases.getDb('downloads')
 
       const queueSelectedFile = downloadsdb
         .find({
@@ -38,7 +40,7 @@ exort default class TorrentEngine extends EventEmitter {
         }
       )
 
-      filesHelper.updateFile(torrent.infoHash, {
+      updateFile(torrent.infoHash, {
         filename: path.basename(filepath, path.extname(filepath)),
         dirname: path.dirname(filepath),
         path: filepath,
@@ -46,15 +48,6 @@ exort default class TorrentEngine extends EventEmitter {
       })
 
       torrent.on('download', () => {
-        process.stdout.clearLine() // clear current text
-        process.stdout.cursorTo(0)
-        process.stdout.write(
-          `${(torrent.progress * 100).toFixed(2)}%`.blue + ' Downloaded'.green
-        )
-        if (torrent.progress === 100) {
-          console.log('', true)
-        }
-
         downloadsdb.update(
           {
             infoHash
@@ -85,8 +78,7 @@ exort default class TorrentEngine extends EventEmitter {
       })
 
       torrent.on('error', err => {
-        this.emit('error', infoHash)
-        console.log(err.red)
+        this.emit('error', ({ infoHash, err }))
 
         downloadsdb.update(
           {
@@ -100,9 +92,9 @@ exort default class TorrentEngine extends EventEmitter {
     })
   }
 
-  add (magnet, path) {
+  add (magnet) {
     this.WebTorrent.add(magnet, {
-      path
+      path: this.path
     })
   }
 
