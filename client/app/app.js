@@ -23,6 +23,8 @@ import main from './main/main.component'
 import show from './show/show.component'
 import season from './season/season.component'
 import episode from './episode/episode.component'
+import files from './files/files.component'
+import queue from './queue/queue.component'
 
 // Loading directives
 import bgImage from '../directives/bgImage/bgImage.module'
@@ -45,7 +47,9 @@ angular.module('showFlixAppApp', [
   show,
   season,
   episode,
-  bgImage
+  bgImage,
+  files,
+  queue
 ])
   .config(routeConfig)
 

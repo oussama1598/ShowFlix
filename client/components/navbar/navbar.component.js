@@ -7,8 +7,8 @@ export class NavbarComponent {
     title: 'Home',
     state: 'main'
   }, {
-    title: 'Downloads',
-    state: 'downloads'
+    title: 'Files',
+    state: 'files'
   }, {
     title: 'Queue',
     state: 'queue'

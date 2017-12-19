@@ -15,6 +15,12 @@ $transparent_accent: rgba(189, 189, 189, .7);
   padding: 0.2em 0;
 }
 
+.float-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
 [ui-view] {
   &.ng-enter,
   &.ng-leave {
@@ -53,7 +59,11 @@ $transparent_accent: rgba(189, 189, 189, .7);
 
 @import 'episode/episode';
 
+@import 'files/files';
+
 @import 'main/main';
+
+@import 'queue/queue';
 
 @import 'season/season';
 

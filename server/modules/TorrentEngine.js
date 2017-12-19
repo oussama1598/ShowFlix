@@ -1,95 +1,48 @@
 import WebTorrent from 'webtorrent'
 import path from 'path'
-import { updateFile } from '../helpers/filesHelper'
 import EventEmitter from 'events'
 import databases from '../services/databases'
 
 export default class TorrentEngine extends EventEmitter {
   constructor (showsPath) {
     super()
-    this.WebTorrent = new WebTorrent()
+
     this.path = showsPath
+    this.WebTorrent = new WebTorrent()
+      .on('torrent', torrent => {
+        const infoHash = torrent.infoHash
+        const queueSelectedFile = databases
+          .getDb('queue')
+          .find({
+            infoHash
+          })
+          .value().file
 
-    this.WebTorrent.on('torrent', torrent => {
-      this.emit('start', torrent.infoHash)
+        const mainFile = torrent.files.filter(
+          file => file.name === queueSelectedFile
+        )[0]
+        const filepath = mainFile.path
 
-      const infoHash = torrent.infoHash
-      const downloadsdb = databases.getDb('downloads')
+        torrent.files.forEach(file => file.deselect())
+        mainFile.select()
 
-      const queueSelectedFile = downloadsdb
-        .find({
-          infoHash
+        this.emit('start', {
+          infoHash,
+          fileData: {
+            progress: {},
+            filename: path.basename(filepath, path.extname(filepath)),
+            dirname: path.dirname(filepath),
+            path: filepath,
+            started: true,
+            error: false,
+            done: false
+          }
         })
-        .value().file
 
-      const mainFile = torrent.files.filter(
-        file => file.name === queueSelectedFile
-      )[0]
-      const filepath = mainFile.path
-
-      torrent.files.forEach(file => file.deselect())
-      mainFile.select()
-      downloadsdb.update(
-        {
-          infoHash
-        },
-        {
-          started: true,
-          error: false,
-          finished: false
-        }
-      )
-
-      updateFile(torrent.infoHash, {
-        filename: path.basename(filepath, path.extname(filepath)),
-        dirname: path.dirname(filepath),
-        path: filepath,
-        done: false
+        torrent.on('download', () => this.emit('progress', {infoHash, torrent, mainFile}))
+        torrent.on('done', () => this.emit('done', infoHash))
+        torrent.on('error', err => this.emit('error', ({ infoHash, err })))
       })
-
-      torrent.on('download', () => {
-        downloadsdb.update(
-          {
-            infoHash
-          },
-          {
-            progress: {
-              progress: torrent.progress * 100,
-              written: torrent.downloaded,
-              size: mainFile.length,
-              speed: torrent.downloadSpeed,
-              timeRemaining: torrent.timeRemaining,
-              peers: torrent.numPeers
-            }
-          }
-        )
-      })
-
-      torrent.on('done', () => {
-        this.emit('done', infoHash)
-        downloadsdb.update(
-          {
-            infoHash
-          },
-          {
-            finished: true
-          }
-        )
-      })
-
-      torrent.on('error', err => {
-        this.emit('error', ({ infoHash, err }))
-
-        downloadsdb.update(
-          {
-            infoHash
-          },
-          {
-            error: true
-          }
-        )
-      })
-    })
   }
 
   add (magnet) {

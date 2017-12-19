@@ -2,8 +2,6 @@ import { getShowData, getShows } from '../../lib/tvshowsData'
 import tvShowsApi from '../../lib/tvShowsApi'
 
 export const getShowsByPage = (req, res, next) => {
-  req.checkParams('page', 'Must be an integer').isInt()
-
   req.getValidationResult().then(result => {
     if (!result.isEmpty()) {
       return res.status(400).send({
@@ -12,7 +10,7 @@ export const getShowsByPage = (req, res, next) => {
       })
     }
 
-    return getShows(Object.assign({page: req.params.page}, req.query))
+    return getShows(req.query)
   })
     .then(data => {
       res.jsonify({

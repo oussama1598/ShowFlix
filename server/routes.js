@@ -1,21 +1,8 @@
 import * as errors from './components/errors'
 import path from 'path'
-import express from 'express'
-
-// import Routes
-import downloadsRouter from './api/downloads'
-import showsRouter from './api/shows'
-import queueRouter from './api/queue'
-import subsRouter from './api/subtitles'
-
-const ApiRouter = express.Router()
+import ApiRouter from './api'
 
 export default app => {
-  ApiRouter.use('/downloads', downloadsRouter)
-    .use('/', showsRouter)
-    .use('/queue', queueRouter)
-    .use('/subtitles', subsRouter)
-
   app.use('/api', ApiRouter)
     .get('/:url(api|auth|components|app|bower_components|assets)/*', errors.pageNotFound)
     .get('/*', (req, res) => {

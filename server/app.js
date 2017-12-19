@@ -11,7 +11,7 @@ const parser = new Parser()
 
 expressConfig(app)
 Routes(app)
-parser.init()
+// parser.init()
 
 server.listen(config.port, config.ip, () =>
   console.log('server listening on %d', config.port)

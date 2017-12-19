@@ -1,42 +1,25 @@
 {
-  "lastId": 3,
+  "lastId": 2,
   "queue": [
     {
       "id": 1,
-      "infoHash": "2fd1877762eb88afa15e975ea1d5ee2f671d9184",
-      "title": "daredevil",
-      "season": "1",
-      "episode": "12",
-      "thumb": "http://static.tvmaze.com/uploads/images/medium_landscape/10/25335.jpg",
-      "magnet": "magnet:?xt=urn:btih:2FD1877762EB88AFA15E975EA1D5EE2F671D9184&dn=marvels daredevil s01e12 webrip x264 qcf eztv&tr=udp://tracker.publicbt.com/announce&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.openbittorrent.com:80/announce&tr=udp://zer0day.to:1337/announce&tr=udp://tracker.coppersurfer.tk:6969/announce",
-      "quality": "720p",
-      "file": "Marvels.Daredevil.S01E12.WEBRiP.x264-QCF.mp4",
-      "tried": false,
-      "done": false
-    },
-    {
-      "id": 2,
       "infoHash": "9a863e9f05470b9f3d2aec7433e109c636da82fa",
       "imdb": "tt4230076",
       "season": "1",
       "episode": "1",
-      "thumb": null,
       "magnet": "magnet:?xt=urn:btih:9a863e9f05470b9f3d2aec7433e109c636da82fa&dn=Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEBRip.DD5.1.x264-NTb%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710",
-      "quality": "720p",
       "file": "Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEB-DL.DD5.1.x264-NTb.mkv",
       "tried": false,
       "done": false
     },
     {
-      "id": 3,
-      "infoHash": "bcac6672a7860f585d2e478890afbd88225fb2ad",
-      "imdb": "tt4230076",
-      "season": "1",
+      "id": 2,
+      "infoHash": "1d706b55cc95ad713894380e7d6e9375b782dd28",
+      "imdb": "tt1632701",
+      "season": "7",
       "episode": "1",
-      "thumb": null,
-      "magnet": "magnet:?xt=urn:btih:bcac6672a7860f585d2e478890afbd88225fb2ad&dn=Marvels.The.Defenders.S01.1080p.NF.WEB.DD5.1.x264-NTb%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710",
-      "quality": "1080p",
-      "file": "Marvels.The.Defenders.S01E01.The.H.Word.1080p.NF.WEBRip.DD5.1.x264-NTb.mkv",
+      "magnet": "magnet:?xt=urn:btih:1d706b55cc95ad713894380e7d6e9375b782dd28&dn=Suits.S07E01.720p.HDTV.x264-AVS%5Beztv%5D.mkv%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A80&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969",
+      "file": "Suits.S07E01.720p.HDTV.x264-AVS[eztv].mkv",
       "tried": false,
       "done": false
     }

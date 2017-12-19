@@ -1,9 +1,5 @@
-import express from 'express'
-import * as Controller from './subtitles.controller'
+import { Router } from 'express'
+import { getSubs } from './subtitles.controller'
 
-const router = express.Router()
-
-router.route('/')
-  .get(Controller.getSubs)
-
-export default router
+export default Router()
+  .get('/', getSubs)

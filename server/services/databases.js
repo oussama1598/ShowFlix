@@ -14,11 +14,6 @@ class LocalDbs extends EventEmitter {
       queue: []
     })
 
-    this.newDb(path.join(config.root, '/server/data/', 'downloads.json'), 'downloads', {
-      lastId: 0,
-      downloads: []
-    })
-
     this.newDb(path.join(config.root, '/server/data/', 'files.json'), 'files', {
       lastId: 0,
       files: []

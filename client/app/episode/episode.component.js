@@ -30,7 +30,7 @@ export class EpisodeController {
     })
 
     this.$http
-      .get(`/api/show/${this.$stateParams.imdb}/${this.$stateParams.number}/${this.$stateParams.episode}`)
+      .get(`/api/shows/${this.$stateParams.imdb}/${this.$stateParams.number}/${this.$stateParams.episode}`)
       .then(res => res.data)
       .then(data => {
         if (!data.status) {

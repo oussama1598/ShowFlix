@@ -1,0 +1,17 @@
+.files {
+  .thumb-container {
+    margin-right: 16px;
+
+    .episode-thumb {
+      width: auto !important;
+      height: 60px !important;
+      border-radius: 0 !important;
+      margin-bottom: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    md-progress-linear {
+      margin-bottom: 10px !important;
+    }
+  }
+}

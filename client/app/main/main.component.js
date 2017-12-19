@@ -72,7 +72,7 @@ export class MainController {
 
   getShows () {
     this.loading = true
-    this.$http.get(`/api/shows/${this.page}?sort=${this.sort}&genre=${this.genre}`)
+    this.$http.get(`/api/shows/?page=${this.page}&sort=${this.sort}&genre=${this.genre}`)
       .then(res => {
         if (!res.data.status) return
 

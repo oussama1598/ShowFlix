@@ -1,0 +1,44 @@
+<md-content layout="column" flex class="files">
+  <md-list flex ng-hide="$ctrl.loading">
+    <div ng-repeat="(key, episodes) in $ctrl.files">
+      <md-subheader class="md-no-sticky">Show {{ key }}</md-subheader>
+      <md-list-item class="md-3-line" ng-click="null" ng-repeat="episode in episodes">
+        <div class="thumb-container">
+          <img ng-src="http://thetvdb.com/banners/episodes/281662/4889609.jpg" class="md-avatar episode-thumb" alt="Lucifer" />
+          <md-progress-linear ng-class="{'md-warn': episode.error}" md-mode="determinate" value="{{episode.progress.progress}}">
+          </md-progress-linear>
+        </div>
+        <div class="md-list-item-text" layout="column">
+          <h3>Lucifer</h3>
+          <h4>Pilot - S{{ episode.season }}E{{ episode.season }}</h4>
+          <p ng-show="episode.progress.progress !== 100">
+            <b>{{$ctrl.filesize(episode.progress.written)}}</b> of
+            <b>{{$ctrl.filesize(episode.progress.size)}}</b> Downloaded - Remaining: <b>{{$ctrl.humanizeDuration(episode.progress.timeRemaining)}}</b> - Speed: <b>{{$ctrl.filesize(episode.progress.speed)}}/s</b>
+          </p>
+        </div>
+      </md-list-item>
+    </div>
+  </md-list>
+  <div flex class="float-btn">
+    <md-fab-speed-dial md-open="true" md-direction="up" class="md-fling md-primary">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-warn">
+          <md-icon><i class="material-icons">menu</i></md-icon>
+        </md-button>
+      </md-fab-trigger>
+
+      <md-fab-actions>
+        <md-button aria-label="Start" class="md-fab md-raised md-mini">
+          <md-icon><i class="material-icons">play_arrow</i></md-icon>
+        </md-button>
+        <md-button aria-label="Pause" class="md-fab md-raised md-mini">
+          <md-icon><i class="material-icons">pause</i></md-icon>
+        </md-button>
+      </md-fab-actions>
+    </md-fab-speed-dial>
+  </div>
+
+  <div flex layout="row" ng-show="$ctrl.loading" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+</md-content>

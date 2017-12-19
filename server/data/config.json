@@ -1,6 +1,6 @@
 {
   "port": 8888,
-  "savetofolder": "/home/oussama/Desktop/TV Shows",
+  "OUTPUT_FOLDER": "/home/oussama/Desktop/TV Shows",
   "data_folder": "/home/oussama/Desktop/ShowFlix/data",
   "START_SERVER_WHENE_FOUND": true,
   "ENABLE_CLIENT_LOGGING": true,

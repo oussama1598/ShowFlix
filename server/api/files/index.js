@@ -1,7 +1,6 @@
 import { Router } from 'express'
-import { getAll, addRecord, deleteRecord } from './queue.controller'
+import { getAll, deleteRecord } from './files.controller'
 
 export default Router()
   .get('/', getAll)
-  .post('/', addRecord)
   .delete('/', deleteRecord)

@@ -4,7 +4,6 @@ import NodeCache from 'node-cache'
 import fetch from 'node-fetch'
 // import config from '../modules/config'
 import path from 'path'
-import databases from './databases'
 
 const myCache = new NodeCache({
   stdTTL: 60 * 60 * 24,
@@ -36,23 +35,6 @@ export const deleteFromQueue = ({ episode, season, name }) => Promise.resolve().
     name
   })
 })
-
-export const createDownloadEntry = episodeData => {
-  databases.getDb('downloads').add({
-    title: episodeData.title,
-    episode: episodeData.episode,
-    season: episodeData.season,
-    magnet: episodeData.magnet,
-    file: episodeData.file,
-    infoHash: episodeData.infoHash,
-    progress: {},
-    started: false,
-    error: false,
-    finished: false
-  }, {
-    infoHash: episodeData.infoHash
-  })
-}
 
 export const arrayDeffrence = (_arr, _target) => {
   const containsEquals = (obj, target) => {

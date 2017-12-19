@@ -1,23 +1,29 @@
 {
-  "lastId": 3,
+  "lastId": 1,
   "files": [
     {
-      "id": 3,
-      "title": "The H Word",
+      "id": 1,
+      "infoHash": "9a863e9f05470b9f3d2aec7433e109c636da82fa",
+      "imdb": "tt4230076",
       "season": "1",
       "episode": "1",
-      "infoHash": "9a863e9f05470b9f3d2aec7433e109c636da82fa",
-      "path": "",
-      "filename": "",
-      "streamUrl": "/files/9a863e9f05470b9f3d2aec7433e109c636da82fa",
-      "thumbUrl": "/files/9a863e9f05470b9f3d2aec7433e109c636da82fa/thumb",
-      "onlineThumb": null,
-      "episodeId": null,
-      "theTvDBId": null,
-      "poster": "",
-      "srt": false,
+      "magnet": "magnet:?xt=urn:btih:9a863e9f05470b9f3d2aec7433e109c636da82fa&dn=Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEBRip.DD5.1.x264-NTb%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710",
+      "file": "Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEB-DL.DD5.1.x264-NTb.mkv",
+      "tried": false,
       "done": false,
-      "show": false
+      "progress": {
+        "progress": 7.549585852553728,
+        "written": 78430208,
+        "size": 1038867658,
+        "speed": 19660.8,
+        "timeRemaining": 48850376.38346355,
+        "peers": 16
+      },
+      "filename": "Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEB-DL.DD5.1.x264-NTb",
+      "dirname": "Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEBRip.DD5.1.x264-NTb[rarbg]",
+      "path": "Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEBRip.DD5.1.x264-NTb[rarbg]/Marvels.The.Defenders.S01E01.The.H.Word.720p.NF.WEB-DL.DD5.1.x264-NTb.mkv",
+      "started": true,
+      "error": false
     }
   ]
 }
